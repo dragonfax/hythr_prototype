@@ -1,17 +1,87 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'dart:convert' show JSON;
+import 'dart:async' show Future;
+
+Future<DataRoot> readContent() async {
+  String contentJson = await rootBundle.loadString('assets/content.json');
+
+  var json = JSON.decode(contentJson);
+
+  return new DataRoot.fromJson(json);
+}
+
+
+class Stylist {
+  String username;
+  String realName;
+  String photo;
+  List<String> clients;
+
+  Stylist.fromJson(Map json) {
+    username = json['username'];
+    realName = json['real_name'];
+    photo = json['photo'];
+
+    json['clients'].forEach((clientName){
+      clients.add(clientName);
+    });
+  }
+}
+
+class Client {
+  String username;
+  String realName;
+  String photo;
+
+  Client.fromJson(Map json) {
+    username = json['username'];
+    realName = json['real_name'];
+    photo = json['photo'];
+  }
+}
+
+class DataRoot {
+  String user;
+  Map<String,Stylist> stylists;
+  Map<String,Client> clients;
+
+  DataRoot() {
+    stylists = new Map();
+    clients = new Map();
+  }
+
+  DataRoot.fromJson(Map json) {
+    user = json['user'];
+
+    stylists = new Map();
+    json['stylists'].forEach((stylistData) {
+      stylists[stylistData['username']] = new Stylist.fromJson(stylistData);
+    });
+
+    clients = new Map();
+    json['clients'].forEach((clientData) {
+      clients[clientData['username']] = new Client.fromJson(clientData);
+    });
+
+  }
+}
 
 void main() {
+  readContent();
   runApp(new MyApp());
 }
 
 enum AddButtons { post, video, selfie, clientNote }
+
+final String appTitle = 'HAIRAPPi';
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'tHairepy',
+      title: appTitle,
       theme: new ThemeData(
         // This is the theme of your application.
         //
@@ -23,7 +93,7 @@ class MyApp extends StatelessWidget {
         // counter didn't reset back to zero; the application is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: new MyHomePage(title: 'tHairepy'),
+      home: new MyHomePage(title: appTitle),
     );
   }
 }
@@ -47,34 +117,36 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  DataRoot root = new DataRoot();
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  _MyHomePageState() {
+    var f = readContent();
+    f.then((r) { setState(() { root = r; }); });
   }
-
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return new Scaffold(
+
+    return new DefaultTabController( length: 3, child: new Scaffold(
       appBar: new AppBar(
 
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: new Text(widget.title),
+        bottom: new TabBar(
+          tabs: [
+            new Tab(
+              text: 'Collegues',
+              icon: new Icon(Icons.group_work)
+            ),
+            new Tab(
+              text: 'Clients',
+              icon: new Icon(Icons.people)
+            ),
+            new Tab(
+                text: 'Notifications',
+                icon: new Icon(Icons.notifications)
+            ),
+          ]
+        )
       ),
       drawer: new Drawer(
         child: new ListView(
@@ -83,18 +155,18 @@ class _MyHomePageState extends State<MyHomePage> {
               child: new Row(
                 children: <Widget>[
                   new Icon(Icons.mood),
-                  const Text('Angela B.')
+                  new Text( root.user != null ? root.stylists[root.user].realName : 'None')
                 ]
               )
             ),
             new ListTile(
-              title: const Text('Your Profile')
+              title: new Text('Your Profile')
             ),
             new ListTile(
-              title: const Text('Settings'),
+              title: new Text('Settings'),
             ),
             new ListTile(
-              title: const Text('Logout'),
+              title: new Text('Logout'),
             ),
             new AboutListTile(
               applicationName: 'tHairepy'
@@ -103,60 +175,66 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
 
-      body: new Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: new Column(
-          // Column is also layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug paint" (press "p" in the console where you ran
-          // "flutter run", or select "Toggle Debug Paint" from the lutter tool
-          // window in IntelliJ) to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            new Text(
-              'You have pushed the button this many times:',
+      body: new TabBarView(
+        children: [
+          new Center(
+            child: new Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new Text(
+                  'Your collegues',
+                ),
+              ],
             ),
-            new Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
+          ),
+          root.clients.isEmpty ? new Center( child: new Text('0 clients') ) :
+            new ListView(
+              children: root.clients.values.map( (client) {
+                return new Row(
+                    children: [
+                      new Image.asset(client.photo),
+                      new Text(client.realName)
+                    ]
+                );
+              }).toList()
             ),
-          ],
-        ),
+          new Center(
+            child: new Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new Text(
+                  '0 unread notifications',
+                ),
+              ],
+            ),
+          ),
+        ]
       ),
       floatingActionButton: new FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
+        onPressed: () => {},
+        tooltip: 'Add Content',
         // child: new Icon(Icons.add),
         child: new PopupMenuButton<AddButtons>(
           itemBuilder: (BuildContext context) => <PopupMenuEntry<AddButtons>>[
-            const PopupMenuItem<AddButtons>(
+            new PopupMenuItem<AddButtons>(
                 value: AddButtons.post,
-                child: const Text('Add Image to Work Gallery')
+                child: new Text('Add Image to Work Gallery')
             ),
-            const PopupMenuItem<AddButtons>(
+            new PopupMenuItem<AddButtons>(
                 value: AddButtons.selfie,
-                child: const Text('Take a new Profile Pic')
+                child: new Text('Take a new Profile Pic')
             ),
-            const PopupMenuItem<AddButtons>(
+            new PopupMenuItem<AddButtons>(
               value: AddButtons.clientNote,
-              child: const Text('Add to Client Log')
+              child: new Text('Add to Client Log')
             ),
-            const PopupMenuItem<AddButtons>(
+            new PopupMenuItem<AddButtons>(
               value: AddButtons.video,
-              child: const Text('Add a new Story/Video')
+              child: new Text('Add a new Story/Video')
             )
           ]
         )
       ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+    ));
   }
 }

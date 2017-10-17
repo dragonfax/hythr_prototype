@@ -1,0 +1,18 @@
+{
+  "user": "angela_b",
+  "stylists": [
+    {
+      "username": "angela_b",
+      "real_name": "Angela Bower",
+      "photo": "assets/images/profiles/judith_light.jpg",
+      "clients": ["sam_malone"]
+    }
+  ],
+  "clients":[
+    {
+      "username": "sam_malone",
+      "real_name": "Sam Malone",
+      "photo": "assets/images/profiles/ted_danson.jpg"
+    }
+  ]
+}
