@@ -23,6 +23,7 @@ class Stylist {
     realName = json['real_name'];
     photo = json['photo'];
 
+    clients = [];
     json['clients'].forEach((clientName){
       clients.add(clientName);
     });
@@ -121,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   _MyHomePageState() {
     var f = readContent();
-    f.then((r) { setState(() { root = r; }); });
+    f.then((r) { setState(() { root = r; }); }).catchError((e) { print(e); });
   }
 
   @override
@@ -189,6 +190,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           root.clients.isEmpty ? new Center( child: new Text('0 clients') ) :
             new ListView(
+              itemExtent: 200.0,
               children: root.clients.values.map( (client) {
                 return new Row(
                     children: [

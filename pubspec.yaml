@@ -26,6 +26,8 @@ flutter:
     - assets/content.json
     - assets/images/profiles/judith_light.jpg
     - assets/images/profiles/ted_danson.jpg
+    - assets/images/profiles/rhea_perlman.jpg
+    - assets/images/profiles/john_ratzenberger.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

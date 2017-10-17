@@ -13,6 +13,16 @@
       "username": "sam_malone",
       "real_name": "Sam Malone",
       "photo": "assets/images/profiles/ted_danson.jpg"
+    },
+    {
+      "username": "carla_tortelli",
+      "real_name": "Carla Tortelli",
+      "photo": "assets/images/profiles/rhea_perlman.jpg"
+    },
+    {
+      "username": "cliff_clavin",
+      "real_name": "Cliff Clavin",
+      "photo": "assets/images/profiles/john_ratzenberger.jpg"
     }
   ]
 }
