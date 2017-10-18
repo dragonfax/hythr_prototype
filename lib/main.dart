@@ -178,16 +178,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
       body: new TabBarView(
         children: [
-          new Center(
-            child: new Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                new Text(
-                  'Your collegues',
-                ),
-              ],
+          root.stylists.isEmpty ? new Center( child: new Text('0 collegues') ) :
+            new ListView(
+              itemExtent: 200.0,
+              children: root.stylists.values.map( (stylist) {
+                return new Row(
+                  children: [
+                    new Image.asset(stylist.photo),
+                    new Text(stylist.realName)
+                  ]
+                );
+              }).toList()
             ),
-          ),
           root.clients.isEmpty ? new Center( child: new Text('0 clients') ) :
             new ListView(
               itemExtent: 200.0,
@@ -200,22 +202,29 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               }).toList()
             ),
-          new Center(
-            child: new Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                new Text(
-                  '0 unread notifications',
+          root.clients.isEmpty ? new Center( child: new Text('0 notifications')) :
+            new ListView(
+              itemExtent: 100.0,
+              children: [
+                new Row(
+                    children: [
+                      new Icon(Icons.mail),
+                      new Expanded( child: new Text("Your client ${root.clients.values.first.realName} would like to schedule an appointment.", softWrap: true, overflow: TextOverflow.ellipsis))
+                    ]
                 ),
-              ],
-            ),
-          ),
+                new Row(
+                  children: [
+                    new Icon(Icons.people),
+                    new Expanded( child: new Text("Your connection ${root.stylists.values.first.realName} has referred a client ${root.clients.values.last.realName} to you.", softWrap: true, overflow: TextOverflow.ellipsis))
+                  ]
+                )
+              ]
+            )
         ]
       ),
       floatingActionButton: new FloatingActionButton(
         onPressed: () => {},
         tooltip: 'Add Content',
-        // child: new Icon(Icons.add),
         child: new PopupMenuButton<AddButtons>(
           itemBuilder: (BuildContext context) => <PopupMenuEntry<AddButtons>>[
             new PopupMenuItem<AddButtons>(

@@ -28,6 +28,14 @@ flutter:
     - assets/images/profiles/ted_danson.jpg
     - assets/images/profiles/rhea_perlman.jpg
     - assets/images/profiles/john_ratzenberger.jpg
+    - assets/images/profiles/alyssa_milano.jpg
+    - assets/images/profiles/danny_pintauro.jpg
+    - assets/images/profiles/george_wendt.jpg
+    - assets/images/profiles/katherine_helmond.jpg
+    - assets/images/profiles/kelsey_grammer.jpg
+    - assets/images/profiles/kirstie_alley.jpg
+    - assets/images/profiles/shelley_long.jpg
+    - assets/images/profiles/tony_danza.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
