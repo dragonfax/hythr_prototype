@@ -1,0 +1,72 @@
+{
+  "user": "angela_b",
+  "stylists": [
+    {
+      "username": "angela_b",
+      "real_name": "Angela Bower",
+      "photo": "assets/images/profiles/judith_light.jpg",
+      "clients": ["sam_malone"]
+    },
+    {
+      "username": "tony_m",
+      "real_name": "Tony Micelli",
+      "photo": "assets/images/profiles/tony_danza.jpg",
+      "clients": []
+    },
+    {
+      "username": "sam_m",
+      "real_name": "Samantha Micelli",
+      "photo": "assets/images/profiles/alyssa_milano.jpg",
+      "clients": []
+    },
+    {
+      "username": "jon_b",
+      "real_name": "Jonathan Bower",
+      "photo": "assets/images/profiles/danny_pintauro.jpg",
+      "clients": []
+    },
+    {
+      "username": "mona",
+      "real_name": "Mona Robinson",
+      "photo": "assets/images/profiles/katherine_helmond.jpg",
+      "clients": []
+    }
+  ],
+  "clients":[
+    {
+      "username": "sam_malone",
+      "real_name": "Sam Malone",
+      "photo": "assets/images/profiles/ted_danson.jpg"
+    },
+    {
+      "username": "carla_tortelli",
+      "real_name": "Carla Tortelli",
+      "photo": "assets/images/profiles/rhea_perlman.jpg"
+    },
+    {
+      "username": "cliff_clavin",
+      "real_name": "Cliff Clavin",
+      "photo": "assets/images/profiles/john_ratzenberger.jpg"
+    },
+    {
+      "username": "norm_peterson",
+      "real_name": "Norm Peterson",
+      "photo": "assets/images/profiles/george_wendt.jpg"
+    },
+    {
+      "username": "frasier_crane",
+      "real_name": "Dr Frasier Crane",
+      "photo": "assets/images/profiles/kelsey_grammer.jpg"
+    },
+    {
+      "username": "rebecca_howe",
+      "real_name": "Rebecca Howe",
+      "photo": "assets/images/profiles/kirstie_alley.jpg"
+    },
+    {
+      "username": "diane_chambers",
+      "real_name": "Diane Chambers",
+      "photo": "assets/images/profiles/shelley_long.jpg"
+    }
+  ]
+}
