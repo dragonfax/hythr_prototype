@@ -1,4 +1,4 @@
-package com.yourcompany.hythr;
+package com.digeratido.hythr;
 
 import android.os.Bundle;
 
