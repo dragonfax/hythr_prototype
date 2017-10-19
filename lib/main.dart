@@ -1,15 +1,87 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'dart:convert' show JSON;
+import 'dart:async' show Future;
+
+Future<DataRoot> readContent() async {
+  String contentJson = await rootBundle.loadString('assets/content.json');
+
+  var json = JSON.decode(contentJson);
+
+  return new DataRoot.fromJson(json);
+}
+
+
+class Stylist {
+  String username;
+  String realName;
+  String photo;
+  List<String> clients;
+
+  Stylist.fromJson(Map json) {
+    username = json['username'];
+    realName = json['real_name'];
+    photo = json['photo'];
+
+    clients = [];
+    json['clients'].forEach((clientName){
+      clients.add(clientName);
+    });
+  }
+}
+
+class HairClient {
+  String username;
+  String realName;
+  String photo;
+
+  HairClient.fromJson(Map json) {
+    username = json['username'];
+    realName = json['real_name'];
+    photo = json['photo'];
+  }
+}
+
+class DataRoot {
+  String user;
+  Map<String,Stylist> stylists;
+  Map<String,HairClient> clients;
+
+  DataRoot() {
+    stylists = new Map();
+    clients = new Map();
+  }
+
+  DataRoot.fromJson(Map json) {
+    user = json['user'];
+
+    stylists = new Map();
+    json['stylists'].forEach((stylistData) {
+      stylists[stylistData['username']] = new Stylist.fromJson(stylistData);
+    });
+
+    clients = new Map();
+    json['clients'].forEach((clientData) {
+      clients[clientData['username']] = new HairClient.fromJson(clientData);
+    });
+
+  }
+}
 
 void main() {
   runApp(new MyApp());
 }
+
+enum AddButtons { post, video, selfie, clientNote }
+
+final String appTitle = 'HAIRAPPi';
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Flutter Demo',
+      title: appTitle,
       theme: new ThemeData(
         // This is the theme of your application.
         //
@@ -21,7 +93,7 @@ class MyApp extends StatelessWidget {
         // counter didn't reset back to zero; the application is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: new MyHomePage(title: 'Flutter Demo Home Page'),
+      home: new MyHomePage(title: appTitle),
     );
   }
 }
@@ -45,67 +117,134 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  DataRoot root = new DataRoot();
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  _MyHomePageState() {
+    var f = readContent();
+    f.then((r) { setState(() { root = r; }); }).catchError((e) { print(e); });
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return new Scaffold(
+
+    return new DefaultTabController( length: 3, child: new Scaffold(
       appBar: new AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
+
         title: new Text(widget.title),
+        bottom: new TabBar(
+          tabs: [
+            new Tab(
+              text: 'Collegues',
+              icon: new Icon(Icons.group_work)
+            ),
+            new Tab(
+              text: 'Clients',
+              icon: new Icon(Icons.people)
+            ),
+            new Tab(
+                text: 'Notifications',
+                icon: new Icon(Icons.notifications)
+            ),
+          ]
+        )
       ),
-      body: new Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: new Column(
-          // Column is also layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug paint" (press "p" in the console where you ran
-          // "flutter run", or select "Toggle Debug Paint" from the Flutter tool
-          // window in IntelliJ) to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
+      drawer: new Drawer(
+        child: new ListView(
           children: <Widget>[
-            new Text(
-              'You have pushed the button this many times:',
+            new DrawerHeader(
+              child: new Row(
+                children: <Widget>[
+                  new Icon(Icons.mood),
+                  new Text( root.user != null ? root.stylists[root.user].realName : 'None')
+                ]
+              )
             ),
-            new Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
+            new ListTile(
+              title: new Text('Your Profile')
             ),
-          ],
+            new ListTile(
+              title: new Text('Settings'),
+            ),
+            new ListTile(
+              title: new Text('Logout'),
+            ),
+            new AboutListTile(
+              applicationName: 'tHairepy'
+            ),
+          ]
         ),
       ),
+
+      body: new TabBarView(
+        children: [
+          root.stylists.isEmpty ? new Center( child: new Text('0 collegues') ) :
+            new ListView(
+              itemExtent: 200.0,
+              children: root.stylists.values.map( (stylist) {
+                return new Row(
+                  children: [
+                    new Image.asset(stylist.photo),
+                    new Text(stylist.realName)
+                  ]
+                );
+              }).toList()
+            ),
+          root.clients.isEmpty ? new Center( child: new Text('0 clients') ) :
+            new ListView(
+              itemExtent: 200.0,
+              children: root.clients.values.map( (client) {
+                return new Row(
+                    children: [
+                      new Image.asset(client.photo),
+                      new Text(client.realName)
+                    ]
+                );
+              }).toList()
+            ),
+          root.clients.isEmpty ? new Center( child: new Text('0 notifications')) :
+            new ListView(
+              itemExtent: 100.0,
+              children: [
+                new Row(
+                    children: [
+                      new Icon(Icons.mail),
+                      new Expanded( child: new Text("Your client ${root.clients.values.first.realName} would like to schedule an appointment.", softWrap: true, overflow: TextOverflow.ellipsis))
+                    ]
+                ),
+                new Row(
+                  children: [
+                    new Icon(Icons.people),
+                    new Expanded( child: new Text("Your connection ${root.stylists.values.first.realName} has referred a client ${root.clients.values.last.realName} to you.", softWrap: true, overflow: TextOverflow.ellipsis))
+                  ]
+                )
+              ]
+            )
+        ]
+      ),
       floatingActionButton: new FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: new Icon(Icons.add),
+        onPressed: () => {},
+        tooltip: 'Add Content',
+        child: new PopupMenuButton<AddButtons>(
+          itemBuilder: (BuildContext context) => <PopupMenuEntry<AddButtons>>[
+            new PopupMenuItem<AddButtons>(
+                value: AddButtons.post,
+                child: new Text('Add Image to Work Gallery')
+            ),
+            new PopupMenuItem<AddButtons>(
+                value: AddButtons.selfie,
+                child: new Text('Take a new Profile Pic')
+            ),
+            new PopupMenuItem<AddButtons>(
+              value: AddButtons.clientNote,
+              child: new Text('Add to Client Log')
+            ),
+            new PopupMenuItem<AddButtons>(
+              value: AddButtons.video,
+              child: new Text('Add a new Story/Video')
+            )
+          ]
+        )
       ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+    ));
   }
 }
