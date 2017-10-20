@@ -119,9 +119,17 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   DataRoot root = new DataRoot();
 
-  _MyHomePageState() {
-    var f = readContent();
-    f.then((r) { setState(() { root = r; }); }).catchError((e) { print(e); });
+  @override
+  initState() {
+    super.initState();
+
+    readContent().then((r) {
+      setState(() {
+        root = r;
+      });
+    }).catchError((e) {
+      debugPrint(e);
+    });
   }
 
   @override
