@@ -119,17 +119,24 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   DataRoot root = new DataRoot();
 
+  loadContent() async {
+    try {
+      DataRoot newRoot = await readContent();
+
+      setState(() {
+        root = newRoot;
+      });
+    }
+    catch (e) {
+      debugPrint(e);
+    }
+  }
+
   @override
   initState() {
     super.initState();
 
-    readContent().then((r) {
-      setState(() {
-        root = r;
-      });
-    }).catchError((e) {
-      debugPrint(e);
-    });
+    loadContent();
   }
 
   @override
