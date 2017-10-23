@@ -8,3 +8,6 @@ ios/.generated/
 packages
 pubspec.lock
 .flutter-plugins
+CertificateSigningRequest.certSigningRequest
+ios Distribution signing certificate.p12
+ios_development.cer
