@@ -12,11 +12,76 @@ Future<DataRoot> readContent() async {
 }
 
 
+enum NotificationType { appointment_request, client_referral }
+
+NotificationType getNotificationTypeFromString(String str) {
+  final fqstr = 'NotificationType.$str';
+  final t = NotificationType.values.firstWhere((e)=> e.toString() == fqstr);
+  if ( t == null ) {
+    throw "Bad state: no notification type '$str'";
+  }
+  return t;
+}
+
+abstract class Notification {
+
+  ListTile buildListTile() {
+    return new ListTile(
+      leading: new Icon(getIcon()),
+      title: new Text(toString())
+    );
+  }
+
+  IconData getIcon();
+
+  String toString() {
+    return "";
+  }
+}
+
+class AppointmentRequest extends Notification {
+  String client;
+
+  @override
+  IconData getIcon() {
+    return Icons.mail;
+  }
+
+  @override
+  String toString() {
+    return "Your client $client would like to schedule an appointment.";
+  }
+
+  AppointmentRequest.fromJson(Map json) {
+    client = json['client'];
+  }
+}
+
+class ClientReferral extends Notification {
+  String client;
+  String stylist;
+
+  @override
+  IconData getIcon() {
+    return Icons.people;
+  }
+
+  @override
+  String toString() {
+    return "Your collegue $stylist has referred a client $client to you.";
+  }
+
+  ClientReferral.fromJson(Map json) {
+    client = json['client'];
+  }
+}
+
 class Stylist {
   String username;
   String realName;
   String photo;
   List<String> clients;
+  List<Notification> notifications;
 
   Stylist.fromJson(Map json) {
     username = json['username'];
@@ -27,6 +92,22 @@ class Stylist {
     json['clients'].forEach((clientName){
       clients.add(clientName);
     });
+
+    notifications = [];
+    if ( json.containsKey('notifications') ) {
+      json['notifications'].forEach((Map subJson) {
+
+        final nt = getNotificationTypeFromString(subJson['type']);
+        switch (nt) {
+          case NotificationType.appointment_request:
+            notifications.add(new AppointmentRequest.fromJson(subJson));
+            break;
+          case NotificationType.client_referral:
+            notifications.add(new ClientReferral.fromJson(subJson));
+            break;
+        }
+      });
+    }
   }
 }
 
@@ -43,9 +124,10 @@ class HairClient {
 }
 
 class DataRoot {
-  String user;
+  String currentUserName;
   Map<String,Stylist> stylists;
   Map<String,HairClient> clients;
+  Stylist currentUser;
 
   DataRoot() {
     stylists = new Map();
@@ -53,7 +135,7 @@ class DataRoot {
   }
 
   DataRoot.fromJson(Map json) {
-    user = json['user'];
+    currentUserName = json['user'];
 
     stylists = new Map();
     json['stylists'].forEach((stylistData) {
@@ -65,6 +147,7 @@ class DataRoot {
       clients[clientData['username']] = new HairClient.fromJson(clientData);
     });
 
+    currentUser = stylists[currentUserName];
   }
 }
 
@@ -170,7 +253,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: new Row(
                 children: <Widget>[
                   new Icon(Icons.mood),
-                  new Text( root.user != null ? root.stylists[root.user].realName : 'None')
+                  new Text( root.currentUser?.realName ?? 'None')
                 ]
               )
             ),
@@ -192,47 +275,33 @@ class _MyHomePageState extends State<MyHomePage> {
 
       body: new TabBarView(
         children: [
-          root.stylists.isEmpty ? new Center( child: new Text('0 collegues') ) :
+          root.stylists.isEmpty ? new Center( child: new Text('0 connected collegues') ) :
             new ListView(
-              itemExtent: 200.0,
+              itemExtent: 100.0,
+              // padding: null,
               children: root.stylists.values.map( (stylist) {
-                return new Row(
-                  children: [
-                    new Image.asset(stylist.photo),
-                    new Text(stylist.realName)
-                  ]
+                return new ListTile(
+                  leading: new Image.asset(stylist.photo, fit: BoxFit.fitHeight),
+                  title: new Text(stylist.realName)
                 );
               }).toList()
             ),
           root.clients.isEmpty ? new Center( child: new Text('0 clients') ) :
             new ListView(
-              itemExtent: 200.0,
+              itemExtent: 100.0,
               children: root.clients.values.map( (client) {
-                return new Row(
-                    children: [
-                      new Image.asset(client.photo),
-                      new Text(client.realName)
-                    ]
+                return new ListTile(
+                  leading: new Image.asset(client.photo),
+                  title: new Text(client.realName)
                 );
               }).toList()
             ),
-          root.clients.isEmpty ? new Center( child: new Text('0 notifications')) :
+          root.currentUser?.notifications == null || root.currentUser.notifications.isEmpty ? new Center( child: new Text('0 notifications')) :
             new ListView(
               itemExtent: 100.0,
-              children: [
-                new Row(
-                    children: [
-                      new Icon(Icons.mail),
-                      new Expanded( child: new Text("Your client ${root.clients.values.first.realName} would like to schedule an appointment.", softWrap: true, overflow: TextOverflow.ellipsis))
-                    ]
-                ),
-                new Row(
-                  children: [
-                    new Icon(Icons.people),
-                    new Expanded( child: new Text("Your connection ${root.stylists.values.first.realName} has referred a client ${root.clients.values.last.realName} to you.", softWrap: true, overflow: TextOverflow.ellipsis))
-                  ]
-                )
-              ]
+              children: root.currentUser.notifications.map((notification) {
+                return notification.buildListTile();
+              }).toList()
             )
         ]
       ),

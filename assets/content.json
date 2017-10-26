@@ -5,7 +5,20 @@
       "username": "angela_b",
       "real_name": "Angela Bower",
       "photo": "assets/images/profiles/judith_light.jpg",
-      "clients": ["sam_malone"]
+      "clients": [
+        "sam_malone"
+      ],
+      "notifications": [
+        {
+          "type": "appointment_request",
+          "client": "sam_malone"
+        },
+        {
+          "type": "client_referral",
+          "stylist": "tony_m",
+          "client": "carla_tortelli"
+        }
+      ]
     },
     {
       "username": "tony_m",
