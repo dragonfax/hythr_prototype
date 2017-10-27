@@ -7,6 +7,7 @@ import 'collegues_tab_view.dart';
 import 'clients_tab_view.dart';
 import 'notifications_tab_view.dart';
 import 'add_content_speed_dial.dart';
+import 'profile_tab_view.dart';
 
 final String appTitle = 'HAIRAPPi';
 
@@ -98,11 +99,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 icon: new Icon(Icons.people)
               ),
               new Tab(
-                  text: 'Notifications',
-                  icon: new Icon(Icons.notifications)
+                  text: 'Your Profile',
+                  icon: new Icon(Icons.person)
               ),
             ]
-          )
+          ),
+          actions: <Widget>[
+            new IconButton(
+              icon: new Icon(Icons.notifications, color: Colors.white),
+              tooltip: "Notifications",
+              onPressed: null
+            )
+          ]
         ),
 
         drawer: new ApplicationMenu(root.currentUser?.realName, appTitle),
@@ -113,7 +121,8 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 new ColleguesTabView(root.stylists.values.toList()),
                 new ClientsTabView(root.clients.values.toList()),
-                new NotificationsTabView(root.currentUser.notifications)
+                new ProfileTabView(),
+                // new NotificationsTabView(root.currentUser.notifications)
               ]
             ),
             new AddContentSpeedDial()
