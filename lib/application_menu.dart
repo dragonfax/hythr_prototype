@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 
 class ApplicationMenu extends StatelessWidget {
 
-  ApplicationMenu(this.userRealName, this.appTitle);
+  ApplicationMenu(this.userRealName, this.appTitle, this.stylistMode, this.toggleMode);
 
   final String userRealName;
   final String appTitle;
+  final bool stylistMode;
+  final toggleMode;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,10 @@ class ApplicationMenu extends StatelessWidget {
             ),
             new ListTile(
               title: new Text('Logout'),
+            ),
+            new ListTile(
+              title: new Text(stylistMode ? 'Switch to Client Mode' : 'Switch to Stylist Mode'),
+              onTap: () { toggleMode(); }
             ),
             new AboutListTile(
                 applicationName: appTitle

@@ -58,6 +58,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   DataRoot root = new DataRoot();
   bool notificationsShowing = false;
+  bool stylistMode = true;
 
   loadContent() async {
     try {
@@ -118,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ]
         ),
 
-        drawer: new ApplicationMenu(root.currentUser?.realName, appTitle),
+        drawer: new ApplicationMenu(root.currentUser?.realName, appTitle, stylistMode, () { setState( () { stylistMode = ! stylistMode; } ); }),
 
         body: new Stack(
           children: [
