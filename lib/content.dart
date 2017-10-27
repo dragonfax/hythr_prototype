@@ -124,7 +124,6 @@ class HairClient {
 }
 
 class DataRoot {
-  String currentUserName;
   Map<String,Stylist> stylists;
   Map<String,HairClient> clients;
   Stylist currentUser;
@@ -135,7 +134,6 @@ class DataRoot {
   }
 
   DataRoot.fromJson(Map json) {
-    currentUserName = json['user'];
 
     stylists = new Map();
     json['stylists'].forEach((stylistData) {
@@ -147,6 +145,6 @@ class DataRoot {
       clients[clientData['username']] = new HairClient.fromJson(clientData);
     });
 
-    currentUser = stylists[currentUserName];
+    currentUser = stylists.values.toList()[0];
   }
 }
