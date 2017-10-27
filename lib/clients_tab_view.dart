@@ -6,6 +6,13 @@ class ClientsTabView extends StatelessWidget {
 
   final List<HairClient> clients;
 
+  Widget getTab() {
+    return new Tab(
+        text: 'Clients',
+        icon: new Icon(Icons.people)
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if ( clients.isEmpty ){

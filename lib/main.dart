@@ -82,66 +82,68 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final stylistsView = new ColleguesTabView(root.stylists.values.toList());
+    final clientsView = new ClientsTabView(root.clients.values.toList());
+    final profileView = new ProfileTabView();
+
+
+    List<Widget> tabs = [];
+    tabs.add(stylistsView.getTab());
+    if (stylistMode) {
+      tabs.add(clientsView.getTab());
+    }
+    tabs.add(profileView.getTab());
+
+    List<Widget> views = [];
+    views.add(stylistsView);
+    if ( stylistMode ) {
+      views.add(clientsView);
+    }
+    views.add(profileView);
 
 
     return new DefaultTabController(
-      length: 3,
-      child: new Scaffold(
+        length: tabs.length,
+        child: new Scaffold(
 
-        appBar: new AppBar(
-          title: new Text(widget.title),
-          bottom: new TabBar(
-            tabs: [
-              new Tab(
-                text: 'Collegues',
-                icon: new Icon(Icons.group_work)
-              ),
-              new Tab(
-                text: 'Clients',
-                icon: new Icon(Icons.people)
-              ),
-              new Tab(
-                  text: 'Your Profile',
-                  icon: new Icon(Icons.person)
-              ),
-            ]
-          ),
-          actions: <Widget>[
-            new IconButton(
-              icon: new Icon(Icons.notifications, color: Colors.white),
-              tooltip: "Notifications",
-              onPressed: () {
-                setState(() {
-                  notificationsShowing = ! notificationsShowing;
-                });
-              }
-            )
-          ]
-        ),
-
-        drawer: new ApplicationMenu(root.currentUser?.realName, appTitle, stylistMode, () { setState( () { stylistMode = ! stylistMode; } ); }),
-
-        body: new Stack(
-          children: [
-            new IndexedStack(
-              index: notificationsShowing ? 1 : 0,
-              children: [
-                new TabBarView(
-                  children: [
-                    new ColleguesTabView(root.stylists.values.toList()),
-                    new ClientsTabView(root.clients.values.toList()),
-                    new ProfileTabView(),
-                  ]
-                ),
-                new NotificationsTabView(root.currentUser.notifications)
+          appBar: new AppBar(
+              title: new Text(widget.title),
+              bottom: new TabBar( tabs: tabs ),
+              actions: <Widget>[
+                new IconButton(
+                    icon: new Icon(Icons.notifications, color: Colors.white),
+                    tooltip: "Notifications",
+                    onPressed: () {
+                      setState(() {
+                        notificationsShowing = !notificationsShowing;
+                      });
+                    }
+                )
               ]
-            ),
-            new AddContentSpeedDial()
-          ]
-        ),
+          ),
 
-        // floatingActionButton: new FloatingAddButton(),
-      )
+          drawer: new ApplicationMenu(
+              root.currentUser?.realName, appTitle, stylistMode, () {
+            setState(() {
+              stylistMode = !stylistMode;
+            });
+          }),
+
+          body: new Stack(
+              children: [
+                new IndexedStack(
+                    index: notificationsShowing ? 1 : 0,
+                    children: [
+                      new TabBarView( children: views ),
+                      new NotificationsTabView(root.currentUser.notifications)
+                    ]
+                ),
+                new AddContentSpeedDial()
+              ]
+          ),
+
+          // floatingActionButton: new FloatingAddButton(),
+        )
     );
   }
 }

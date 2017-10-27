@@ -33,7 +33,7 @@ class ApplicationMenu extends StatelessWidget {
               title: new Text('Logout'),
             ),
             new ListTile(
-              title: new Text(stylistMode ? 'Switch to Client Mode' : 'Switch to Stylist Mode'),
+              title: new Text(stylistMode ? 'Stylist ON' : 'Stylist OFF'),
               onTap: () { toggleMode(); }
             ),
             new AboutListTile(

@@ -7,6 +7,13 @@ class ColleguesTabView extends StatelessWidget {
 
   ColleguesTabView(this.stylists);
 
+  Widget getTab() {
+    return new Tab(
+      text: 'Stylists',
+      icon: new Icon(Icons.group_work)
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if ( stylists.isEmpty ) {
