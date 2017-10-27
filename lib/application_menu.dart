@@ -24,20 +24,21 @@ class ApplicationMenu extends StatelessWidget {
                 )
             ),
             new ListTile(
-                title: new Text('Your Profile')
-            ),
-            new ListTile(
+              leading: new Icon(Icons.settings),
               title: new Text('Settings'),
             ),
             new ListTile(
+              leading: new Icon(Icons.time_to_leave),
               title: new Text('Logout'),
             ),
             new ListTile(
+              leading: new Icon(Icons.content_cut),
               title: new Text(stylistMode ? 'Stylist ON' : 'Stylist OFF'),
               onTap: () { toggleMode(); }
             ),
             new AboutListTile(
-                applicationName: appTitle
+              icon: new Icon(Icons.info),
+              applicationName: appTitle
             ),
           ]
       ),
