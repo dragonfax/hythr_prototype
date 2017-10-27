@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_fab_dialer/flutter_fab_dialer.dart';
 
 import 'add_content_button.dart';
 import 'content.dart';
@@ -7,6 +6,7 @@ import 'application_menu.dart';
 import 'collegues_tab_view.dart';
 import 'clients_tab_view.dart';
 import 'notifications_tab_view.dart';
+import 'add_content_speed_dial.dart';
 
 final String appTitle = 'HAIRAPPi';
 
@@ -80,6 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
 
+
     return new DefaultTabController(
       length: 3,
       child: new Scaffold(
@@ -106,15 +107,20 @@ class _MyHomePageState extends State<MyHomePage> {
 
         drawer: new ApplicationMenu(root.currentUser?.realName, appTitle),
 
-        body: new TabBarView(
+        body: new Stack(
           children: [
-            new ColleguesTabView(root.stylists.values.toList()),
-            new ClientsTabView(root.clients.values.toList()),
-            new NotificationsTabView(root.currentUser.notifications)
+            new TabBarView(
+              children: [
+                new ColleguesTabView(root.stylists.values.toList()),
+                new ClientsTabView(root.clients.values.toList()),
+                new NotificationsTabView(root.currentUser.notifications)
+              ]
+            ),
+            new AddContentSpeedDial()
           ]
         ),
 
-        floatingActionButton: new FloatingAddButton(),
+        // floatingActionButton: new FloatingAddButton(),
       )
     );
   }
