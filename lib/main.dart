@@ -1,163 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
-import 'dart:convert' show JSON;
-import 'dart:async' show Future;
+// import 'package:flutter_fab_dialer/flutter_fab_dialer.dart';
 
-Future<DataRoot> readContent() async {
-  String contentJson = await rootBundle.loadString('assets/content.json');
+import 'add_content_button.dart';
+import 'content.dart';
+import 'application_menu.dart';
+import 'collegues_tab_view.dart';
+import 'clients_tab_view.dart';
+import 'notifications_tab_view.dart';
 
-  var json = JSON.decode(contentJson);
-
-  return new DataRoot.fromJson(json);
-}
-
-
-enum NotificationType { appointment_request, client_referral }
-
-NotificationType getNotificationTypeFromString(String str) {
-  final fqstr = 'NotificationType.$str';
-  final t = NotificationType.values.firstWhere((e)=> e.toString() == fqstr);
-  if ( t == null ) {
-    throw "Bad state: no notification type '$str'";
-  }
-  return t;
-}
-
-abstract class Notification {
-
-  ListTile buildListTile() {
-    return new ListTile(
-      leading: new Icon(getIcon()),
-      title: new Text(toString())
-    );
-  }
-
-  IconData getIcon();
-
-  String toString() {
-    return "";
-  }
-}
-
-class AppointmentRequest extends Notification {
-  String client;
-
-  @override
-  IconData getIcon() {
-    return Icons.mail;
-  }
-
-  @override
-  String toString() {
-    return "Your client $client would like to schedule an appointment.";
-  }
-
-  AppointmentRequest.fromJson(Map json) {
-    client = json['client'];
-  }
-}
-
-class ClientReferral extends Notification {
-  String client;
-  String stylist;
-
-  @override
-  IconData getIcon() {
-    return Icons.people;
-  }
-
-  @override
-  String toString() {
-    return "Your collegue $stylist has referred a client $client to you.";
-  }
-
-  ClientReferral.fromJson(Map json) {
-    client = json['client'];
-  }
-}
-
-class Stylist {
-  String username;
-  String realName;
-  String photo;
-  List<String> clients;
-  List<Notification> notifications;
-
-  Stylist.fromJson(Map json) {
-    username = json['username'];
-    realName = json['real_name'];
-    photo = json['photo'];
-
-    clients = [];
-    json['clients'].forEach((clientName){
-      clients.add(clientName);
-    });
-
-    notifications = [];
-    if ( json.containsKey('notifications') ) {
-      json['notifications'].forEach((Map subJson) {
-
-        final nt = getNotificationTypeFromString(subJson['type']);
-        switch (nt) {
-          case NotificationType.appointment_request:
-            notifications.add(new AppointmentRequest.fromJson(subJson));
-            break;
-          case NotificationType.client_referral:
-            notifications.add(new ClientReferral.fromJson(subJson));
-            break;
-        }
-      });
-    }
-  }
-}
-
-class HairClient {
-  String username;
-  String realName;
-  String photo;
-
-  HairClient.fromJson(Map json) {
-    username = json['username'];
-    realName = json['real_name'];
-    photo = json['photo'];
-  }
-}
-
-class DataRoot {
-  String currentUserName;
-  Map<String,Stylist> stylists;
-  Map<String,HairClient> clients;
-  Stylist currentUser;
-
-  DataRoot() {
-    stylists = new Map();
-    clients = new Map();
-  }
-
-  DataRoot.fromJson(Map json) {
-    currentUserName = json['user'];
-
-    stylists = new Map();
-    json['stylists'].forEach((stylistData) {
-      stylists[stylistData['username']] = new Stylist.fromJson(stylistData);
-    });
-
-    clients = new Map();
-    json['clients'].forEach((clientData) {
-      clients[clientData['username']] = new HairClient.fromJson(clientData);
-    });
-
-    currentUser = stylists[currentUserName];
-  }
-}
+final String appTitle = 'HAIRAPPi';
 
 void main() {
   runApp(new MyApp());
 }
-
-enum AddButtons { post, video, selfie, clientNote }
-
-final String appTitle = 'HAIRAPPi';
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -225,110 +80,42 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
 
-    return new DefaultTabController( length: 3, child: new Scaffold(
-      appBar: new AppBar(
+    return new DefaultTabController(
+      length: 3,
+      child: new Scaffold(
 
-        title: new Text(widget.title),
-        bottom: new TabBar(
-          tabs: [
-            new Tab(
-              text: 'Collegues',
-              icon: new Icon(Icons.group_work)
-            ),
-            new Tab(
-              text: 'Clients',
-              icon: new Icon(Icons.people)
-            ),
-            new Tab(
-                text: 'Notifications',
-                icon: new Icon(Icons.notifications)
-            ),
-          ]
-        )
-      ),
-      drawer: new Drawer(
-        child: new ListView(
-          children: <Widget>[
-            new DrawerHeader(
-              child: new Row(
-                children: <Widget>[
-                  new Icon(Icons.mood),
-                  new Text( root.currentUser?.realName ?? 'None')
-                ]
-              )
-            ),
-            new ListTile(
-              title: new Text('Your Profile')
-            ),
-            new ListTile(
-              title: new Text('Settings'),
-            ),
-            new ListTile(
-              title: new Text('Logout'),
-            ),
-            new AboutListTile(
-              applicationName: 'tHairepy'
-            ),
+        appBar: new AppBar(
+          title: new Text(widget.title),
+          bottom: new TabBar(
+            tabs: [
+              new Tab(
+                text: 'Collegues',
+                icon: new Icon(Icons.group_work)
+              ),
+              new Tab(
+                text: 'Clients',
+                icon: new Icon(Icons.people)
+              ),
+              new Tab(
+                  text: 'Notifications',
+                  icon: new Icon(Icons.notifications)
+              ),
+            ]
+          )
+        ),
+
+        drawer: new ApplicationMenu(root.currentUser?.realName, appTitle),
+
+        body: new TabBarView(
+          children: [
+            new ColleguesTabView(root.stylists.values.toList()),
+            new ClientsTabView(root.clients.values.toList()),
+            new NotificationsTabView(root.currentUser.notifications)
           ]
         ),
-      ),
 
-      body: new TabBarView(
-        children: [
-          root.stylists.isEmpty ? new Center( child: new Text('0 connected collegues') ) :
-            new ListView(
-              itemExtent: 100.0,
-              // padding: null,
-              children: root.stylists.values.map( (stylist) {
-                return new ListTile(
-                  leading: new Image.asset(stylist.photo, fit: BoxFit.fitHeight),
-                  title: new Text(stylist.realName)
-                );
-              }).toList()
-            ),
-          root.clients.isEmpty ? new Center( child: new Text('0 clients') ) :
-            new ListView(
-              itemExtent: 100.0,
-              children: root.clients.values.map( (client) {
-                return new ListTile(
-                  leading: new Image.asset(client.photo),
-                  title: new Text(client.realName)
-                );
-              }).toList()
-            ),
-          root.currentUser?.notifications == null || root.currentUser.notifications.isEmpty ? new Center( child: new Text('0 notifications')) :
-            new ListView(
-              itemExtent: 100.0,
-              children: root.currentUser.notifications.map((notification) {
-                return notification.buildListTile();
-              }).toList()
-            )
-        ]
-      ),
-      floatingActionButton: new FloatingActionButton(
-        onPressed: () => {},
-        tooltip: 'Add Content',
-        child: new PopupMenuButton<AddButtons>(
-          itemBuilder: (BuildContext context) => <PopupMenuEntry<AddButtons>>[
-            new PopupMenuItem<AddButtons>(
-                value: AddButtons.post,
-                child: new Text('Add Image to Work Gallery')
-            ),
-            new PopupMenuItem<AddButtons>(
-                value: AddButtons.selfie,
-                child: new Text('Take a new Profile Pic')
-            ),
-            new PopupMenuItem<AddButtons>(
-              value: AddButtons.clientNote,
-              child: new Text('Add to Client Log')
-            ),
-            new PopupMenuItem<AddButtons>(
-              value: AddButtons.video,
-              child: new Text('Add a new Story/Video')
-            )
-          ]
-        )
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    ));
+        floatingActionButton: new FloatingAddButton(),
+      )
+    );
   }
 }
