@@ -57,6 +57,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   DataRoot root = new DataRoot();
+  bool notificationsShowing = false;
 
   loadContent() async {
     try {
@@ -108,7 +109,11 @@ class _MyHomePageState extends State<MyHomePage> {
             new IconButton(
               icon: new Icon(Icons.notifications, color: Colors.white),
               tooltip: "Notifications",
-              onPressed: null
+              onPressed: () {
+                setState(() {
+                  notificationsShowing = ! notificationsShowing;
+                });
+              }
             )
           ]
         ),
@@ -117,12 +122,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
         body: new Stack(
           children: [
-            new TabBarView(
+            new IndexedStack(
+              index: notificationsShowing ? 1 : 0,
               children: [
-                new ColleguesTabView(root.stylists.values.toList()),
-                new ClientsTabView(root.clients.values.toList()),
-                new ProfileTabView(),
-                // new NotificationsTabView(root.currentUser.notifications)
+                new TabBarView(
+                  children: [
+                    new ColleguesTabView(root.stylists.values.toList()),
+                    new ClientsTabView(root.clients.values.toList()),
+                    new ProfileTabView(),
+                  ]
+                ),
+                new NotificationsTabView(root.currentUser.notifications)
               ]
             ),
             new AddContentSpeedDial()
