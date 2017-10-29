@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'content.dart';
 
-class ColleguesTabView extends StatelessWidget {
+class StylistsTabView extends StatelessWidget {
 
   final List<User> stylists;
 
-  ColleguesTabView(this.stylists);
+  StylistsTabView(this.stylists);
 
   Widget getTab() {
     return new Tab(
@@ -17,7 +17,7 @@ class ColleguesTabView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if ( stylists == null || stylists.isEmpty ) {
-      return new Center( child: new Text('0 connected collegues') ) ;
+      return new Center( child: new Text('0 stylists followed') ) ;
     } else {
       return new ListView(
           itemExtent: 100.0,

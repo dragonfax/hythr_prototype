@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // import 'add_content_button.dart';
 import 'content.dart';
 import 'application_menu.dart';
-import 'collegues_tab_view.dart';
+import 'stylists_tab_view.dart';
 import 'clients_tab_view.dart';
 import 'notifications_tab_view.dart';
 import 'add_content_speed_dial.dart';
@@ -83,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final stylistsView = new ColleguesTabView(root.stylists());
+    final stylistsView = new StylistsTabView(root.stylists());
     final clientsView = new ClientsTabView(root.clients());
     final profileView = new ProfileTabView(root.currentUser);
 
