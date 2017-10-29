@@ -3,7 +3,7 @@ import 'content.dart';
 
 class ColleguesTabView extends StatelessWidget {
 
-  final List<Stylist> stylists;
+  final List<User> stylists;
 
   ColleguesTabView(this.stylists);
 

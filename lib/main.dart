@@ -75,9 +75,16 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
+  reassemble() {
+    super.reassemble();
+    print("test reassmebly");
+    // loadContent();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final stylistsView = new ColleguesTabView(root.stylists.values.toList());
-    final clientsView = new ClientsTabView(root.clients.values.toList());
+    final stylistsView = new ColleguesTabView(root.stylists());
+    final clientsView = new ClientsTabView(root.clients());
     final profileView = new ProfileTabView(root.currentUser);
 
 

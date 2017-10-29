@@ -1,8 +1,9 @@
 {
-  "stylists": [
+  "users": [
     {
       "username": "angela_b",
       "real_name": "Angela Bower",
+      "is_stylist": true,
       "phone": "415-555-2342",
       "salon": {
         "name": "You're The Boss, Hair Solutions",
@@ -10,10 +11,22 @@
         "hours": "10am-7pm",
         "phone": "234-555-2343"
       },
-      "interests": ["Sports", "Bourbon", "The Sopranos", "Jet Skiing"],
+      "interests": [
+        "Sports",
+        "Bourbon",
+        "The Sopranos",
+        "Jet Skiing"
+      ],
       "certifications": [],
-      "clients": ["sam_malone", "diane_chambers", "frasier_crane"],
-      "stylists_following": ["tony_m", "mona" ],
+      "clients": [
+        "sam_malone",
+        "diane_chambers",
+        "frasier_crane"
+      ],
+      "stylists_following": [
+        "tony_m",
+        "mona"
+      ],
       "notifications": [
         {
           "type": "appointment_request",
@@ -48,9 +61,15 @@
           "is_selfie": true,
           "was_profile": true
         },
-        { "asset": "assets/images/angela_b/style/2.jpg" },
-        { "asset": "assets/images/angela_b/style/3.jpg" },
-        { "asset": "assets/images/angela_b/style/4.jpg" },
+        {
+          "asset": "assets/images/angela_b/style/2.jpg"
+        },
+        {
+          "asset": "assets/images/angela_b/style/3.jpg"
+        },
+        {
+          "asset": "assets/images/angela_b/style/4.jpg"
+        },
         {
           "asset": "assets/images/angela_b/clients/1.jpg",
           "is_client": true
@@ -116,7 +135,10 @@
     {
       "username": "tony_m",
       "real_name": "Tony Micelli",
-      "stylists_following": ["angela_b"],
+      "is_stylist": true,
+      "stylists_following": [
+        "angela_b"
+      ],
       "clients": [],
       "gallery": [
         {
@@ -130,6 +152,7 @@
     {
       "username": "sam_m",
       "real_name": "Samantha Micelli",
+      "is_stylist": true,
       "clients": [],
       "gallery": [
         {
@@ -143,8 +166,11 @@
     {
       "username": "jon_b",
       "real_name": "Jonathan Bower",
+      "is_stylist": true,
       "clients": [],
-      "stylists_following": ["angela_b"],
+      "stylists_following": [
+        "angela_b"
+      ],
       "gallery": [
         {
           "asset": "assets/images/profiles/danny_pintauro.jpg",
@@ -157,6 +183,7 @@
     {
       "username": "mona",
       "real_name": "Mona Robinson",
+      "is_stylist": true,
       "gallery": [
         {
           "asset": "assets/images/profiles/katherine_helmond.jpg",
@@ -165,44 +192,91 @@
           "is_profile": true
         }
       ],
-      "clients": []
-    }
-  ],
-  "clients":[
+      "client": []
+    },
     {
       "username": "sam_malone",
-      "real_name": "Sam Malone",
-      "photo": "assets/images/profiles/ted_danson.jpg"
+      "real_name": "am Malone",
+      "gallery": [
+        {
+          "asset": "assets/images/profiles/ted_danson.jpg",
+          "is_selfie": true,
+          "was_profile": true,
+          "is_profile": true
+        }
+      ]
     },
     {
       "username": "carla_tortelli",
-      "real_name": "Carla Tortelli",
-      "photo": "assets/images/profiles/rhea_perlman.jpg"
+      "real_name": "Carla ortelli",
+      "gallery": [
+        {
+          "asset": "assets/images/profiles/rhea_perlman.jpg",
+          "is_selfie": true,
+          "was_profile": true,
+          "is_profile": true
+        }
+      ]
     },
     {
       "username": "cliff_clavin",
-      "real_name": "Cliff Clavin",
-      "photo": "assets/images/profiles/john_ratzenberger.jpg"
+      "real_name": "Cliff lavin",
+      "gallery": [
+        {
+          "asset": "assets/images/profiles/john_ratzenberger.jpg",
+          "is_selfie": true,
+          "was_profile": true,
+          "is_profile": true
+        }
+      ]
     },
     {
       "username": "norm_peterson",
-      "real_name": "Norm Peterson",
-      "photo": "assets/images/profiles/george_wendt.jpg"
+      "real_name": "Norm Peteson",
+      "gallery": [
+        {
+          "asset": "assets/images/profiles/george_wendt.jpg",
+          "is_selfie": true,
+          "was_profile": true,
+          "is_profile": true
+        }
+      ]
     },
     {
       "username": "frasier_crane",
-      "real_name": "Dr Frasier Crane",
-      "photo": "assets/images/profiles/kelsey_grammer.jpg"
+      "real_name": "Dr Frasier Crae",
+      "gallery": [
+        {
+          "asset": "assets/images/profiles/kelsey_grammer.jpg",
+          "is_selfie": true,
+          "was_profile": true,
+          "is_profile": true
+        }
+      ]
     },
     {
       "username": "rebecca_howe",
       "real_name": "Rebecca Howe",
-      "photo": "assets/images/profiles/kirstie_alley.jpg"
+      "gallery": [
+        {
+          "asset": "assets/images/profiles/kirstie_alley.jpg",
+          "is_selfie": true,
+          "was_profile": true,
+          "is_profile": true
+        }
+      ]
     },
     {
       "username": "diane_chambers",
       "real_name": "Diane Chambers",
-      "photo": "assets/images/profiles/shelley_long.jpg"
+      "gallery": [
+        {
+          "asset": "assets/images/profiles/shelley_long.jpg",
+          "is_selfie": true,
+          "was_profile": true,
+          "is_profile": true
+        }
+      ]
     }
   ]
 }

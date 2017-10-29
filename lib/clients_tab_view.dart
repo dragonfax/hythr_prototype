@@ -4,7 +4,7 @@ import 'content.dart';
 class ClientsTabView extends StatelessWidget {
   ClientsTabView(this.clients);
 
-  final List<HairClient> clients;
+  final List<User> clients;
 
   Widget getTab() {
     return new Tab(
@@ -22,7 +22,7 @@ class ClientsTabView extends StatelessWidget {
         itemExtent: 100.0,
         children: clients.map( (client) {
           return new ListTile(
-            leading: new Image.asset(client.photo),
+            leading: client.getProfilePicture(),
             title: new Text(client.realName)
           );
         }).toList()

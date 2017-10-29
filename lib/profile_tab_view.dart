@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'content.dart';
 
 class ProfileTabView extends StatelessWidget {
-  final Stylist stylist;
+  final User stylist;
 
   ProfileTabView(this.stylist);
 

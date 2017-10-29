@@ -3,8 +3,8 @@ import 'dart:async' show Future;
 import 'dart:convert' show JSON;
 import 'package:flutter/services.dart' show rootBundle;
 
-Future<DataRoot> readContent() async {
-  String contentJson = await rootBundle.loadString('assets/content.json');
+Future<DataRoot> readContent({ String filename = 'assets/content.json' }) async {
+  String contentJson = await rootBundle.loadString(filename);
 
   var json = JSON.decode(contentJson);
 
@@ -122,24 +122,26 @@ class Salon {
   }
 }
 
-class Stylist {
+class User {
+  bool isStylist = false;
   String username;
   String realName;
   String phone;
   Salon salon;
-  List<String> interests;
-  List<String> certifications;
+  List<String> interests = [];
+  List<String> certifications = [];
 
-  List<String> clients;
-  List<String> followingStylists;
+  List<String> clients = [];
+  List<String> followingStylists = [];
 
-  List<Notification> notifications;
-  List<Picture> gallery;
+  List<Notification> notifications = [];
+  List<Picture> gallery = [];
 
 
-  Stylist.fromJson(Map json) {
+  User.fromJson(Map json) {
     username = json['username'];
     realName = json['real_name'];
+    isStylist = json['is_stylist'] ?? false;
 
     salon = new Salon.fromJson(json['salon']);
     phone = json['phone'];
@@ -183,40 +185,31 @@ class Stylist {
   }
 }
 
-class HairClient {
-  String username;
-  String realName;
-  String photo;
-
-  HairClient.fromJson(Map json) {
-    username = json['username'];
-    realName = json['real_name'];
-    photo = json['photo'];
-  }
-}
-
 class DataRoot {
-  Map<String,Stylist> stylists;
-  Map<String,HairClient> clients;
-  Stylist currentUser;
+  Map<String,User> users;
+
+  List<User> stylists() {
+    return users.values.where((u) { return u.isStylist; }).toList();
+  }
+
+  List<User> clients() {
+    return users.values.where((u) { return ! u.isStylist; }).toList();
+  }
+
+  User currentUser;
 
   DataRoot() {
-    stylists = new Map();
-    clients = new Map();
+    users = new Map();
   }
 
   DataRoot.fromJson(Map json) {
 
-    stylists = new Map();
-    json['stylists'].forEach((stylistData) {
-      stylists[stylistData['username']] = new Stylist.fromJson(stylistData);
+    users = new Map();
+
+    json['users'].forEach((userJson) {
+      users[userJson['username']] = new User.fromJson(userJson);
     });
 
-    clients = new Map();
-    json['clients'].forEach((clientData) {
-      clients[clientData['username']] = new HairClient.fromJson(clientData);
-    });
-
-    currentUser = stylists.values.toList()[0];
+    currentUser = stylists()[0];
   }
 }
