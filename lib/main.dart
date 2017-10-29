@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'add_content_button.dart';
+// import 'add_content_button.dart';
 import 'content.dart';
 import 'application_menu.dart';
 import 'collegues_tab_view.dart';
@@ -61,16 +61,10 @@ class _MyHomePageState extends State<MyHomePage> {
   bool stylistMode = true;
 
   loadContent() async {
-    try {
-      DataRoot newRoot = await readContent();
-
-      setState(() {
-        root = newRoot;
-      });
-    }
-    catch (e) {
-      debugPrint(e);
-    }
+    DataRoot newRoot = await readContent();
+    setState(() {
+      root = newRoot;
+    });
   }
 
   @override
@@ -84,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final stylistsView = new ColleguesTabView(root.stylists.values.toList());
     final clientsView = new ClientsTabView(root.clients.values.toList());
-    final profileView = new ProfileTabView();
+    final profileView = new ProfileTabView(root.currentUser);
 
 
     List<Widget> tabs = [];
@@ -135,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     index: notificationsShowing ? 1 : 0,
                     children: [
                       new TabBarView( children: views ),
-                      new NotificationsTabView(root.currentUser.notifications)
+                      new NotificationsTabView(root.currentUser?.notifications)
                     ]
                 ),
                 new AddContentSpeedDial()

@@ -3,10 +3,17 @@
     {
       "username": "angela_b",
       "real_name": "Angela Bower",
-      "photo": "assets/images/profiles/judith_light.jpg",
-      "clients": [
-        "sam_malone"
-      ],
+      "phone": "415-555-2342",
+      "salon": {
+        "name": "You're The Boss, Hair Solutions",
+        "address": "23 Pennyworth Ln, Michican, FL",
+        "hours": "10am-7pm",
+        "phone": "234-555-2343"
+      },
+      "interests": ["Sports", "Bourbon", "The Sopranos", "Jet Skiing"],
+      "certifications": [],
+      "clients": ["sam_malone", "diane_chambers", "frasier_crane"],
+      "stylists_following": ["tony_m", "mona" ],
       "notifications": [
         {
           "type": "appointment_request",
@@ -17,30 +24,147 @@
           "stylist": "tony_m",
           "client": "carla_tortelli"
         }
+      ],
+      "gallery": [
+        {
+          "asset": "assets/images/angela_b/profile/1.jpg",
+          "is_selfie": true,
+          "was_profile": true,
+          "is_profile": true,
+          "is_client": false
+        },
+        {
+          "asset": "assets/images/angela_b/profile/2.jpg",
+          "is_selfie": true,
+          "was_profile": true
+        },
+        {
+          "asset": "assets/images/angela_b/profile/3.jpg",
+          "is_selfie": true,
+          "was_profile": true
+        },
+        {
+          "asset": "assets/images/angela_b/profile/4.jpg",
+          "is_selfie": true,
+          "was_profile": true
+        },
+        { "asset": "assets/images/angela_b/style/2.jpg" },
+        { "asset": "assets/images/angela_b/style/3.jpg" },
+        { "asset": "assets/images/angela_b/style/4.jpg" },
+        {
+          "asset": "assets/images/angela_b/clients/1.jpg",
+          "is_client": true
+        },
+        {
+          "asset": "assets/images/angela_b/clients/2.jpg",
+          "is_client": true
+        },
+        {
+          "asset": "assets/images/angela_b/clients/3.jpg",
+          "is_client": true
+        },
+        {
+          "asset": "assets/images/angela_b/clients/4.jpg",
+          "is_client": true
+        },
+        {
+          "asset": "assets/images/angela_b/clients/5.jpg",
+          "is_client": true
+        },
+        {
+          "asset": "assets/images/angela_b/clients/6.jpg",
+          "is_client": true
+        },
+        {
+          "asset": "assets/images/angela_b/clients/7.jpg",
+          "is_client": true
+        },
+        {
+          "asset": "assets/images/angela_b/clients/8.jpg",
+          "is_client": true
+        },
+        {
+          "asset": "assets/images/angela_b/clients/9.jpg",
+          "is_client": true
+        },
+        {
+          "asset": "assets/images/angela_b/clients/10.jpg",
+          "is_client": true
+        },
+        {
+          "asset": "assets/images/angela_b/clients/11.jpg",
+          "is_client": true
+        },
+        {
+          "asset": "assets/images/angela_b/clients/12.jpg",
+          "is_client": true
+        },
+        {
+          "asset": "assets/images/angela_b/clients/13.jpg",
+          "is_client": true
+        },
+        {
+          "asset": "assets/images/angela_b/clients/14.jpg",
+          "is_client": true
+        },
+        {
+          "asset": "assets/images/angela_b/clients/15.jpg",
+          "is_client": true
+        }
       ]
     },
     {
       "username": "tony_m",
       "real_name": "Tony Micelli",
-      "photo": "assets/images/profiles/tony_danza.jpg",
-      "clients": []
+      "stylists_following": ["angela_b"],
+      "clients": [],
+      "gallery": [
+        {
+          "asset": "assets/images/profiles/tony_danza.jpg",
+          "is_selfie": true,
+          "was_profile": true,
+          "is_profile": true
+        }
+      ]
     },
     {
       "username": "sam_m",
       "real_name": "Samantha Micelli",
-      "photo": "assets/images/profiles/alyssa_milano.jpg",
-      "clients": []
+      "clients": [],
+      "gallery": [
+        {
+          "asset": "assets/images/profiles/alyssa_milano.jpg",
+          "is_selfie": true,
+          "was_profile": true,
+          "is_profile": true
+        }
+      ]
     },
     {
       "username": "jon_b",
       "real_name": "Jonathan Bower",
-      "photo": "assets/images/profiles/danny_pintauro.jpg",
-      "clients": []
+      "clients": [],
+      "stylists_following": ["angela_b"],
+      "gallery": [
+        {
+          "asset": "assets/images/profiles/danny_pintauro.jpg",
+          "is_selfie": true,
+          "was_profile": true,
+          "is_profile": true
+        }
+      ]
     },
     {
       "username": "mona",
       "real_name": "Mona Robinson",
-      "photo": "assets/images/profiles/katherine_helmond.jpg",
+      "gallery": [
+        {
+          "asset": "assets/images/profiles/katherine_helmond.jpg",
+          "is_selfie": true,
+          "was_profile": true,
+          "is_profile": true
+        }
+      ],
       "clients": []
     }
   ],

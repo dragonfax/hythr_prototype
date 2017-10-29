@@ -16,9 +16,9 @@ enum NotificationType { appointment_request, client_referral }
 
 NotificationType getNotificationTypeFromString(String str) {
   final fqstr = 'NotificationType.$str';
-  final t = NotificationType.values.firstWhere((e)=> e.toString() == fqstr);
+  final t = NotificationType.values.firstWhere((e)=> e.toString() == fqstr, orElse: () => null);
   if ( t == null ) {
-    throw "Bad state: no notification type '$str'";
+    throw new Exception("Bad state: no notification type '$str'");
   }
   return t;
 }
@@ -73,25 +73,84 @@ class ClientReferral extends Notification {
 
   ClientReferral.fromJson(Map json) {
     client = json['client'];
+    stylist = json['stylist'];
+  }
+}
+
+class Picture {
+  String asset;
+  bool isSelfie = false;
+  bool wasProfile = false;
+  bool isProfile = false;
+  bool isClient = false;
+
+  Picture.fromJson(Map json) {
+    asset = json['asset'];
+
+    if ( json.containsKey('is_selfie') ) {
+      isSelfie = json['is_selfie'];
+    }
+
+    if ( json.containsKey('was_profile') ) {
+      wasProfile = json['was_profile'];
+    }
+
+    if ( json.containsKey('is_profile') ) {
+      isProfile = json['is_profile'];
+    }
+
+    if ( json.containsKey('is_client') ) {
+      isClient = json['is_client'];
+    }
+
+  }
+}
+
+class Salon {
+  String name;
+  String address;
+  String hours;
+  String phone;
+
+  Salon.fromJson(Map json) {
+    if ( json != null ) {
+      name = json['name'];
+      address = json['address'];
+      hours = json['hours'];
+      phone = json['phone'];
+    }
   }
 }
 
 class Stylist {
   String username;
   String realName;
-  String photo;
+  String phone;
+  Salon salon;
+  List<String> interests;
+  List<String> certifications;
+
   List<String> clients;
+  List<String> followingStylists;
+
   List<Notification> notifications;
+  List<Picture> gallery;
+
 
   Stylist.fromJson(Map json) {
     username = json['username'];
     realName = json['real_name'];
-    photo = json['photo'];
 
-    clients = [];
-    json['clients'].forEach((clientName){
-      clients.add(clientName);
-    });
+    salon = new Salon.fromJson(json['salon']);
+    phone = json['phone'];
+
+    interests = ( json['interests'] ?? <String>[] ).map((s) { return s; } ).toList();
+
+    certifications =  (json['certifications'] ?? <String>[] ).map((s) { return s; }).toList();
+
+    clients = ( json['clients'] ?? <String>[]).map((clientName){ return clientName; }).toList();
+
+    followingStylists = ( json['following_stylists'] ?? <String>[]).map((s) { return s; }).toList();
 
     notifications = [];
     if ( json.containsKey('notifications') ) {
@@ -108,6 +167,19 @@ class Stylist {
         }
       });
     }
+
+    gallery = [];
+    if ( json.containsKey('gallery') ) {
+      gallery = json['gallery'].map((subJson) { return new Picture.fromJson(subJson); }).toList();
+    }
+  }
+
+  getProfilePicture() {
+    final profilePhoto = gallery.firstWhere((p) { return p.isProfile; }, orElse: () => null);
+    if ( profilePhoto != null ) {
+      return new Image.asset(profilePhoto.asset);
+    }
+    return new Icon(Icons.person);
   }
 }
 

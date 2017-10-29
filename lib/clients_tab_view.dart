@@ -15,7 +15,7 @@ class ClientsTabView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if ( clients.isEmpty ){
+    if ( clients == null || clients.isEmpty ){
       return new Center( child: new Text('0 clients') );
     } else {
       return new ListView(

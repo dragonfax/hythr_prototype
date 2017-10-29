@@ -16,14 +16,14 @@ class ColleguesTabView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if ( stylists.isEmpty ) {
+    if ( stylists == null || stylists.isEmpty ) {
       return new Center( child: new Text('0 connected collegues') ) ;
     } else {
       return new ListView(
           itemExtent: 100.0,
           children: stylists.map((stylist) {
             return new ListTile(
-                leading: new Image.asset(stylist.photo, fit: BoxFit.fitHeight),
+                leading: stylist.getProfilePicture(),
                 title: new Text(stylist.realName)
             );
           }).toList()
