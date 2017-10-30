@@ -143,7 +143,10 @@ class User {
     realName = json['real_name'];
     isStylist = json['is_stylist'] ?? false;
 
-    salon = new Salon.fromJson(json['salon']);
+    if (json['salon'] != null ) {
+      salon = new Salon.fromJson(json['salon']);
+    }
+
     phone = json['phone'];
 
     interests = ( json['interests'] ?? <String>[] ).map((s) { return s; } ).toList();

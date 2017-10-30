@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'content.dart';
+import 'profile_widget.dart';
 
 class ClientsTabView extends StatelessWidget {
   ClientsTabView(this.clients);
@@ -23,7 +24,17 @@ class ClientsTabView extends StatelessWidget {
         children: clients.map( (client) {
           return new ListTile(
             leading: client.getProfilePicture(),
-            title: new Text(client.realName)
+            title: new Text(client.realName),
+            onTap: () {
+              Navigator.of(context).push(new MaterialPageRoute<Null>(
+                builder: (BuildContext context) {
+                  return new Scaffold(
+                      appBar: new AppBar(title: new Text(client.realName)),
+                      body: new ProfileWidget(client)
+                  );
+                },
+              ));
+            },
           );
         }).toList()
       );

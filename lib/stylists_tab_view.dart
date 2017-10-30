@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'content.dart';
+import 'profile_widget.dart';
 
 class StylistsTabView extends StatelessWidget {
 
@@ -24,7 +25,17 @@ class StylistsTabView extends StatelessWidget {
           children: stylists.map((stylist) {
             return new ListTile(
                 leading: stylist.getProfilePicture(),
-                title: new Text(stylist.realName)
+                title: new Text(stylist.realName),
+                onTap: () {
+                  Navigator.of(context).push(new MaterialPageRoute<Null>(
+                    builder: (BuildContext context) {
+                      return new Scaffold(
+                        appBar: new AppBar(title: new Text(stylist.realName)),
+                        body: new ProfileWidget(stylist)
+                      );
+                    },
+                  ));
+                },
             );
           }).toList()
       );

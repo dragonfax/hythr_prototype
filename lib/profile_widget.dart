@@ -16,12 +16,15 @@ class ProfileWidget extends StatelessWidget {
       new ListTile(
         leading: user.getProfilePicture(),
         title: new Text(user.realName),
-        subtitle: new Text(user.username),
+        subtitle: new Column(children: [
+          new Text(user.username),
+          new Text(user.isStylist ? "(stylist)" : "", style: new TextStyle(fontStyle: FontStyle.italic))
+        ]),
       ),
       new Divider(),
       new ListTile(
         leading: new Icon(Icons.phone),
-        title: new Text(user.phone),
+        title: new Text(user.phone ?? "XXX-XXX-XXXX"),
       ),
       new Divider(),
     ];
@@ -33,7 +36,7 @@ class ProfileWidget extends StatelessWidget {
               leading: new Column(children: [
                 new Icon(Icons.content_cut),
               ]),
-              title: new Text(user.salon.name),
+              title: new Text(user.salon.name ?? ""),
               subtitle: new Text(user.salon.address +
                 "\n" +
                 user.salon.hours +

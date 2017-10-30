@@ -10,6 +10,8 @@ dependencies:
   cupertino_icons: ^0.1.0
 
   flutter_fab_dialer:
+    git:
+      url: git@github.com:dragonfax/flutter_fab_dialer.git
 
 dev_dependencies:
   flutter_test:
