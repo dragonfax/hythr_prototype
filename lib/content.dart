@@ -129,6 +129,7 @@ class User {
   String phone;
   Salon salon;
   List<String> interests = [];
+  List<String> skills = [];
   List<String> certifications = [];
 
   List<String> clients = [];
@@ -150,6 +151,8 @@ class User {
     phone = json['phone'];
 
     interests = ( json['interests'] ?? <String>[] ).map((s) { return s; } ).toList();
+
+    skills = ( json['skills'] ?? <String>[] ).map((s) { return s; } ).toList();
 
     certifications =  (json['certifications'] ?? <String>[] ).map((s) { return s; }).toList();
 

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'content.dart';
+import 'skills_selection_page.dart';
 
 class ProfileWidget extends StatelessWidget {
   final User user;
+  final Function() userChangeCallback;
 
-  ProfileWidget(this.user);
+  ProfileWidget(this.user, this.userChangeCallback);
 
   @override
   Widget build(BuildContext context) {
@@ -50,10 +52,23 @@ class ProfileWidget extends StatelessWidget {
 
     basicInfo.addAll([
       new ListTile(
-          leading: new Icon(Icons.beach_access),
-          title: new Text("Interests",
-              style: new TextStyle(fontWeight: FontWeight.bold)),
-          subtitle: new Text(user.interests.join(", "))),
+        leading: new Icon(Icons.beach_access),
+        title: new Text("Interests",
+          style: new TextStyle(fontWeight: FontWeight.bold)
+        ),
+        subtitle: new Text(user.interests.join(", "))
+      ),
+      new Divider(),
+      new ListTile(
+        leading: new Icon(Icons.content_cut),
+        title: new Text("Skills",
+          style: new TextStyle(fontWeight: FontWeight.bold)
+        ),
+        subtitle: new Text(user.skills.join(", ")),
+        onTap: () {
+          SkillsSelectionPage.activate(context, user, userChangeCallback );
+        }
+      ),
       new Divider(),
     ]);
 

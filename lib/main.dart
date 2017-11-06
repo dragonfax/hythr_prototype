@@ -86,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final stylistsView = new StylistsTabView(root.stylists());
     final clientsView = new ClientsTabView(root.clients());
-    final profileView = new ProfileTabView(root.currentUser);
+    final profileView = new ProfileTabView(root.currentUser, () { setState(() {}); });
 
 
     List<Widget> tabs = [];

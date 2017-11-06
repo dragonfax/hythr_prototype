@@ -31,7 +31,7 @@ class StylistsTabView extends StatelessWidget {
                     builder: (BuildContext context) {
                       return new Scaffold(
                         appBar: new AppBar(title: new Text(stylist.realName)),
-                        body: new ProfileWidget(stylist)
+                        body: new ProfileWidget(stylist, null)
                       );
                     },
                   ));

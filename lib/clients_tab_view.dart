@@ -30,7 +30,7 @@ class ClientsTabView extends StatelessWidget {
                 builder: (BuildContext context) {
                   return new Scaffold(
                       appBar: new AppBar(title: new Text(client.realName)),
-                      body: new ProfileWidget(client)
+                      body: new ProfileWidget(client, null)
                   );
                 },
               ));
