@@ -38,7 +38,12 @@ class ApplicationMenu extends StatelessWidget {
             ),
             new AboutListTile(
               icon: new Icon(Icons.info),
-              applicationName: appTitle
+              applicationName: appTitle,
+              aboutBoxChildren: [
+                new Text("Lead Designers: Yael Amyra, Jeff Gimenez"),
+                new Divider(),
+                new Text("Lead Developer: Jason Stillwell")
+              ],
             ),
           ]
       ),
