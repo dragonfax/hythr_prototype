@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'content.dart';
-import 'dart:async';
+
 import 'package:flutter/foundation.dart';
-
-import 'dart:ui' as ui show Image;
-
 
 
 class Skill {
@@ -89,16 +85,90 @@ class SkillsSelectionWidgetState extends State<SkillsSelectionWidget> {
     return new GridView.count(
               crossAxisCount: 2,
               children: skills.map((skill){
-                return new Switch(
-                  value: skill.getValue(user),
-                  onChanged: (bool newValue) {
+                return new SkillSwitch(
+                   user: user,
+                   skill: skill,
+                   onChanged: (SetStateCallback block) {
                     setState((){
-                      skill.toggle(user);
+                      block();
+                      stateCallback();
                     });
-                    stateCallback();
-                  },
+                  }
                 );
               }).toList()
             );
   }
+}
+
+typedef void OnChangeCallback(SetStateCallback f);
+
+class SkillSwitch extends StatelessWidget {
+
+  /*
+  final IconData icon;
+  final String title;
+  final SetStateCallback onChanged;
+  final bool value;
+  */
+
+  final User user;
+  final Skill skill;
+  final OnChangeCallback onChanged;
+
+
+  // const SkillSwitch({ @required this.value, @required this.icon, @required this.title, @required this.onChanged });
+  const SkillSwitch({ @required this.user, @required this.skill, @required this.onChanged });
+
+  @override
+  Widget build(BuildContext context) {
+    return new ToggleButton(
+      onChanged: () { onChanged(() { skill.toggle(user); }); },
+      value: skill.getValue(user),
+      child: new Center(
+        child: new Column(
+          children: [
+            new Icon(skill.icon),
+            new Text(skill.name)
+          ]
+        )
+      )
+    );
+  }
+}
+
+/* toggle doesn't track its own state, or change any state when clicked.
+   it relies ont he parent to do that and give it its new state (value)
+
+   Its only useful for alternating between on/off colors. on behalf o the parent.
+ */
+class ToggleButton extends StatelessWidget {
+
+  final Widget child;
+  final bool value;
+  final SetStateCallback onChanged;
+  final Color onColor;
+  final Color offColor;
+  final Color bgColor;
+
+  ToggleButton({
+    @required this.child,
+    @required this.value,
+    @required this.onChanged,
+    this.onColor = Colors.yellow,
+    this.offColor = Colors.grey,
+    this.bgColor = Colors.black
+  });
+
+  Widget build(BuildContext context) {
+    return new IconTheme(
+      data: new IconThemeData(
+        color: value ? onColor : offColor
+      ),
+      child: new InkWell(
+        child: child,
+        onTap: onChanged
+      )
+    );
+  }
+
 }
