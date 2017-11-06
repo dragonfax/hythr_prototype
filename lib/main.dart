@@ -8,6 +8,7 @@ import 'clients_tab_view.dart';
 import 'notifications_tab_view.dart';
 import 'add_content_speed_dial.dart';
 import 'profile_tab_view.dart';
+import 'signin_widget.dart';
 
 final String appTitle = 'HAIRAPPi';
 
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
         // counter didn't reset back to zero; the application is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: new MyHomePage(title: appTitle),
+      home: new SignInWidget( child: new MyHomePage(title: appTitle)),
     );
   }
 }

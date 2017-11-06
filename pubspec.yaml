@@ -61,6 +61,8 @@ flutter:
   # see https://flutter.io/custom-fonts/#from-packages
 
   assets:
+    - assets/images/logo.png
+    - assets/images/background.jpg
     - assets/content.json
     - assets/images/profiles/ted_danson.jpg
     - assets/images/profiles/rhea_perlman.jpg
