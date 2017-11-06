@@ -82,13 +82,15 @@ class SkillsSelectionWidgetState extends State<SkillsSelectionWidget> {
   SkillsSelectionWidgetState(this.user, this.stateCallback);
 
   Widget build(BuildContext context) {
-    return new GridView.count(
+    return
+          new GridView.count(
               crossAxisCount: 2,
+              childAspectRatio: 2.0,
               children: skills.map((skill){
                 return new SkillSwitch(
-                   user: user,
-                   skill: skill,
-                   onChanged: (SetStateCallback block) {
+                  user: user,
+                  skill: skill,
+                  onChanged: (SetStateCallback block) {
                     setState((){
                       block();
                       stateCallback();
@@ -104,19 +106,10 @@ typedef void OnChangeCallback(SetStateCallback f);
 
 class SkillSwitch extends StatelessWidget {
 
-  /*
-  final IconData icon;
-  final String title;
-  final SetStateCallback onChanged;
-  final bool value;
-  */
-
   final User user;
   final Skill skill;
   final OnChangeCallback onChanged;
 
-
-  // const SkillSwitch({ @required this.value, @required this.icon, @required this.title, @required this.onChanged });
   const SkillSwitch({ @required this.user, @required this.skill, @required this.onChanged });
 
   @override
@@ -124,13 +117,12 @@ class SkillSwitch extends StatelessWidget {
     return new ToggleButton(
       onChanged: () { onChanged(() { skill.toggle(user); }); },
       value: skill.getValue(user),
-      child: new Center(
-        child: new Column(
-          children: [
-            new Icon(skill.icon),
-            new Text(skill.name)
-          ]
-        )
+      child: new Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          new Icon(skill.icon),
+          new Text(skill.name)
+        ]
       )
     );
   }
@@ -165,7 +157,7 @@ class ToggleButton extends StatelessWidget {
           color: value ? onColor : offColor
         ),
         child: new InkWell(
-          child: child,
+          child: new Center( child: child),
           onTap: onChanged
         )
       )
