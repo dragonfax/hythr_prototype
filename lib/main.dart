@@ -48,7 +48,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   DataRoot root = new DataRoot();
-  bool notificationsShowing = false;
   bool stylistMode = true;
 
   loadContent() async {
@@ -106,9 +105,25 @@ class _MyHomePageState extends State<MyHomePage> {
                     icon: new Icon(Icons.notifications, color: Colors.white),
                     tooltip: "Notifications",
                     onPressed: () {
-                      setState(() {
-                        notificationsShowing = !notificationsShowing;
-                      });
+                      Navigator.of(context).push(new MaterialPageRoute<Null>(
+                        builder: (BuildContext context){
+                          return new Scaffold(
+                            appBar: new AppBar(
+                              title: new Text("Notifications"),
+                              actions: [
+                                new IconButton(
+                                  icon: new Icon(Icons.notifications, color: Colors.white),
+                                  tooltip: "Notifications",
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  }
+                                )
+                              ]
+                            ),
+                            body: new NotificationsTabView(root.currentUser?.notifications)
+                          );
+                        }
+                      ));
                     }
                 )
               ]
@@ -123,13 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
           body: new Stack(
               children: [
-                new IndexedStack(
-                    index: notificationsShowing ? 1 : 0,
-                    children: [
-                      new TabBarView( children: views ),
-                      new NotificationsTabView(root.currentUser?.notifications)
-                    ]
-                ),
+                new TabBarView( children: views ),
                 new AddContentSpeedDial()
               ]
           ),
