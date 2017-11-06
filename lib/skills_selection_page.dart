@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'content.dart';
+import 'dart:async';
+import 'package:flutter/foundation.dart';
+
+import 'dart:ui' as ui show Image;
+
+
 
 class Skill {
   String name;
@@ -22,23 +29,23 @@ class Skill {
 
 List<Skill> skills = [
   new Skill("Women's Hair", Icons.pregnant_woman),
-  new Skill("Men's Hair", Icons.pregnant_woman),
-  new Skill("Fine Hair", Icons.pregnant_woman),
-  new Skill("Thick Hair", Icons.pregnant_woman),
-  new Skill("Wavy Hair", Icons.pregnant_woman),
-  new Skill("Curly Hair", Icons.pregnant_woman),
-  new Skill("Straigh Hair", Icons.pregnant_woman),
-  new Skill("Asian Hair", Icons.pregnant_woman),
-  new Skill("Afro Texture", Icons.pregnant_woman),
-  new Skill("Short Hair", Icons.pregnant_woman),
-  new Skill("Long Hair", Icons.pregnant_woman),
-  new Skill("Up Do's", Icons.pregnant_woman),
-  new Skill("Wedding Hair", Icons.pregnant_woman),
-  new Skill("Tint", Icons.pregnant_woman),
-  new Skill("Highlight", Icons.pregnant_woman),
-  new Skill("Balayage", Icons.pregnant_woman),
-  new Skill("Scissor Cut", Icons.pregnant_woman),
-  new Skill("Razor Cut", Icons.pregnant_woman)
+  new Skill("Men's Hair", Icons.local_post_office),
+  new Skill("Fine Hair", Icons.donut_small),
+  new Skill("Thick Hair", Icons.donut_large),
+  new Skill("Wavy Hair", Icons.lens),
+  new Skill("Curly Hair", Icons.stay_current_landscape),
+  new Skill("Straigh Hair", Icons.straighten),
+  new Skill("Asian Hair", Icons.assignment_ind),
+  new Skill("Afro Texture", Icons.accessible_forward),
+  new Skill("Short Hair", Icons.short_text),
+  new Skill("Long Hair", Icons.location_on),
+  new Skill("Up Do's", Icons.update),
+  new Skill("Wedding Hair", Icons.web),
+  new Skill("Tint", Icons.turned_in),
+  new Skill("Highlight", Icons.highlight),
+  new Skill("Balayage", Icons.account_balance),
+  new Skill("Scissor Cut", Icons.supervised_user_circle),
+  new Skill("Razor Cut", Icons.radio)
 ];
 
 class SkillsSelectionPage {
