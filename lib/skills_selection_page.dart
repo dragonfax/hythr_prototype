@@ -82,23 +82,32 @@ class SkillsSelectionWidgetState extends State<SkillsSelectionWidget> {
   SkillsSelectionWidgetState(this.user, this.stateCallback);
 
   Widget build(BuildContext context) {
-    return
-          new GridView.count(
-              crossAxisCount: 2,
-              childAspectRatio: 2.0,
-              children: skills.map((skill){
-                return new SkillSwitch(
-                  user: user,
-                  skill: skill,
-                  onChanged: (SetStateCallback block) {
-                    setState((){
-                      block();
-                      stateCallback();
-                    });
-                  }
-                );
-              }).toList()
-            );
+    return new Column(
+      children: [
+        new Padding(
+            padding: new EdgeInsets.symmetric(vertical: 8.0),
+            child: new Text("Select skill you want to promote.", style: new TextStyle(fontStyle: FontStyle.italic))
+        ),
+        new Expanded(
+          child: new GridView.count(
+            crossAxisCount: 2,
+            // shrinkWrap: true,
+            childAspectRatio: 2.0,
+            children: skills.map((skill){
+              return new SkillSwitch(
+                user: user,
+                skill: skill,
+                onChanged: stateCallback == null ? null :  (SetStateCallback block) {
+                  setState((){
+                    block();
+                    stateCallback();
+                  });
+                }
+              );
+            }).toList()
+          ))
+      ]
+    );
   }
 }
 
@@ -115,7 +124,7 @@ class SkillSwitch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new ToggleButton(
-      onChanged: () { onChanged(() { skill.toggle(user); }); },
+      onChanged: onChanged == null ? null : () { onChanged(() { skill.toggle(user); }); },
       value: skill.getValue(user),
       child: new Column(
         mainAxisSize: MainAxisSize.min,
@@ -158,7 +167,7 @@ class ToggleButton extends StatelessWidget {
         ),
         child: new InkWell(
           child: new Center( child: child),
-          onTap: onChanged
+          onTap: onChanged == null ? null : onChanged
         )
       )
     );
