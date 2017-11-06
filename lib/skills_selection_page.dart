@@ -148,7 +148,6 @@ class ToggleButton extends StatelessWidget {
   final SetStateCallback onChanged;
   final Color onColor;
   final Color offColor;
-  final Color bgColor;
 
   ToggleButton({
     @required this.child,
@@ -156,17 +155,19 @@ class ToggleButton extends StatelessWidget {
     @required this.onChanged,
     this.onColor = Colors.yellow,
     this.offColor = Colors.grey,
-    this.bgColor = Colors.black
   });
 
   Widget build(BuildContext context) {
-    return new IconTheme(
-      data: new IconThemeData(
-        color: value ? onColor : offColor
-      ),
-      child: new InkWell(
-        child: child,
-        onTap: onChanged
+    return new DefaultTextStyle(
+      style: new TextStyle( color: value ? onColor : offColor ),
+      child: new IconTheme(
+        data: new IconThemeData(
+          color: value ? onColor : offColor
+        ),
+        child: new InkWell(
+          child: child,
+          onTap: onChanged
+        )
       )
     );
   }
