@@ -75,69 +75,60 @@ class ToggleButton extends StatelessWidget {
 
 typedef List<Widget> ToggleBuilder(SetStateCallback callback);
 
-abstract class ToggleSelectionPage  {
+
+class ToggleSelectionPage extends StatelessWidget {
+
   final String title;
   final String hint;
+  final WidgetBuilder builder;
 
-  ToggleSelectionPage(this.title, this.hint);
+  ToggleSelectionPage(this.title, this.hint, this.builder);
 
-  List<Widget> buildToggles(SetStateCallback callback);
+  Widget build(BuildContext context) {
+    return new Scaffold(
+        appBar: new AppBar(title: new Text(title)),
+        body: new DecoratedBox(
+          decoration: new BoxDecoration(
+            color: Colors.black
+          ),
+          child: new Column(
+            children: [
+              new Padding(
+                  padding: new EdgeInsets.symmetric(vertical: 8.0),
+                  child: new Text(hint, style: new TextStyle(fontStyle: FontStyle.italic))
+              ),
+              new Expanded(
+                child: builder(context)
+              )
+            ]
+          )
+        )
+    );
+  }
 
-  void show(BuildContext context) {
+  static void show(BuildContext context, String title, String hint, WidgetBuilder builder) {
     Navigator.of(context).push(
       new MaterialPageRoute<Null>(
         builder: (BuildContext context) {
-          return new Scaffold(
-            appBar: new AppBar(title: new Text(title)),
-            body: new ToggleSelectionWidget( hint: hint, buildToggles: buildToggles )
-          );
+          return new ToggleSelectionPage(title, hint, builder);
         }
       )
     );
   }
 }
 
-class ToggleSelectionWidget extends StatefulWidget {
-
-  final String hint;
-  final ToggleBuilder buildToggles;
-
-  ToggleSelectionWidget({ this.hint, this.buildToggles });
-
-  @override
-  createState() => new ToggleSelectionWidgetState(this.hint, this.buildToggles);
-
+abstract class ToggleSelectionWidget extends StatefulWidget {
 }
 
-class ToggleSelectionWidgetState extends State<ToggleSelectionWidget> {
+abstract class ToggleSelectionWidgetState extends State<ToggleSelectionWidget> {
 
-  final String hint;
-  final ToggleBuilder buildToggles;
-
-  ToggleSelectionWidgetState(this.hint, this.buildToggles);
+  List<Widget> buildToggles();
 
   Widget build(BuildContext context) {
-
-    return new DecoratedBox(
-      decoration: new BoxDecoration(
-          color: Colors.black
-      ),
-      child: new Column(
-        children: [
-          new Padding(
-              padding: new EdgeInsets.symmetric(vertical: 8.0),
-              child: new Text(hint, style: new TextStyle(fontStyle: FontStyle.italic))
-          ),
-          new Expanded(
-            child: new GridView.count(
-              crossAxisCount: 2,
-              // shrinkWrap: true,
-              childAspectRatio: 2.0,
-              children: buildToggles(setState)
-            )
-          )
-        ]
-      )
+    return new GridView.count(
+        crossAxisCount: 2,
+        childAspectRatio: 2.0,
+        children: buildToggles()
     );
   }
 }

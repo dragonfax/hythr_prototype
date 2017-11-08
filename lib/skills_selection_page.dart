@@ -44,40 +44,45 @@ List<Skill> skills = [
   new Skill("Razor Cut", Icons.radio)
 ];
 
-class SkillSwitch extends StatelessWidget {
+class SkillSwitch extends ToggleButton {
 
   final User user;
   final Skill skill;
   final VoidCallback onChanged;
   final Color bgColor;
 
-  const SkillSwitch({
+  SkillSwitch({
     @required this.user,
     @required this.skill,
     @required this.onChanged,
     this.bgColor = Colors.black
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return new ToggleButton(
-      name: skill.name,
-      icon: skill.icon,
-      value: skill.getValue(user),
-      onChanged: onChanged == null ? null :  onChanged,
-      bgColor: bgColor,
-    );
-  }
+  }) : super(
+    name: skill.name,
+    icon: skill.icon,
+    value: skill.getValue(user),
+    onChanged: onChanged == null ? null :  onChanged,
+    bgColor: bgColor,
+  );
 }
 
-class SkillsSelectionPage extends ToggleSelectionPage {
+class SkillsSelectionWidget extends ToggleSelectionWidget {
   final User user;
   final SetStateCallback userChangingCallback;
 
-  SkillsSelectionPage(this.user, this.userChangingCallback) : super("Stylist Skills", "Select the skills you want to promote");
+  SkillsSelectionWidget(this.user, this.userChangingCallback);
 
   @override
-  List<Widget> buildToggles(SetStateCallback localUserChangingCallback) {
+  createState() => new SkillsSelectionWidgetState(user, userChangingCallback);
+}
+
+class SkillsSelectionWidgetState extends ToggleSelectionWidgetState {
+  final User user;
+  final SetStateCallback userChangingCallback;
+
+  SkillsSelectionWidgetState(this.user, this.userChangingCallback);
+
+  @override
+  List<Widget> buildToggles() {
 
     int index = 0;
     return skills.map((skill){
@@ -88,12 +93,26 @@ class SkillsSelectionPage extends ToggleSelectionPage {
           bgColor: blacks[index % blacks.length],
           onChanged: userChangingCallback == null ? null :  () {
             userChangingCallback((){
-              localUserChangingCallback((){
+              setState((){
                 skill.toggle(user);
               });
             });
           }
       );
     }).toList();
+  }
+}
+
+class SkillsSelectionPage {
+
+  static void show(BuildContext context, User user, SetStateCallback userChangingCallback) {
+    ToggleSelectionPage.show(
+      context,
+      "Stylist Skills",
+      "Select the skills you want to promote",
+      (context) {
+        return new SkillsSelectionWidget(user, userChangingCallback);
+      }
+    );
   }
 }

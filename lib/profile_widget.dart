@@ -68,7 +68,7 @@ class ProfileWidget extends StatelessWidget {
         ),
         subtitle: new Text(user.skills.join(", ")),
         onTap: () {
-          new SkillsSelectionPage(user, userChangingCallback).show(context);
+          SkillsSelectionPage.show(context, user, userChangingCallback);
         }
       ),
       new Divider(),
