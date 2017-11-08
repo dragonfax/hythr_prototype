@@ -1,18 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
-List<Color> blacks = [
-  new Color(0xFF202020),
-  new Color(0xFF161616),
-  new Color(0xFF121212),
-  new Color(0xFF101010),
-  new Color(0xFF080808),
-  new Color(0xFF060606),
-  new Color(0xFF080808),
-  new Color(0xFF101010),
-  new Color(0xFF121212),
-  new Color(0xFF161616),
-];
 
 /* toggle doesn't track its own state, or change any state when clicked.
    it relies ont he parent to do that and give it its new state (value)
@@ -25,6 +13,7 @@ class ToggleButton extends StatelessWidget {
   final ImageIcon icon;
   final bool value;
   final VoidCallback onChanged;
+  final VoidCallback onLongPress;
   final Color onColor;
   final Color offColor;
   final Color bgColor;
@@ -34,12 +23,22 @@ class ToggleButton extends StatelessWidget {
     @required this.icon,
     @required this.value,
     @required this.onChanged,
+    this.onLongPress,
     this.onColor = Colors.yellow,
     this.offColor = Colors.white,
     this.bgColor = Colors.black,
   });
 
   Widget build(BuildContext context) {
+    List<Widget> deco = [
+      icon,
+      new Text(name)
+    ];
+
+    if ( onLongPress != null ) {
+      deco.add(new Text("...", style: new TextStyle(fontSize: 24.0)));
+    }
+
     return new DecoratedBox(
         decoration: new BoxDecoration(
             color: bgColor,
@@ -61,73 +60,13 @@ class ToggleButton extends StatelessWidget {
                     child:
                       new Column(
                         mainAxisSize: MainAxisSize.min,
-                        children: [
-                          icon,
-                          new Text(name)
-                        ]
+                        children: deco
                       )
                   ),
-                  onTap: onChanged == null ? null : onChanged
+                  onTap: onChanged,
+                  onLongPress: onLongPress
                 )
             )
         ));
-  }
-}
-
-
-class ToggleSelectionPage extends StatelessWidget {
-
-  final String title;
-  final String hint;
-  final WidgetBuilder builder;
-
-  ToggleSelectionPage(this.title, this.hint, this.builder);
-
-  Widget build(BuildContext context) {
-    return new Scaffold(
-        appBar: new AppBar(title: new Text(title)),
-        body: new DecoratedBox(
-          decoration: new BoxDecoration(
-            color: Colors.black
-          ),
-          child: new Column(
-            children: [
-              new Padding(
-                  padding: new EdgeInsets.symmetric(vertical: 8.0),
-                  child: new Text(hint, style: new TextStyle(fontStyle: FontStyle.italic))
-              ),
-              new Expanded(
-                child: builder(context)
-              )
-            ]
-          )
-        )
-    );
-  }
-
-  static void show(BuildContext context, String title, String hint, WidgetBuilder builder) {
-    Navigator.of(context).push(
-      new MaterialPageRoute<Null>(
-        builder: (BuildContext context) {
-          return new ToggleSelectionPage(title, hint, builder);
-        }
-      )
-    );
-  }
-}
-
-abstract class ToggleSelectionWidget extends StatefulWidget {
-}
-
-abstract class ToggleSelectionWidgetState extends State<ToggleSelectionWidget> {
-
-  List<Widget> buildToggles();
-
-  Widget build(BuildContext context) {
-    return new GridView.count(
-        crossAxisCount: 2,
-        childAspectRatio: 2.0,
-        children: buildToggles()
-    );
   }
 }
