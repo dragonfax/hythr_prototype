@@ -11,6 +11,29 @@ Future<DataRoot> readContent({ String filename = 'assets/content.json' }) async 
   return new DataRoot.fromJson(json);
 }
 
+class Skill {
+  String name;
+  ImageIcon icon;
+
+  Skill(this.name, this.icon);
+
+  bool getValue(User user) {
+    return user.skills.contains(name);
+  }
+
+  toggle(User user) {
+    if ( user.skills.contains(name) ) {
+      user.skills.remove(name);
+    } else {
+      user.skills.add(name);
+    }
+  }
+
+  Skill.fromJson(Map json) {
+    name = json['name'];
+    icon = new ImageIcon(new AssetImage(json['icon']));
+  }
+}
 
 enum NotificationType { appointment_request, client_referral }
 
@@ -204,6 +227,8 @@ class DataRoot {
 
   User currentUser;
 
+  List<Skill> skills;
+
   DataRoot() {
     users = new Map();
   }
@@ -217,5 +242,7 @@ class DataRoot {
     });
 
     currentUser = stylists()[0];
+
+    skills = json['skills'].map((d) { return new Skill.fromJson(d); }).toList();
   }
 }

@@ -7,8 +7,9 @@ import 'skills_selection_page.dart';
 class ProfileWidget extends StatelessWidget {
   final User user;
   final canEdit;
+  final List<Skill> skills;
 
-  ProfileWidget(this.user, this.canEdit);
+  ProfileWidget(this.user, this.canEdit, this.skills);
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +68,7 @@ class ProfileWidget extends StatelessWidget {
         ),
         subtitle: new Text(user.skills.join(", ")),
         onTap: () {
-          SkillsSelectionPage.show(context, user, canEdit);
+          SkillsSelectionPage.show(context, user, canEdit, skills);
         }
       ),
       new Divider(),

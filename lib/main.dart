@@ -73,9 +73,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final stylistsView = new StylistsTabView(root.stylists());
-    final clientsView = new ClientsTabView(root.clients());
-    final profileView = new ProfileTabView(root.currentUser);
+    final stylistsView = new StylistsTabView(root.stylists(), root.skills);
+    final clientsView = new ClientsTabView(root.clients(), root.skills);
+    final profileView = new ProfileTabView(root.currentUser, root.skills);
 
 
     List<Widget> tabs = [];

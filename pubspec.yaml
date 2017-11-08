@@ -61,9 +61,12 @@ flutter:
   # see https://flutter.io/custom-fonts/#from-packages
 
   assets:
+    - assets/content.json
+    - assets/icons/gradient.png
+    - assets/icons/men.png
+    - assets/icons/women.png
     - assets/images/logo.png
     - assets/images/background.jpg
-    - assets/content.json
     - assets/images/profiles/ted_danson.jpg
     - assets/images/profiles/rhea_perlman.jpg
     - assets/images/profiles/john_ratzenberger.jpg

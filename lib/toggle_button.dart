@@ -22,7 +22,7 @@ List<Color> blacks = [
 class ToggleButton extends StatelessWidget {
 
   final String name;
-  final IconData icon;
+  final ImageIcon icon;
   final bool value;
   final VoidCallback onChanged;
   final Color onColor;
@@ -57,15 +57,17 @@ class ToggleButton extends StatelessWidget {
                     color: value ? onColor : offColor
                 ),
                 child: new InkWell(
-                    child: new Center(child:
-                    new Column(
+                  child: new Center(
+                    child:
+                      new Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          new Icon(icon),
+                          icon,
                           new Text(name)
                         ]
-                    )),
-                    onTap: onChanged == null ? null : onChanged
+                      )
+                  ),
+                  onTap: onChanged == null ? null : onChanged
                 )
             )
         ));

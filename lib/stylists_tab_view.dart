@@ -5,8 +5,9 @@ import 'profile_widget.dart';
 class StylistsTabView extends StatelessWidget {
 
   final List<User> stylists;
+  final List<Skill> skills;
 
-  StylistsTabView(this.stylists);
+  StylistsTabView(this.stylists, this.skills);
 
   Widget getTab() {
     return new Tab(
@@ -31,7 +32,7 @@ class StylistsTabView extends StatelessWidget {
                     builder: (BuildContext context) {
                       return new Scaffold(
                         appBar: new AppBar(title: new Text(stylist.realName)),
-                        body: new ProfileWidget(stylist, false)
+                        body: new ProfileWidget(stylist, false, skills)
                       );
                     },
                   ));

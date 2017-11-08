@@ -3,45 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'content.dart';
 import 'toggle_button.dart';
 
-class Skill {
-  String name;
-  IconData icon;
-
-  Skill(this.name, this.icon);
-
-  bool getValue(User user) {
-    return user.skills.contains(name);
-  }
-
-  toggle(User user) {
-    if ( user.skills.contains(name) ) {
-      user.skills.remove(name);
-    } else {
-      user.skills.add(name);
-    }
-  }
-}
-
-List<Skill> skills = [
-  new Skill("Women's Hair", Icons.pregnant_woman),
-  new Skill("Men's Hair", Icons.local_post_office),
-  new Skill("Fine Hair", Icons.donut_small),
-  new Skill("Thick Hair", Icons.donut_large),
-  new Skill("Wavy Hair", Icons.lens),
-  new Skill("Curly Hair", Icons.stay_current_landscape),
-  new Skill("Straigh Hair", Icons.straighten),
-  new Skill("Asian Hair", Icons.assignment_ind),
-  new Skill("Afro Texture", Icons.accessible_forward),
-  new Skill("Short Hair", Icons.short_text),
-  new Skill("Long Hair", Icons.location_on),
-  new Skill("Up Do's", Icons.update),
-  new Skill("Wedding Hair", Icons.web),
-  new Skill("Tint", Icons.turned_in),
-  new Skill("Highlight", Icons.highlight),
-  new Skill("Balayage", Icons.account_balance),
-  new Skill("Scissor Cut", Icons.supervised_user_circle),
-  new Skill("Razor Cut", Icons.radio)
-];
 
 class SkillSwitch extends ToggleButton {
 
@@ -67,18 +28,20 @@ class SkillSwitch extends ToggleButton {
 class SkillsSelectionWidget extends ToggleSelectionWidget {
   final User user;
   final bool canEdit;
+  final List<Skill> skills;
 
-  SkillsSelectionWidget(this.user, this.canEdit);
+  SkillsSelectionWidget(this.user, this.canEdit, this.skills);
 
   @override
-  createState() => new SkillsSelectionWidgetState(user, canEdit);
+  createState() => new SkillsSelectionWidgetState(user, canEdit, skills);
 }
 
 class SkillsSelectionWidgetState extends ToggleSelectionWidgetState {
   final User user;
   final bool canEdit;
+  final List<Skill> skills;
 
-  SkillsSelectionWidgetState(this.user,this.canEdit);
+  SkillsSelectionWidgetState(this.user,this.canEdit, this.skills);
 
   @override
   List<Widget> buildToggles() {
@@ -102,13 +65,13 @@ class SkillsSelectionWidgetState extends ToggleSelectionWidgetState {
 
 class SkillsSelectionPage {
 
-  static void show(BuildContext context, User user, bool canEdit) {
+  static void show(BuildContext context, User user, bool canEdit, List<Skill> skills) {
     ToggleSelectionPage.show(
       context,
       "Stylist Skills",
       canEdit ? "Select the skills you want to promote" : "Skills",
       (context) {
-        return new SkillsSelectionWidget(user, canEdit);
+        return new SkillsSelectionWidget(user, canEdit, skills);
       }
     );
   }

@@ -5,8 +5,9 @@ import 'profile_widget.dart';
 
 class ProfileTabView extends StatelessWidget {
   final User user;
+  final List<Skill> skills;
 
-  ProfileTabView(this.user);
+  ProfileTabView(this.user, this.skills);
 
   Widget getTab() {
     return new Tab(text: 'Your Profile', icon: new Icon(Icons.person));
@@ -17,7 +18,7 @@ class ProfileTabView extends StatelessWidget {
     if (user == null) {
       return new Center(child: new Text("Nothing yet."));
     } else {
-      return new ProfileWidget(user, true);
+      return new ProfileWidget(user, true, skills);
     }
   }
 
