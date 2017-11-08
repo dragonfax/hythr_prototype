@@ -67,19 +67,17 @@ class SkillSwitch extends ToggleButton {
 
 class SkillsSelectionWidget extends ToggleSelectionWidget {
   final User user;
-  final SetStateCallback userChangingCallback;
 
-  SkillsSelectionWidget(this.user, this.userChangingCallback);
+  SkillsSelectionWidget(this.user);
 
   @override
-  createState() => new SkillsSelectionWidgetState(user, userChangingCallback);
+  createState() => new SkillsSelectionWidgetState(user);
 }
 
 class SkillsSelectionWidgetState extends ToggleSelectionWidgetState {
   final User user;
-  final SetStateCallback userChangingCallback;
 
-  SkillsSelectionWidgetState(this.user, this.userChangingCallback);
+  SkillsSelectionWidgetState(this.user);
 
   @override
   List<Widget> buildToggles() {
@@ -91,11 +89,9 @@ class SkillsSelectionWidgetState extends ToggleSelectionWidgetState {
           user: user,
           skill: skill,
           bgColor: blacks[index % blacks.length],
-          onChanged: userChangingCallback == null ? null :  () {
-            userChangingCallback((){
-              setState((){
-                skill.toggle(user);
-              });
+          onChanged: () {
+            setState((){
+              skill.toggle(user);
             });
           }
       );
@@ -105,13 +101,13 @@ class SkillsSelectionWidgetState extends ToggleSelectionWidgetState {
 
 class SkillsSelectionPage {
 
-  static void show(BuildContext context, User user, SetStateCallback userChangingCallback) {
+  static void show(BuildContext context, User user) {
     ToggleSelectionPage.show(
       context,
       "Stylist Skills",
       "Select the skills you want to promote",
       (context) {
-        return new SkillsSelectionWidget(user, userChangingCallback);
+        return new SkillsSelectionWidget(user);
       }
     );
   }
