@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'set_state_callback.dart';
 
 List<Color> blacks = [
   new Color(0xFF202020),
@@ -73,8 +72,6 @@ class ToggleButton extends StatelessWidget {
   }
 }
 
-typedef List<Widget> ToggleBuilder(SetStateCallback callback);
-
 
 class ToggleSelectionPage extends StatelessWidget {
 
@@ -132,5 +129,3 @@ abstract class ToggleSelectionWidgetState extends State<ToggleSelectionWidget> {
     );
   }
 }
-
-typedef void OnChangeCallback(SetStateCallback f);

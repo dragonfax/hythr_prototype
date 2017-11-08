@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'content.dart';
 import 'toggle_button.dart';
-import 'set_state_callback.dart';
 
 class Skill {
   String name;
@@ -67,17 +66,19 @@ class SkillSwitch extends ToggleButton {
 
 class SkillsSelectionWidget extends ToggleSelectionWidget {
   final User user;
+  final bool canEdit;
 
-  SkillsSelectionWidget(this.user);
+  SkillsSelectionWidget(this.user, this.canEdit);
 
   @override
-  createState() => new SkillsSelectionWidgetState(user);
+  createState() => new SkillsSelectionWidgetState(user, canEdit);
 }
 
 class SkillsSelectionWidgetState extends ToggleSelectionWidgetState {
   final User user;
+  final bool canEdit;
 
-  SkillsSelectionWidgetState(this.user);
+  SkillsSelectionWidgetState(this.user,this.canEdit);
 
   @override
   List<Widget> buildToggles() {
@@ -89,7 +90,7 @@ class SkillsSelectionWidgetState extends ToggleSelectionWidgetState {
           user: user,
           skill: skill,
           bgColor: blacks[index % blacks.length],
-          onChanged: () {
+          onChanged: ! canEdit ? null : () {
             setState((){
               skill.toggle(user);
             });
@@ -101,13 +102,13 @@ class SkillsSelectionWidgetState extends ToggleSelectionWidgetState {
 
 class SkillsSelectionPage {
 
-  static void show(BuildContext context, User user) {
+  static void show(BuildContext context, User user, bool canEdit) {
     ToggleSelectionPage.show(
       context,
       "Stylist Skills",
-      "Select the skills you want to promote",
+      canEdit ? "Select the skills you want to promote" : "Skills",
       (context) {
-        return new SkillsSelectionWidget(user);
+        return new SkillsSelectionWidget(user, canEdit);
       }
     );
   }
