@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'content.dart';
-import 'skills_selection_page.dart';
+import 'tags_selection_page.dart';
 
 
 class ProfileWidget extends StatelessWidget {
   final User user;
   final canEdit;
-  final List<Skill> skills;
+  final List<Tag> skills;
+  final List<Tag> interests;
 
-  ProfileWidget(this.user, this.canEdit, this.skills);
+  ProfileWidget(this.user, this.canEdit, this.skills, this.interests);
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +59,10 @@ class ProfileWidget extends StatelessWidget {
         title: new Text("Interests",
           style: new TextStyle(fontWeight: FontWeight.bold)
         ),
-        subtitle: new Text(user.interests.join(", "))
+        subtitle: new Text(user.interests.join(", ")),
+        onTap: () {
+          InterestsSelectionPage.show(context, user, canEdit, interests);
+        }
       ),
       new Divider(),
       new ListTile(

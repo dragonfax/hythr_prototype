@@ -11,27 +11,47 @@ Future<DataRoot> readContent({ String filename = 'assets/content.json' }) async 
   return new DataRoot.fromJson(json);
 }
 
-class Skill {
+enum TagClass { SKILL, INTEREST }
+
+class Tag {
   String name;
   ImageIcon icon;
+  List<Tag> children;
+  TagClass tagClass;
 
-  Skill(this.name, this.icon);
+  bool hasChildren() {
+    return children != null && children.isNotEmpty;
+  }
+
+  List<String> _getTagList(User user) {
+    if ( tagClass == TagClass.SKILL ) {
+      return user.skills;
+    } else if ( tagClass == TagClass.INTEREST ) {
+      return user.interests;
+    }
+    throw "tag had no tag class";
+  }
 
   bool getValue(User user) {
-    return user.skills.contains(name);
+    return _getTagList(user).contains(name);
   }
 
   toggle(User user) {
-    if ( user.skills.contains(name) ) {
-      user.skills.remove(name);
+    List<String> l = _getTagList(user);
+    if ( l.contains(name) ) {
+      l.remove(name);
     } else {
-      user.skills.add(name);
+      l.add(name);
     }
   }
 
-  Skill.fromJson(Map json) {
+  Tag.fromJson(Map json, TagClass tagClass) {
     name = json['name'];
     icon = new ImageIcon(new AssetImage(json['icon']));
+    this.tagClass = tagClass;
+    if ( json['children'] != null ) {
+      children = json['children'].map((child){ return new Tag.fromJson(child, tagClass); }).toList();
+    }
   }
 }
 
@@ -227,7 +247,8 @@ class DataRoot {
 
   User currentUser;
 
-  List<Skill> skills;
+  List<Tag> skills;
+  List<Tag> interests;
 
   DataRoot() {
     users = new Map();
@@ -243,6 +264,8 @@ class DataRoot {
 
     currentUser = stylists()[0];
 
-    skills = json['skills'].map((d) { return new Skill.fromJson(d); }).toList();
+    skills = json['skills'].map((d) { return new Tag.fromJson(d, TagClass.SKILL); }).toList();
+
+    interests = json['interests'].map((d) { return new Tag.fromJson(d, TagClass.INTEREST); }).toList();
   }
 }

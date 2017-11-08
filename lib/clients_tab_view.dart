@@ -3,10 +3,11 @@ import 'content.dart';
 import 'profile_widget.dart';
 
 class ClientsTabView extends StatelessWidget {
-  ClientsTabView(this.clients, this.skills);
+  ClientsTabView(this.clients, this.skills, this.interests);
 
   final List<User> clients;
-  final List<Skill> skills;
+  final List<Tag> skills;
+  final List<Tag> interests;
 
   Widget getTab() {
     return new Tab(
@@ -31,7 +32,7 @@ class ClientsTabView extends StatelessWidget {
                 builder: (BuildContext context) {
                   return new Scaffold(
                       appBar: new AppBar(title: new Text(client.realName)),
-                      body: new ProfileWidget(client, false, skills)
+                      body: new ProfileWidget(client, false, skills, interests)
                   );
                 },
               ));

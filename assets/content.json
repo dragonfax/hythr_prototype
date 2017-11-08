@@ -73,6 +73,26 @@
       "icon": "assets/icons/gradient.png"
     }
   ],
+  "interests": [
+    {
+      "name": "Sports",
+      "icon": "assets/icons/gradient.png",
+      "children": [
+        {
+          "name": "Hockey",
+          "icon": "assets/icons/gradient.png"
+        },
+        {
+          "name": "Baseball",
+          "icon": "assets/icons/gradient.png"
+        }
+      ]
+    },
+    {
+      "name": "News",
+      "icon": "assets/icons/gradient.png"
+    }
+  ],
   "users": [
     {
       "username": "angela_b",
