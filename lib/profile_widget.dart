@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'content.dart';
 import 'skills_selection_page.dart';
+import 'set_state_callback.dart';
+
 
 class ProfileWidget extends StatelessWidget {
   final User user;
-  final Function() userChangeCallback;
+  final SetStateCallback userChangingCallback;
 
-  ProfileWidget(this.user, this.userChangeCallback);
+  ProfileWidget(this.user, this.userChangingCallback);
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +68,7 @@ class ProfileWidget extends StatelessWidget {
         ),
         subtitle: new Text(user.skills.join(", ")),
         onTap: () {
-          SkillsSelectionPage.activate(context, user, userChangeCallback );
+          new SkillsSelectionPage(user, userChangingCallback).show(context);
         }
       ),
       new Divider(),
