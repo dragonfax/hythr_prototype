@@ -93,7 +93,8 @@ class SkillsSelectionWidgetState extends State<SkillsSelectionWidget> {
       new Color(0xFF060606),
       new Color(0xFF080808),
       new Color(0xFF101010),
-      new Color(0xFF121212)
+      new Color(0xFF121212),
+      new Color(0xFF161616),
     ];
 
     int index = 0;
