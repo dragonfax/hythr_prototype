@@ -17,6 +17,8 @@ dependencies:
     git:
       url: git@github.com:apptreesoftware/flutter_google_map_view.git
 
+  http:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

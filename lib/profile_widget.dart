@@ -7,6 +7,9 @@ import 'package:map_view/camera_position.dart';
 import 'package:map_view/location.dart';
 import 'package:map_view/toolbar_action.dart';
 import 'package:map_view/map_options.dart';
+import 'package:map_view/marker.dart';
+import 'package:flutter/services.dart';
+import 'dart:convert';
 
 
 class ProfileWidget extends StatelessWidget {
@@ -16,6 +19,44 @@ class ProfileWidget extends StatelessWidget {
   final List<Tag> interests;
 
   ProfileWidget(this.user, this.canEdit, this.skills, this.interests);
+
+  showSalonMap() async {
+
+    var httpClient = createHttpClient();
+
+    String address = Uri.encodeQueryComponent(user.salon.address);
+    String url = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyD3dwHECky9YbAwgGik_bU_VjXipsSpgr8&address=$address";
+
+    var response = await httpClient.read(url);
+    Map data = JSON.decode(response);
+    Map longlat = data["results"][0]["geometry"]["location"];
+    double long = longlat["lng"];
+    double lat = longlat["lat"];
+
+
+    MapView mapView = new MapView();
+    mapView.onToolbarAction.listen((id) {
+      if (id == 1) {
+        mapView.dismiss();
+      }
+    });
+
+    mapView.onMapReady.listen((_) {
+      mapView.addMarker(new Marker("1",user.salon.name,lat,long));
+    });
+
+    mapView.show(
+        new MapOptions(
+            showUserLocation: true,
+            initialCameraPosition: new CameraPosition(
+                new Location(lat,long),
+                14.0
+            ),
+            title: user.salon.name
+        ),
+        toolbarActions: [new ToolbarAction("Close", 1)]
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,25 +94,7 @@ class ProfileWidget extends StatelessWidget {
               "\n" +
               user.salon.phone
             ),
-            onTap: () {
-              MapView mapView = new MapView();
-              mapView.onToolbarAction.listen((id) {
-                if (id == 1) {
-                  mapView.dismiss();
-                }
-              });
-              mapView.show(
-                  new MapOptions(
-                      showUserLocation: true,
-                      initialCameraPosition: new CameraPosition(
-                          new Location(45.5235258, -122.6732493),
-                          14.0
-                      ),
-                      title: user.salon.name
-                  ),
-                  toolbarActions: [new ToolbarAction("Close", 1)]
-              );
-            }
+            onTap: showSalonMap
           ),
           new Divider()
       ]);
