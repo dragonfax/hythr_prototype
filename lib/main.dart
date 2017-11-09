@@ -9,10 +9,12 @@ import 'notifications_tab_view.dart';
 import 'add_content_speed_dial.dart';
 import 'profile_tab_view.dart';
 import 'signin_widget.dart';
+import 'package:map_view/map_view.dart';
 
 final String appTitle = 'HAIRAPPi';
 
 void main() {
+  MapView.setApiKey('AIzaSyD3dwHECky9YbAwgGik_bU_VjXipsSpgr8');
   runApp(new MyApp());
 }
 

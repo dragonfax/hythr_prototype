@@ -13,6 +13,10 @@ dependencies:
     git:
       url: git@github.com:dragonfax/flutter_fab_dialer.git
 
+  map_view:
+    git:
+      url: git@github.com:apptreesoftware/flutter_google_map_view.git
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

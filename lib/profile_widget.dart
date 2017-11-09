@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'content.dart';
 import 'tags_selection_page.dart';
+import 'package:map_view/map_view.dart';
+import 'package:map_view/camera_position.dart';
+import 'package:map_view/location.dart';
+import 'package:map_view/toolbar_action.dart';
+import 'package:map_view/map_options.dart';
 
 
 class ProfileWidget extends StatelessWidget {
@@ -38,15 +43,35 @@ class ProfileWidget extends StatelessWidget {
     if ( user.isStylist && user.salon != null ) {
       basicInfo.addAll([
           new ListTile(
-              leading: new Column(children: [
-                new Icon(Icons.content_cut),
-              ]),
-              title: new Text(user.salon.name ?? ""),
-              subtitle: new Text(user.salon.address +
-                "\n" +
-                user.salon.hours +
-                "\n" +
-                user.salon.phone)
+            leading: new Column(children: [
+              new Icon(Icons.content_cut),
+            ]),
+            title: new Text(user.salon.name ?? ""),
+            subtitle: new Text(user.salon.address +
+              "\n" +
+              user.salon.hours +
+              "\n" +
+              user.salon.phone
+            ),
+            onTap: () {
+              MapView mapView = new MapView();
+              mapView.onToolbarAction.listen((id) {
+                if (id == 1) {
+                  mapView.dismiss();
+                }
+              });
+              mapView.show(
+                  new MapOptions(
+                      showUserLocation: true,
+                      initialCameraPosition: new CameraPosition(
+                          new Location(45.5235258, -122.6732493),
+                          14.0
+                      ),
+                      title: user.salon.name
+                  ),
+                  toolbarActions: [new ToolbarAction("Close", 1)]
+              );
+            }
           ),
           new Divider()
       ]);
