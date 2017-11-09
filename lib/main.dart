@@ -73,6 +73,28 @@ class _MyHomePageState extends State<MyHomePage> {
     // loadContent();
   }
 
+  showNotificationsPanel() {
+    Navigator.of(context).push(new MaterialPageRoute<Null>(
+      builder: (BuildContext context){
+        return new Scaffold(
+          appBar: new AppBar(
+            title: new Text("Notifications"),
+            actions: [
+              new IconButton(
+                icon: new Icon(Icons.notifications, color: Colors.white),
+                tooltip: "Notifications",
+                onPressed: () {
+                  Navigator.of(context).pop();
+                }
+              )
+            ]
+          ),
+          body: new NotificationsTabView(root.currentUser?.notifications)
+        );
+      }
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     final stylistsView = new StylistsTabView(root.stylists(), root.skills, root.interests);
@@ -106,27 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 new IconButton(
                     icon: new Icon(Icons.notifications, color: Colors.white),
                     tooltip: "Notifications",
-                    onPressed: () {
-                      Navigator.of(context).push(new MaterialPageRoute<Null>(
-                        builder: (BuildContext context){
-                          return new Scaffold(
-                            appBar: new AppBar(
-                              title: new Text("Notifications"),
-                              actions: [
-                                new IconButton(
-                                  icon: new Icon(Icons.notifications, color: Colors.white),
-                                  tooltip: "Notifications",
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  }
-                                )
-                              ]
-                            ),
-                            body: new NotificationsTabView(root.currentUser?.notifications)
-                          );
-                        }
-                      ));
-                    }
+                    onPressed: showNotificationsPanel
                 )
               ]
           ),

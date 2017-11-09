@@ -16,6 +16,17 @@ class ClientsTabView extends StatelessWidget {
     );
   }
 
+  showClientProfilePanel(BuildContext context, User client) {
+    Navigator.of(context).push(new MaterialPageRoute<Null>(
+      builder: (BuildContext context) {
+        return new Scaffold(
+            appBar: new AppBar(title: new Text(client.realName)),
+            body: new ProfileWidget(client, false, skills, interests)
+        );
+      },
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     if ( clients == null || clients.isEmpty ){
@@ -27,16 +38,7 @@ class ClientsTabView extends StatelessWidget {
           return new ListTile(
             leading: client.getProfilePicture(),
             title: new Text(client.realName),
-            onTap: () {
-              Navigator.of(context).push(new MaterialPageRoute<Null>(
-                builder: (BuildContext context) {
-                  return new Scaffold(
-                      appBar: new AppBar(title: new Text(client.realName)),
-                      body: new ProfileWidget(client, false, skills, interests)
-                  );
-                },
-              ));
-            },
+            onTap: () { showClientProfilePanel(context, client); }
           );
         }).toList()
       );

@@ -17,6 +17,17 @@ class StylistsTabView extends StatelessWidget {
     );
   }
 
+  showStylistProfilePanel(BuildContext context, User stylist) {
+    Navigator.of(context).push(new MaterialPageRoute<Null>(
+      builder: (BuildContext context) {
+        return new Scaffold(
+          appBar: new AppBar(title: new Text(stylist.realName)),
+          body: new ProfileWidget(stylist, false, skills, interests)
+        );
+      },
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     if ( stylists == null || stylists.isEmpty ) {
@@ -28,16 +39,7 @@ class StylistsTabView extends StatelessWidget {
             return new ListTile(
                 leading: stylist.getProfilePicture(),
                 title: new Text(stylist.realName),
-                onTap: () {
-                  Navigator.of(context).push(new MaterialPageRoute<Null>(
-                    builder: (BuildContext context) {
-                      return new Scaffold(
-                        appBar: new AppBar(title: new Text(stylist.realName)),
-                        body: new ProfileWidget(stylist, false, skills, interests)
-                      );
-                    },
-                  ));
-                },
+                onTap: () { showStylistProfilePanel(context, stylist); }
             );
           }).toList()
       );
