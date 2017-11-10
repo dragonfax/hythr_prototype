@@ -118,6 +118,18 @@
         "diane_chambers",
         "frasier_crane"
       ],
+      "client_notes": {
+        "sam_malone" : [
+          {
+            "type": "text",
+            "text": "blah blah blah"
+          },
+          {
+            "type": "photo",
+            "asset": "assets/images/angela_b/clients/1.jpg"
+          }
+        ]
+      },
       "stylists_following": [
         "tony_m",
         "mona"

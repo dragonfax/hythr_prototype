@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'content/user.dart';
 import 'content/tag.dart';
 import 'profile_widget.dart';
+import 'client_notes_widget.dart';
 
 class ClientsTabView extends StatelessWidget {
-  ClientsTabView(this.clients, this.skills, this.interests);
+  ClientsTabView(this.stylist, this.clients, this.skills, this.interests);
 
+  final User stylist;
   final List<User> clients;
   final List<Tag> skills;
   final List<Tag> interests;
@@ -39,7 +41,8 @@ class ClientsTabView extends StatelessWidget {
           return new ListTile(
             leading: client.getProfilePicture(),
             title: new Text(client.realName),
-            onTap: () { showClientProfilePanel(context, client); }
+            // onTap: () { showClientProfilePanel(context, client); }
+            onTap: () { ClientNotesWidget.show(context, stylist.clientNotes[client.username], client.realName); }
           );
         }).toList()
       );

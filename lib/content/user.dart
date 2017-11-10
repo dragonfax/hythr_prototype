@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'notification.dart' as notification;
 import 'gallery.dart';
 import 'stylist.dart';
+import 'client_note.dart';
 
 class User {
   bool isStylist = false;
@@ -14,6 +15,7 @@ class User {
   List<String> certifications = [];
 
   List<String> clients = [];
+  Map<String,List<ClientNote>> clientNotes = {};
   List<String> followingStylists = [];
 
   List<notification.Notification> notifications = [];
@@ -38,6 +40,8 @@ class User {
     certifications =  (json['certifications'] ?? <String>[] ).map((s) { return s; }).toList();
 
     clients = ( json['clients'] ?? <String>[]).map((clientName){ return clientName; }).toList();
+
+    clientNotes = ClientNote.fromJsonMap(json['client_notes']);
 
     followingStylists = ( json['following_stylists'] ?? <String>[]).map((s) { return s; }).toList();
 
