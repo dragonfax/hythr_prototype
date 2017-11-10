@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'content.dart';
+import 'content/user.dart';
+import 'content/tag.dart';
 import 'profile_widget.dart';
 
 class ProfileTabView extends StatelessWidget {

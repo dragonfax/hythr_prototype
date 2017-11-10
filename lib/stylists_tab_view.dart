@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'content.dart';
+import 'content/user.dart';
+import 'content/tag.dart';
 import 'profile_widget.dart';
 
 class StylistsTabView extends StatelessWidget {

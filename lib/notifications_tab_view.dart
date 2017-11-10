@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'content.dart' as content;
+import 'content/notification.dart' as content;
 
 
 class NotificationsTabView extends StatelessWidget {

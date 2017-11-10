@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // import 'add_content_button.dart';
-import 'content.dart';
+import 'content/root.dart';
 import 'application_menu.dart';
 import 'stylists_tab_view.dart';
 import 'clients_tab_view.dart';

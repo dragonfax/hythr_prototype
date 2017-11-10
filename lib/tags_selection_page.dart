@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'content.dart';
+import 'content/user.dart';
+import 'content/tag.dart';
 import 'toggle_button.dart';
 
 List<Color> blacks = [

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'content.dart';
+import 'content/user.dart';
+import 'content/tag.dart';
 import 'tags_selection_page.dart';
 import 'package:map_view/map_view.dart';
 import 'package:map_view/camera_position.dart';
