@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'content/user.dart';
-import 'content/tag.dart';
 import 'tags_selection_page.dart';
 import 'package:map_view/map_view.dart';
 import 'package:map_view/camera_position.dart';
@@ -11,17 +10,27 @@ import 'package:map_view/map_options.dart';
 import 'package:map_view/marker.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
+import 'content/root.dart';
+import 'yellow_divider.dart';
 
 
 class ProfileWidget extends StatelessWidget {
-  final User user;
-  final canEdit;
-  final List<Tag> skills;
-  final List<Tag> interests;
+  final canEdit = true;
 
-  ProfileWidget(this.user, this.canEdit, this.skills, this.interests);
+  static show(BuildContext context) {
+    Navigator.of(context).push(new MaterialPageRoute<Null>(
+      builder: (BuildContext context) {
+        return new Scaffold(
+          appBar: new AppBar(title: new Text("Stylist Profile")),
+          body: new ProfileWidget()
+        );
+      }
+    ));
+  }
 
   showSalonMap() async {
+
+    User user = root.currentUser;
 
     var httpClient = createHttpClient();
 
@@ -61,6 +70,8 @@ class ProfileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    User user = root.currentUser;
+
     List<Widget> slivers = [];
 
     // initial tiles with basic user info for the first sliver.
@@ -72,6 +83,11 @@ class ProfileWidget extends StatelessWidget {
           new Text(user.username),
           new Text(user.isStylist ? "(stylist)" : "", style: new TextStyle(fontStyle: FontStyle.italic))
         ]),
+      ),
+      new Divider(),
+      new ListTile(
+        leading: new Text("Bio"),
+        title: new Text("I want to scream and shout and let it all out. Scream and shout and let it out. We sing oh we oh.")
       ),
       new Divider(),
       new ListTile(
@@ -110,7 +126,7 @@ class ProfileWidget extends StatelessWidget {
         ),
         subtitle: new Text(user.interests.join(", ")),
         onTap: () {
-          InterestsSelectionPage.show(context, user, canEdit, interests);
+          InterestsSelectionPage.show(context, user, canEdit, root.interests);
         }
       ),
       new Divider(),
@@ -121,7 +137,7 @@ class ProfileWidget extends StatelessWidget {
         ),
         subtitle: new Text(user.skills.join(", ")),
         onTap: () {
-          SkillsSelectionPage.show(context, user, canEdit, skills);
+          SkillsSelectionPage.show(context, user, canEdit, root.skills);
         }
       ),
       new Divider(),
@@ -138,61 +154,10 @@ class ProfileWidget extends StatelessWidget {
       ]);
     }
 
-    basicInfo.add(
-      new ListTile(
-        leading: new Icon(Icons.person_outline),
-        title: new Text("Profile Gallery", style: new TextStyle(fontWeight: FontWeight.bold))
-      )
-    );
-
     slivers.add(new SliverList( delegate: new SliverChildListDelegate(basicInfo)));
-
-
-    slivers.addAll([
-        new SliverGrid(
-            gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount( crossAxisCount: 3),
-            delegate: new SliverChildListDelegate(
-              user.gallery.where( (p) {
-                return p.wasProfile || p.isProfile;
-              }).map((p) {
-              return new Padding(
-                  child: new Image.asset(p.asset),
-                  padding: new EdgeInsets.all(8.0));
-            }).toList())),
-        new SliverList(
-            delegate: new SliverChildListDelegate([
-              new ListTile(
-                  leading: new Icon(Icons.people),
-                  title: new Text("Client Gallery", style: new TextStyle(fontWeight: FontWeight.bold))
-              )])),
-        new SliverGrid(
-            gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount( crossAxisCount: 3),
-            delegate: new SliverChildListDelegate(
-                user.gallery.where( (p) {
-                  return p.isClient;
-                }).map((p) {
-                  return new Padding(
-                      child: new Image.asset(p.asset),
-                      padding: new EdgeInsets.all(8.0));
-                }).toList())),
-        new SliverList(
-          delegate: new SliverChildListDelegate([
-          new ListTile(
-            leading: new Icon(Icons.brush),
-            title: new Text("Style Gallery", style: new TextStyle(fontWeight: FontWeight.bold))
-          )])),
-        new SliverGrid(
-            gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount( crossAxisCount: 3),
-            delegate: new SliverChildListDelegate(
-              user.gallery.where( (p) {
-                return !p.isClient && !p.wasProfile && !p.isProfile;
-              }).map((p) {
-              return new Padding(
-                  child: new Image.asset(p.asset),
-                  padding: new EdgeInsets.all(8.0));
-            }).toList())),
+    return new Column( crossAxisAlignment: CrossAxisAlignment.stretch ,children: [
+      new YellowDivider(),
+      new Expanded(child: new CustomScrollView(slivers: slivers))
     ]);
-
-    return new CustomScrollView(slivers: slivers);
   }
 }

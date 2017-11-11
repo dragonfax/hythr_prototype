@@ -5,6 +5,8 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'user.dart';
 import 'tag.dart';
 
+DataRoot root = new DataRoot();
+
 Future<DataRoot> readContent({ String filename = 'assets/content.json' }) async {
   String contentJson = await rootBundle.loadString(filename);
 

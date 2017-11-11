@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
+import 'constants.dart';
+import 'content/root.dart';
 
 
 class ApplicationMenu extends StatelessWidget {
 
-  ApplicationMenu(this.userRealName, this.appTitle, this.stylistMode, this.toggleMode);
-
-  final String userRealName;
-  final String appTitle;
-  final bool stylistMode;
-  final toggleMode;
+  final bool stylistMode = true;
+  // final toggleMode = null;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +17,7 @@ class ApplicationMenu extends StatelessWidget {
                 child: new Row(
                     children: <Widget>[
                       new Icon(Icons.mood),
-                      new Text(userRealName ?? 'None')
+                      new Text(root.currentUser.realName ?? 'None')
                     ]
                 )
             ),
@@ -31,11 +29,11 @@ class ApplicationMenu extends StatelessWidget {
               leading: new Icon(Icons.time_to_leave),
               title: new Text('Logout'),
             ),
-            new ListTile(
+            /* new ListTile(
               leading: new Icon(Icons.content_cut),
               title: new Text(stylistMode ? 'Stylist ON' : 'Stylist OFF'),
               onTap: () { toggleMode(); }
-            ),
+            ), */
             new AboutListTile(
               icon: new Icon(Icons.info),
               applicationName: appTitle,
