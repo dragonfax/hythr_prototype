@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class SignInWidget extends StatefulWidget {
 
-  SignInWidget({ this.child });
+  const SignInWidget({ this.child });
 
   final Widget child;
 
@@ -16,7 +16,7 @@ class SignInState extends State<SignInWidget> {
   SignInState({this.child});
 
   bool signedIn = false;
-  Widget child;
+  final Widget child;
 
   signedInCallback() {
     setState(() {
@@ -38,21 +38,21 @@ class SignInState extends State<SignInWidget> {
         child: new Column(
           children: [
             new Padding(
-              padding: new EdgeInsets.symmetric(vertical: 150.0),
+              padding: const EdgeInsets.symmetric(vertical: 150.0),
               child: new Image.asset("assets/images/logo.png", width: 300.0)
             ),
             new Padding(
-              padding: new EdgeInsets.only(bottom: 16.0),
+              padding: const EdgeInsets.only(bottom: 16.0),
               child: new FlatButton(
                 onPressed: signedInCallback,
-                child: new Text("Sign up with Facebook"),
+                child: const Text("Sign up with Facebook"),
                 color: Colors.blue,
                 textColor: Colors.white,
               )
             ),
             new FlatButton(
               onPressed: signedInCallback,
-              child: new Text("Sign up with Email"),
+              child: const Text("Sign up with Email"),
               color: Colors.blue,
               textColor: Colors.white,
             ),

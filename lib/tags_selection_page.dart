@@ -5,17 +5,17 @@ import 'content/tag.dart';
 import 'toggle_button.dart';
 import 'page.dart';
 
-List<Color> blacks = [
-  new Color(0xFF202020),
-  new Color(0xFF161616),
-  new Color(0xFF121212),
-  new Color(0xFF101010),
-  new Color(0xFF080808),
-  new Color(0xFF060606),
-  new Color(0xFF080808),
-  new Color(0xFF101010),
-  new Color(0xFF121212),
-  new Color(0xFF161616),
+const List<Color> blacks = const [
+  const Color(0xFF202020),
+  const Color(0xFF161616),
+  const Color(0xFF121212),
+  const Color(0xFF101010),
+  const Color(0xFF080808),
+  const Color(0xFF060606),
+  const Color(0xFF080808),
+  const Color(0xFF101010),
+  const Color(0xFF121212),
+  const Color(0xFF161616),
 ];
 
 class TagSwitch extends ToggleButton {
@@ -48,7 +48,7 @@ class TagsSelectionWidget extends StatefulWidget {
   final bool canEdit;
   final List<Tag> tags;
 
-  TagsSelectionWidget({ @required this.hint, @required this.user, this.canEdit = true, @required this.tags });
+  const TagsSelectionWidget({ @required this.hint, @required this.user, this.canEdit = true, @required this.tags });
 
   @override
   createState() => new TagsSelectionWidgetState(hint: hint, user: user, tags: tags);
@@ -88,14 +88,14 @@ class TagsSelectionWidgetState extends State<TagsSelectionWidget> {
   Widget build(BuildContext context) {
 
     return new DecoratedBox(
-      decoration: new BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.black
       ),
       child: new Column(
         children: [
           new Padding(
-              padding: new EdgeInsets.symmetric(vertical: 8.0),
-              child: new Text(hint, style: new TextStyle(fontStyle: FontStyle.italic))
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: new Text(hint, style: const TextStyle(fontStyle: FontStyle.italic))
           ),
           new Expanded(
             child: new GridView.count(

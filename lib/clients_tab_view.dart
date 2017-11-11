@@ -11,7 +11,7 @@ class ClientsTabView extends StatelessWidget {
   }
 
   Widget getTab() {
-    return new Tab(text: 'Clients', icon: new Icon(Icons.people));
+    return const Tab(text: 'Clients', icon: const Icon(Icons.people));
   }
 
   showClientProfilePanel(BuildContext context, User client) {
@@ -22,11 +22,11 @@ class ClientsTabView extends StatelessWidget {
     showDialog<Null>(
       context: context,
       child: new AlertDialog(
-        title: new Text('Contacting All Clients'),
-        content: new TextField(),
+        title: const Text('Contacting All Clients'),
+        content: const TextField(),
         actions: [
-          new FlatButton(onPressed: () { Navigator.of(context).pop(); }, child: new Text("Cancel")),
-          new FlatButton(onPressed: () { Navigator.of(context).pop(); }, child: new Text("Send"))
+          new FlatButton(onPressed: () { Navigator.of(context).pop(); }, child: const Text("Cancel")),
+          new FlatButton(onPressed: () { Navigator.of(context).pop(); }, child: const Text("Send"))
         ]
       )
     );
@@ -37,15 +37,15 @@ class ClientsTabView extends StatelessWidget {
     if (root.currentUser == null ||
         root.currentUser.clients == null ||
         root.currentUser.clients.isEmpty) {
-      return new Center(child: new Text('0 clients'));
+      return const Center(child: const Text('0 clients'));
     } else {
       return new Column(
         children: [
           new ConstrainedBox(
-            constraints: new BoxConstraints(minHeight: 20.0),
+            constraints: const BoxConstraints(minHeight: 20.0),
             child: new FlatButton(
               onPressed: () { showContactAll(context); },
-              child: new Text("Contact All")
+              child: const Text("Contact All")
             )
           ),
           new Expanded(
@@ -62,7 +62,7 @@ class ClientsTabView extends StatelessWidget {
                     );
                   }).toList()
                 ),
-                new AddClientContentSpeedDial()
+                const AddClientContentSpeedDial()
               ]
             )
           )
@@ -73,18 +73,21 @@ class ClientsTabView extends StatelessWidget {
 }
 
 class AddClientContentSpeedDial extends StatelessWidget {
+
+  const AddClientContentSpeedDial();
+
   @override
   Widget build(BuildContext context) {
 
-    return new FabDialer([
-      new FabMiniMenuItem(
+    return const FabDialer(const [
+      const FabMiniMenuItem(
         text: "Add Client Note",
         elevation: 4.0
       ),
-      new FabMiniMenuItem(
+      const FabMiniMenuItem(
         text: "Add Client Photo",
         elevation: 4.0
       ),
-    ], Colors.blue, new Icon(Icons.add));
+    ], Colors.blue, const Icon(Icons.add));
   }
 }

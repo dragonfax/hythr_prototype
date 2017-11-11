@@ -18,8 +18,8 @@ class PersonalPortfolioView extends StatelessWidget {
 
     basicInfo.add(
       new ListTile(
-        leading: new Icon(Icons.person_outline),
-        title: new Text("Profile Gallery", style: new TextStyle(fontWeight: FontWeight.bold))
+        leading: const Icon(Icons.person_outline),
+        title: const Text("Profile Gallery", style: const TextStyle(fontWeight: FontWeight.bold))
       )
     );
 
@@ -28,37 +28,37 @@ class PersonalPortfolioView extends StatelessWidget {
 
     slivers.addAll([
         new SliverGrid(
-            gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount( crossAxisCount: 3),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount( crossAxisCount: 3),
             delegate: new SliverChildListDelegate(
               user.gallery.where( (p) {
                 return p.wasProfile || p.isProfile;
               }).map((p) {
               return new Padding(
                   child: new Image.asset(p.asset),
-                  padding: new EdgeInsets.all(8.0));
+                  padding: const EdgeInsets.all(8.0));
             }).toList())),
-        new SliverList(
-            delegate: new SliverChildListDelegate([
-              new ListTile(
-                  leading: new Icon(Icons.people),
-                  title: new Text("Client Gallery", style: new TextStyle(fontWeight: FontWeight.bold))
+        const SliverList(
+            delegate: const SliverChildListDelegate(const [
+              const ListTile(
+                  leading: const Icon(Icons.people),
+                  title: const Text("Client Gallery", style: const TextStyle(fontWeight: FontWeight.bold))
               )])),
         new SliverGrid(
-            gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount( crossAxisCount: 3),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount( crossAxisCount: 3),
             delegate: new SliverChildListDelegate(
                 user.gallery.where( (p) {
                   return p.isClient;
                 }).map((p) {
                   return new Padding(
                       child: new Image.asset(p.asset),
-                      padding: new EdgeInsets.all(8.0));
+                      padding: const EdgeInsets.all(8.0));
                 }).toList())),
     ]);
 
     return new Stack(
       children: [
         new CustomScrollView(slivers: slivers),
-        new AddPortfolioSpeedDial()
+        const AddPortfolioSpeedDial()
       ]
     );
   }
@@ -66,17 +66,19 @@ class PersonalPortfolioView extends StatelessWidget {
 
 class AddPortfolioSpeedDial extends StatelessWidget {
 
+  const AddPortfolioSpeedDial();
+
   @override
   Widget build(BuildContext context) {
-    return new FabDialer([
-      new FabMiniMenuItem(
+    return const FabDialer(const [
+      const FabMiniMenuItem(
           text: "Add Profile Photo",
           elevation: 4.0
       ),
-      new FabMiniMenuItem(
+      const FabMiniMenuItem(
           text: "Add Client Photo",
           elevation: 4.0
       ),
-    ], Colors.blue, new Icon(Icons.add));
+    ], Colors.blue, const Icon(Icons.add));
   }
 }

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 class YellowDivider extends StatelessWidget {
 
+  const YellowDivider();
+
   Widget build(BuildContext context) {
     return new ConstrainedBox(
         constraints: new BoxConstraints(minHeight: 4.0, minWidth: 10.0),

@@ -35,23 +35,23 @@ class ProfileWidget extends StatelessWidget {
     ];
 
     if (!asClient ) {
-      basicInfo.addAll([
-        new Divider(),
-        new ListTile(
-            leading: new Text("Bio"),
-            title: new Text(
+      basicInfo.addAll(const [
+        const Divider(),
+        const ListTile(
+            leading: const Text("Bio"),
+            title: const Text(
                 "I want to scream and shout and let it all out. Scream and shout and let it out. We sing oh we oh.")
         ),
       ]);
     }
 
     basicInfo.addAll([
-      new Divider(),
+      const Divider(),
       new ListTile(
-        leading: new Icon(Icons.phone),
+        leading: const Icon(Icons.phone),
         title: new Text(user.phone ?? "XXX-XXX-XXXX"),
       ),
-      new Divider(),
+      const Divider(),
     ]);
 
 
@@ -59,8 +59,8 @@ class ProfileWidget extends StatelessWidget {
     if ( !asClient && user.salon != null ) {
       basicInfo.addAll([
           new ListTile(
-            leading: new Column(children: [
-              new Icon(Icons.content_cut),
+            leading: new Column(children: const [
+              const Icon(Icons.content_cut),
             ]),
             title: new Text(user.salon.name ?? ""),
             subtitle: new Text(user.salon.address +
@@ -70,16 +70,16 @@ class ProfileWidget extends StatelessWidget {
               user.salon.phone
             ),
           ),
-          new Divider()
+          const Divider()
       ]);
     }
 
 
     basicInfo.addAll([
       new ListTile(
-        leading: new Icon(Icons.beach_access),
-        title: new Text("Interests",
-          style: new TextStyle(fontWeight: FontWeight.bold)
+        leading: const Icon(Icons.beach_access),
+        title: const Text("Interests",
+          style: const TextStyle(fontWeight: FontWeight.bold)
         ),
         subtitle: new Text(user.interests.join(", ")),
         onTap: !canEdit ? null : () {
@@ -92,9 +92,9 @@ class ProfileWidget extends StatelessWidget {
       basicInfo.addAll([
         new Divider(),
         new ListTile(
-            leading: new Icon(Icons.content_cut),
-            title: new Text("Skills",
-                style: new TextStyle(fontWeight: FontWeight.bold)
+            leading: const Icon(Icons.content_cut),
+            title: const Text("Skills",
+                style: const TextStyle(fontWeight: FontWeight.bold)
             ),
             subtitle: new Text(user.skills.join(", ")),
             onTap: !canEdit ? null : () {
@@ -108,18 +108,18 @@ class ProfileWidget extends StatelessWidget {
       basicInfo.addAll([
         new Divider(),
         new ListTile(
-            leading: new Icon(Icons.school),
-            title: new Text("Certifications",
-                style: new TextStyle(fontWeight: FontWeight.bold)),
+            leading: const Icon(Icons.school),
+            title: const Text("Certifications",
+                style: const TextStyle(fontWeight: FontWeight.bold)),
             subtitle: new Text((user.certifications ?? []).join(", "))),
       ]);
     }
 
     if ( asClient ) {
-      basicInfo.addAll([
-        new Divider(),
-        new ListTile(
-          title: new Text("Notes & Photos", style: new TextStyle(fontWeight: FontWeight.bold))
+      basicInfo.addAll(const [
+        const Divider(),
+        const ListTile(
+          title: const Text("Notes & Photos", style: const TextStyle(fontWeight: FontWeight.bold))
         ),
       ]);
 
@@ -127,7 +127,7 @@ class ProfileWidget extends StatelessWidget {
 
       if ( notes == null || notes.isEmpty ) {
         basicInfo.add(
-          new ListTile(title: new Center(child: new Text("No notes")))
+          const ListTile(title: const Center(child: const Text("No notes")))
         );
       } else {
         basicInfo.addAll(
@@ -147,7 +147,7 @@ class ProfileWidget extends StatelessWidget {
           child: new CustomScrollView(slivers: [slist])
         )
       ]),
-      new AddClientContentSpeedDial()
+      const AddClientContentSpeedDial()
     ]);
   }
 }
@@ -158,11 +158,11 @@ class ContactClientButton extends StatelessWidget {
     showDialog<Null>(
       context: context,
       child: new AlertDialog(
-        title: new Text('Contact Client'),
-        content: new TextField(),
+        title: const Text('Contact Client'),
+        content: const TextField(),
         actions: [
-          new FlatButton(onPressed: () { Navigator.of(context).pop(); }, child: new Text("Cancel")),
-          new FlatButton(onPressed: () { Navigator.of(context).pop(); }, child: new Text("Send"))
+          new FlatButton(onPressed: () { Navigator.of(context).pop(); }, child: const Text("Cancel")),
+          new FlatButton(onPressed: () { Navigator.of(context).pop(); }, child: const Text("Send"))
         ]
       )
     );
@@ -171,12 +171,12 @@ class ContactClientButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new ConstrainedBox(
-        constraints: new BoxConstraints(minHeight: 20.0),
+        constraints: const BoxConstraints(minHeight: 20.0),
         child: new FlatButton(
             onPressed: () {
               showContactDialog(context);
             },
-            child: new Text("Contact")
+            child: const Text("Contact")
         )
     );
   }

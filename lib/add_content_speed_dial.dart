@@ -2,22 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_fab_dialer/flutter_fab_dialer.dart';
 
 class ContentType {
-  String title;
-  String toolTip;
+  final String title;
+  final String toolTip;
 
-  ContentType(this.title, this.toolTip);
+  const ContentType(this.title, this.toolTip);
 }
 
-final List<ContentType> types = [
-  new ContentType("Profile Photo","Take a new Profile Picture"),
-  new ContentType("Client Note", "Add a note about a client"),
-  new ContentType("Client Photo", "Take a photo of a client"),
-  new ContentType("Add to Portfolio", "Add a picture the your Personal Portfolio"),
-  new ContentType("Add Inspiration", "Add a picture to your Inspiration gallery")
+const List<ContentType> types = const [
+  const ContentType("Profile Photo","Take a new Profile Picture"),
+  const ContentType("Client Note", "Add a note about a client"),
+  const ContentType("Client Photo", "Take a photo of a client"),
+  const ContentType("Add to Portfolio", "Add a picture the your Personal Portfolio"),
+  const ContentType("Add Inspiration", "Add a picture to your Inspiration gallery")
 ];
 
 class AddContentSpeedDial extends StatelessWidget {
-
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +33,6 @@ class AddContentSpeedDial extends StatelessWidget {
       );
     }).toList();
 
-    return new FabDialer(fabList, Colors.blue, new Icon(Icons.add));
+    return new FabDialer(fabList, Colors.blue, const Icon(Icons.add));
   }
 }

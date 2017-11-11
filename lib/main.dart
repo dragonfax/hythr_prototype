@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       title: appTitle,
       theme: new ThemeData.dark(),
-      home: new SignInWidget( child: new HomePage()),
+      home: const SignInWidget( child: const HomePage()),
     );
   }
 

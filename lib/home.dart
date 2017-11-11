@@ -11,6 +11,9 @@ import 'profile_widget.dart';
 import 'add_content_speed_dial.dart';
 
 class HomePage extends StatefulWidget {
+
+  const HomePage();
+
   @override
   HomePageState createState() => new HomePageState();
 }
@@ -37,7 +40,7 @@ class HomePageState extends State<HomePage> {
         title: new Text("Stylist Home"),
         actions: <Widget>[
           new IconButton(
-              icon: new Icon(Icons.notifications, color: Colors.white),
+              icon: const Icon(Icons.notifications, color: Colors.white),
               tooltip: "Notifications",
               onPressed: () { NotificationsTabView.show(context); }
           )
@@ -47,7 +50,7 @@ class HomePageState extends State<HomePage> {
       body: new Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          new YellowDivider(),
+          const YellowDivider(),
           new Expanded(child: new Stack(
             children: [
               new MainMenu(),
@@ -65,23 +68,23 @@ class MainMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return new ListView(children: [
           new ListTile(
-            leading: new Icon(Icons.person),
-            title: new Text("Stylist Profile"),
+            leading: const Icon(Icons.person),
+            title: const Text("Stylist Profile"),
             onTap: () { ProfileWidget.show(context, root.currentUser, true, false); },
           ),
           new ListTile(
-            leading: new Icon(Icons.people_outline),
-            title: new Text("Clients"),
+            leading: const Icon(Icons.people_outline),
+            title: const Text("Clients"),
             onTap: () { ClientsTabView.show(context); },
           ),
           new ListTile(
-            leading: new Icon(Icons.photo_camera),
-            title: new Text("Personal Portfolio"),
+            leading: const Icon(Icons.photo_camera),
+            title: const Text("Personal Portfolio"),
             onTap: () { PersonalPortfolioView.show(context); },
           ),
           new ListTile(
-            leading: new Icon(Icons.photo_album),
-            title: new Text("Inspiration"),
+            leading: const Icon(Icons.photo_album),
+            title: const Text("Inspiration"),
             onTap: () { InspirationGalleryView.show(context); },
           ),
         ]);

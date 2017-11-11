@@ -1,2 +1,2 @@
 
-final String appTitle = 'HAIRAPPi';
+const String appTitle = 'HAIRAPPi';

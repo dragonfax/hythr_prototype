@@ -15,7 +15,7 @@ class NotificationsTabView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if ( notifications == null || notifications.isEmpty ) {
-      return new Center( child: new Text('0 notifications')) ;
+      return const Center( child: const Text('0 notifications')) ;
     } else {
       return new ListView(
         itemExtent: 100.0,

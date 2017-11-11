@@ -36,9 +36,9 @@ class ToggleButton extends StatelessWidget {
     ];
 
     if ( onLongPress != null ) {
-      deco.add(new Text("...", style: new TextStyle(fontSize: 24.0)));
+      deco.add(const Text("...", style: const TextStyle(fontSize: 24.0)));
     } else {
-      deco.add(new Text("   ", style: new TextStyle(fontSize: 24.0)));
+      deco.add(const Text("   ", style: const TextStyle(fontSize: 24.0)));
     }
 
     return new DecoratedBox(

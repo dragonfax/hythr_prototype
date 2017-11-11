@@ -23,7 +23,7 @@ class Page extends StatelessWidget {
         body: new Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              new YellowDivider(),
+              const YellowDivider(),
               new Expanded(
                   child: child
               )

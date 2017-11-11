@@ -17,21 +17,21 @@ class InspirationGalleryView extends StatelessWidget {
 
     slivers.addAll([
         new SliverGrid(
-            gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount( crossAxisCount: 3),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount( crossAxisCount: 3),
             delegate: new SliverChildListDelegate(
               user.gallery.where( (p) {
                 return !p.isClient && !p.wasProfile && !p.isProfile;
               }).map((p) {
               return new Padding(
                   child: new Image.asset(p.asset),
-                  padding: new EdgeInsets.all(8.0));
+                  padding: const EdgeInsets.all(8.0));
             }).toList())),
     ]);
 
     return new Stack(
       children: [
         new CustomScrollView(slivers: slivers),
-        new FabDialer([], Colors.blue, new Icon(Icons.add))
+        const FabDialer(const [], Colors.blue, const Icon(Icons.add))
       ]
     );
   }
