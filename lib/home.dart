@@ -52,7 +52,7 @@ class HomePageState extends State<HomePage> {
           new ListTile(
             leading: new Icon(Icons.person),
             title: new Text("Stylist Profile"),
-            onTap: () { ProfileWidget.show(context); },
+            onTap: () { ProfileWidget.show(context, root.currentUser, true, false); },
           ),
           new ListTile(
             leading: new Icon(Icons.people_outline),
