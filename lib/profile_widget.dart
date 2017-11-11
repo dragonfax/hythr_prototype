@@ -12,18 +12,21 @@ import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'content/root.dart';
 import 'page.dart';
-
+import 'package:flutter/foundation.dart';
+import 'content/client_note.dart';
 
 class ProfileWidget extends StatelessWidget {
-  final canEdit = true;
+  final bool canEdit;
+  final User user;
+  final bool asClient; // otherwise as-stylist
 
-  static show(BuildContext context) {
-    new Page(title: "Stylist Profile", child: new ProfileWidget()).show(context);
+  ProfileWidget({ @required this.user, this.canEdit = false, this.asClient = false });
+
+  static show(BuildContext context, User user, bool canEdit, bool asClient) {
+    new Page(title: "Stylist Profile", child: new ProfileWidget(user: user, canEdit: canEdit, asClient: asClient)).show(context);
   }
 
   showSalonMap() async {
-
-    User user = root.currentUser;
 
     var httpClient = createHttpClient();
 
@@ -63,9 +66,7 @@ class ProfileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    User user = root.currentUser;
 
-    List<Widget> slivers = [];
 
     // initial tiles with basic user info for the first sliver.
     List<Widget> basicInfo = [
@@ -74,24 +75,33 @@ class ProfileWidget extends StatelessWidget {
         title: new Text(user.realName),
         subtitle: new Column(children: [
           new Text(user.username),
-          new Text(user.isStylist ? "(stylist)" : "", style: new TextStyle(fontStyle: FontStyle.italic))
         ]),
       ),
-      new Divider(),
-      new ListTile(
-        leading: new Text("Bio"),
-        title: new Text("I want to scream and shout and let it all out. Scream and shout and let it out. We sing oh we oh.")
-      ),
+    ];
+
+    if (!asClient ) {
+      basicInfo.addAll([
+        new Divider(),
+        new ListTile(
+            leading: new Text("Bio"),
+            title: new Text(
+                "I want to scream and shout and let it all out. Scream and shout and let it out. We sing oh we oh.")
+        ),
+      ]);
+    }
+
+    basicInfo.addAll([
       new Divider(),
       new ListTile(
         leading: new Icon(Icons.phone),
         title: new Text(user.phone ?? "XXX-XXX-XXXX"),
       ),
       new Divider(),
-    ];
+    ]);
 
 
-    if ( user.isStylist && user.salon != null ) {
+
+    if ( !asClient && user.salon != null ) {
       basicInfo.addAll([
           new ListTile(
             leading: new Column(children: [
@@ -118,37 +128,100 @@ class ProfileWidget extends StatelessWidget {
           style: new TextStyle(fontWeight: FontWeight.bold)
         ),
         subtitle: new Text(user.interests.join(", ")),
-        onTap: () {
+        onTap: !canEdit ? null : () {
           InterestsSelectionPage.show(context, user, root.interests);
         }
       ),
-      new Divider(),
-      new ListTile(
-        leading: new Icon(Icons.content_cut),
-        title: new Text("Skills",
-          style: new TextStyle(fontWeight: FontWeight.bold)
-        ),
-        subtitle: new Text(user.skills.join(", ")),
-        onTap: () {
-          SkillsSelectionPage.show(context, user, root.skills);
-        }
-      ),
-      new Divider(),
     ]);
 
-    if (user.isStylist ) {
+    if ( !asClient) {
       basicInfo.addAll([
+        new Divider(),
+        new ListTile(
+            leading: new Icon(Icons.content_cut),
+            title: new Text("Skills",
+                style: new TextStyle(fontWeight: FontWeight.bold)
+            ),
+            subtitle: new Text(user.skills.join(", ")),
+            onTap: !canEdit ? null : () {
+              SkillsSelectionPage.show(context, user, root.skills);
+            }
+        ),
+      ]);
+    }
+
+    if ( !asClient ) {
+      basicInfo.addAll([
+        new Divider(),
         new ListTile(
             leading: new Icon(Icons.school),
             title: new Text("Certifications",
                 style: new TextStyle(fontWeight: FontWeight.bold)),
             subtitle: new Text((user.certifications ?? []).join(", "))),
-        new Divider()
       ]);
     }
 
-    slivers.add(new SliverList( delegate: new SliverChildListDelegate(basicInfo)));
+    if ( asClient ) {
+      basicInfo.addAll([
+        new Divider(),
+        new ListTile(
+          title: new Text("Notes & Photos", style: new TextStyle(fontWeight: FontWeight.bold))
+        ),
+      ]);
 
-    return new CustomScrollView(slivers: slivers);
+      List<ClientNote> notes = root.currentUser.clientNotes[user.username];
+
+      if ( notes == null || notes.isEmpty ) {
+        basicInfo.add(
+          new ListTile(title: new Center(child: new Text("No notes")))
+        );
+      } else {
+        basicInfo.addAll(
+          notes.map((note){
+            return note.getWidget();
+          }).toList()
+        );
+      }
+    }
+
+    SliverList slist = new SliverList( delegate: new SliverChildListDelegate(basicInfo));
+
+    return new Column(children: [
+      new ContactClientButton(),
+      new Expanded(
+        child: new CustomScrollView(slivers: [slist])
+      )
+    ]);
   }
+}
+
+class ContactClientButton extends StatelessWidget {
+
+  showContactDialog(BuildContext context) async {
+    showDialog<Null>(
+      context: context,
+      child: new AlertDialog(
+        title: new Text('Contact Client'),
+        content: new TextField(),
+        actions: [
+          new FlatButton(onPressed: () { Navigator.of(context).pop(); }, child: new Text("Cancel")),
+          new FlatButton(onPressed: () { Navigator.of(context).pop(); }, child: new Text("Send"))
+        ]
+      )
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new ConstrainedBox(
+        constraints: new BoxConstraints(minHeight: 20.0),
+        child: new FlatButton(
+            onPressed: () {
+              showContactDialog(context);
+            },
+            child: new Text("Contact")
+        )
+    );
+  }
+
 }
