@@ -9,11 +9,11 @@ class ContentType {
 }
 
 final List<ContentType> types = [
-  new ContentType("Photo","Take a new Profile Picture"),
-  new ContentType("Gallery", "Add a new image to your Gallery"),
-  new ContentType("Log", "Add a note to your Clients Log"),
-  new ContentType("Story", "Add a new video to your Gallery"),
-  new ContentType("Schedule", "Schedule an appointment with a Client")
+  new ContentType("Profile Photo","Take a new Profile Picture"),
+  new ContentType("Client Note", "Add a note about a client"),
+  new ContentType("Client Photo", "Take a photo of a client"),
+  new ContentType("Add to Portfolio", "Add a picture the your Personal Portfolio"),
+  new ContentType("Add Inspiration", "Add a picture to your Inspiration gallery")
 ];
 
 class AddContentSpeedDial extends StatelessWidget {

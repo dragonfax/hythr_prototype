@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'content/root.dart';
 import 'content/user.dart';
 import 'page.dart';
+import 'package:flutter_fab_dialer/flutter_fab_dialer.dart';
 
 class PersonalPortfolioView extends StatelessWidget {
 
@@ -54,6 +55,28 @@ class PersonalPortfolioView extends StatelessWidget {
                 }).toList())),
     ]);
 
-    return new CustomScrollView(slivers: slivers);
+    return new Stack(
+      children: [
+        new CustomScrollView(slivers: slivers),
+        new AddPortfolioSpeedDial()
+      ]
+    );
+  }
+}
+
+class AddPortfolioSpeedDial extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return new FabDialer([
+      new FabMiniMenuItem(
+          text: "Add Profile Photo",
+          elevation: 4.0
+      ),
+      new FabMiniMenuItem(
+          text: "Add Client Photo",
+          elevation: 4.0
+      ),
+    ], Colors.blue, new Icon(Icons.add));
   }
 }

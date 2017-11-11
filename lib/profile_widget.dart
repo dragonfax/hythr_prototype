@@ -14,6 +14,7 @@ import 'content/root.dart';
 import 'page.dart';
 import 'package:flutter/foundation.dart';
 import 'content/client_note.dart';
+import 'clients_tab_view.dart';
 
 class ProfileWidget extends StatelessWidget {
   final bool canEdit;
@@ -186,11 +187,14 @@ class ProfileWidget extends StatelessWidget {
 
     SliverList slist = new SliverList( delegate: new SliverChildListDelegate(basicInfo));
 
-    return new Column(children: [
-      new ContactClientButton(),
-      new Expanded(
-        child: new CustomScrollView(slivers: [slist])
-      )
+    return new Stack(children: [
+      new Column(children: [
+        new ContactClientButton(),
+        new Expanded(
+          child: new CustomScrollView(slivers: [slist])
+        )
+      ]),
+      new AddClientContentSpeedDial()
     ]);
   }
 }

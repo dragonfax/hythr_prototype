@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'content/root.dart';
 import 'content/user.dart';
 import 'page.dart';
+import 'package:flutter_fab_dialer/flutter_fab_dialer.dart';
 
 class InspirationGalleryView extends StatelessWidget {
 
@@ -27,6 +28,11 @@ class InspirationGalleryView extends StatelessWidget {
             }).toList())),
     ]);
 
-    return new CustomScrollView(slivers: slivers);
+    return new Stack(
+      children: [
+        new CustomScrollView(slivers: slivers),
+        new FabDialer([], Colors.blue, new Icon(Icons.add))
+      ]
+    );
   }
 }

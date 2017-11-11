@@ -8,6 +8,7 @@ import 'inspiration_gallery_view.dart';
 import 'package:flutter/widgets.dart';
 import 'yellow_divider.dart';
 import 'profile_widget.dart';
+import 'add_content_speed_dial.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -47,8 +48,22 @@ class HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           new YellowDivider(),
-        new Expanded(child:
-        new ListView(children: [
+          new Expanded(child: new Stack(
+            children: [
+              new MainMenu(),
+              new AddContentSpeedDial()
+            ]
+          ))
+        ]
+      ),
+    );
+  }
+}
+
+class MainMenu extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new ListView(children: [
           new ListTile(
             leading: new Icon(Icons.person),
             title: new Text("Stylist Profile"),
@@ -69,8 +84,6 @@ class HomePageState extends State<HomePage> {
             title: new Text("Inspiration"),
             onTap: () { InspirationGalleryView.show(context); },
           ),
-        ]))
-      ]),
-    );
+        ]);
   }
 }

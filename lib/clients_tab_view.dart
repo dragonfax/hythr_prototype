@@ -3,6 +3,7 @@ import 'content/user.dart';
 import 'profile_widget.dart';
 import 'content/root.dart';
 import 'page.dart';
+import 'package:flutter_fab_dialer/flutter_fab_dialer.dart';
 
 class ClientsTabView extends StatelessWidget {
   static show(BuildContext context) {
@@ -38,26 +39,52 @@ class ClientsTabView extends StatelessWidget {
         root.currentUser.clients.isEmpty) {
       return new Center(child: new Text('0 clients'));
     } else {
-      return new Column(children: [
-        new ConstrainedBox(
+      return new Column(
+        children: [
+          new ConstrainedBox(
             constraints: new BoxConstraints(minHeight: 20.0),
             child: new FlatButton(
-                onPressed: () { showContactAll(context); },
-                child: new Text("Contact All")
+              onPressed: () { showContactAll(context); },
+              child: new Text("Contact All")
             )
-        ),
-        new Expanded(
-            child: new ListView(
-                itemExtent: 100.0,
-                children: root.currentUser.clients.map((clientName) {
-                  User client = root.users[clientName];
-                  return new ListTile(
-                      leading: client.getProfilePicture(),
-                      title: new Text(client.realName),
-                      onTap: () { showClientProfilePanel(context, client); }
-                  );
-                }).toList()))
-      ]);
+          ),
+          new Expanded(
+            child: new Stack(
+              children: [
+                new ListView(
+                  itemExtent: 100.0,
+                  children: root.currentUser.clients.map((clientName) {
+                    User client = root.users[clientName];
+                    return new ListTile(
+                        leading: client.getProfilePicture(),
+                        title: new Text(client.realName),
+                        onTap: () { showClientProfilePanel(context, client); }
+                    );
+                  }).toList()
+                ),
+                new AddClientContentSpeedDial()
+              ]
+            )
+          )
+        ]
+      );
     }
+  }
+}
+
+class AddClientContentSpeedDial extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+
+    return new FabDialer([
+      new FabMiniMenuItem(
+        text: "Add Client Note",
+        elevation: 4.0
+      ),
+      new FabMiniMenuItem(
+        text: "Add Client Photo",
+        elevation: 4.0
+      ),
+    ], Colors.blue, new Icon(Icons.add));
   }
 }
