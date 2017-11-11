@@ -3,22 +3,11 @@ import 'content/user.dart';
 import 'profile_widget.dart';
 import 'client_notes_widget.dart';
 import 'content/root.dart';
-import 'yellow_divider.dart';
+import 'page.dart';
 
 class ClientsTabView extends StatelessWidget {
   static show(BuildContext context) {
-    Navigator
-        .of(context)
-        .push(new MaterialPageRoute<Null>(builder: (BuildContext context) {
-      return new Scaffold(
-          appBar: new AppBar(title: new Text("Clients")),
-          body: new Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                new YellowDivider(),
-                new Expanded(child: new ClientsTabView())
-              ]));
-    }));
+    new Page(title: "Clients", child: new ClientsTabView()).show(context);
   }
 
   Widget getTab() {
@@ -26,18 +15,7 @@ class ClientsTabView extends StatelessWidget {
   }
 
   showClientProfilePanel(BuildContext context, User client) {
-    Navigator.of(context).push(new MaterialPageRoute<Null>(
-      builder: (BuildContext context) {
-        return new Scaffold(
-            appBar: new AppBar(title: new Text(client.realName)),
-            body: new Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  new YellowDivider(),
-                  new Expanded(child: new ProfileWidget())
-                ]));
-      },
-    ));
+    new Page(title: client.realName, child: new ProfileWidget()).show(context);
   }
 
   showContactAll(BuildContext context) async {
@@ -79,7 +57,7 @@ class ClientsTabView extends StatelessWidget {
                         ClientNotesWidget.show(
                             context,
                             root.currentUser.clientNotes[client.username],
-                            client.realName);
+                            client);
                       });
                 }).toList()))
       ]);

@@ -1,19 +1,12 @@
 import 'package:flutter/material.dart';
 import 'content/root.dart';
 import 'content/user.dart';
-import 'yellow_divider.dart';
+import 'page.dart';
 
 class InspirationGalleryView extends StatelessWidget {
 
   static show(BuildContext context) {
-    Navigator.of(context).push(new MaterialPageRoute<Null>(
-      builder: (BuildContext context) {
-        return new Scaffold(
-          appBar: new AppBar(title: new Text("Inspiration")),
-          body: new Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [ new YellowDivider(), new Expanded( child: new InspirationGalleryView()) ])
-        );
-      }
-    ));
+    new Page(title: "Inspiration", child: new InspirationGalleryView()).show(context);
   }
 
   Widget build(BuildContext context) {

@@ -1,11 +1,14 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
+import 'page.dart';
+import 'content/root.dart';
+import 'content/user.dart';
 
 import 'content/client_note.dart';
 
 class ClientNotesWidget extends StatelessWidget {
   final List<ClientNote> notes;
-  final String client;
+  final User client;
 
   ClientNotesWidget(this.notes, this.client);
 
@@ -20,19 +23,10 @@ class ClientNotesWidget extends StatelessWidget {
         ).toList())
     );
 
-    return new Scaffold(
-      appBar: new AppBar(title: new Text(client)),
-      body: new CustomScrollView( slivers: [sliverList])
-    );
+    return new CustomScrollView( slivers: [sliverList]);
   }
 
-  static show(BuildContext context, List<ClientNote> notes, String client) {
-    Navigator.of(context).push(
-      new MaterialPageRoute<Null>(
-        builder: (BuildContext context) {
-          return new ClientNotesWidget(notes, client);
-        }
-      )
-    );
+  static show(BuildContext context, List<ClientNote> notes, User client) {
+    new Page(title: client.realName, child: new ClientNotesWidget(notes, client)).show(context);
   }
 }

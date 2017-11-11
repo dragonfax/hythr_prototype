@@ -11,21 +11,14 @@ import 'package:map_view/marker.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'content/root.dart';
-import 'yellow_divider.dart';
+import 'page.dart';
 
 
 class ProfileWidget extends StatelessWidget {
   final canEdit = true;
 
   static show(BuildContext context) {
-    Navigator.of(context).push(new MaterialPageRoute<Null>(
-      builder: (BuildContext context) {
-        return new Scaffold(
-          appBar: new AppBar(title: new Text("Stylist Profile")),
-          body: new ProfileWidget()
-        );
-      }
-    ));
+    new Page(title: "Stylist Profile", child: new ProfileWidget()).show(context);
   }
 
   showSalonMap() async {
@@ -126,7 +119,7 @@ class ProfileWidget extends StatelessWidget {
         ),
         subtitle: new Text(user.interests.join(", ")),
         onTap: () {
-          InterestsSelectionPage.show(context, user, canEdit, root.interests);
+          InterestsSelectionPage.show(context, user, root.interests);
         }
       ),
       new Divider(),
@@ -137,7 +130,7 @@ class ProfileWidget extends StatelessWidget {
         ),
         subtitle: new Text(user.skills.join(", ")),
         onTap: () {
-          SkillsSelectionPage.show(context, user, canEdit, root.skills);
+          SkillsSelectionPage.show(context, user, root.skills);
         }
       ),
       new Divider(),
@@ -155,9 +148,7 @@ class ProfileWidget extends StatelessWidget {
     }
 
     slivers.add(new SliverList( delegate: new SliverChildListDelegate(basicInfo)));
-    return new Column( crossAxisAlignment: CrossAxisAlignment.stretch ,children: [
-      new YellowDivider(),
-      new Expanded(child: new CustomScrollView(slivers: slivers))
-    ]);
+
+    return new CustomScrollView(slivers: slivers);
   }
 }

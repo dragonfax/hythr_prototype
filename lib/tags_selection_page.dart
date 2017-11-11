@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'content/user.dart';
 import 'content/tag.dart';
 import 'toggle_button.dart';
+import 'page.dart';
 
 List<Color> blacks = [
   new Color(0xFF202020),
@@ -42,22 +43,25 @@ class TagSwitch extends ToggleButton {
 }
 
 class TagsSelectionWidget extends StatefulWidget {
+  final String hint;
   final User user;
   final bool canEdit;
   final List<Tag> tags;
 
-  TagsSelectionWidget(this.user, this.canEdit, this.tags);
+  TagsSelectionWidget({ @required this.hint, @required this.user, this.canEdit = true, @required this.tags });
 
   @override
-  createState() => new TagsSelectionWidgetState(user, canEdit, tags);
+  createState() => new TagsSelectionWidgetState(hint: hint, user: user, tags: tags);
 }
 
 class TagsSelectionWidgetState extends State<TagsSelectionWidget> {
+  final String hint;
+
   final User user;
   final bool canEdit;
   final List<Tag> tags;
 
-  TagsSelectionWidgetState(this.user,this.canEdit, this.tags);
+  TagsSelectionWidgetState({ @required this.hint, @required this.user, this.canEdit =true, @required this.tags });
 
   List<Widget> buildToggles(BuildContext context) {
 
@@ -74,7 +78,7 @@ class TagsSelectionWidgetState extends State<TagsSelectionWidget> {
             });
           },
           onLongPress: ! tag.hasChildren() ? null : () {
-            InterestsSelectionPage.show(context,user,canEdit,tag.children);
+            InterestsSelectionPage.show(context,user,tag.children);
           },
       );
     }).toList();
@@ -82,50 +86,25 @@ class TagsSelectionWidgetState extends State<TagsSelectionWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return new GridView.count(
-        crossAxisCount: 2,
-        childAspectRatio: 2.0,
-        children: buildToggles(context)
-    );
-  }
-}
 
-class TagSelectionPage extends StatelessWidget {
-
-  final String title;
-  final String hint;
-  final WidgetBuilder builder;
-
-  TagSelectionPage(this.title, this.hint, this.builder);
-
-  Widget build(BuildContext context) {
-    return new Scaffold(
-        appBar: new AppBar(title: new Text(title)),
-        body: new DecoratedBox(
-          decoration: new BoxDecoration(
-            color: Colors.black
+    return new DecoratedBox(
+      decoration: new BoxDecoration(
+        color: Colors.black
+      ),
+      child: new Column(
+        children: [
+          new Padding(
+              padding: new EdgeInsets.symmetric(vertical: 8.0),
+              child: new Text(hint, style: new TextStyle(fontStyle: FontStyle.italic))
           ),
-          child: new Column(
-            children: [
-              new Padding(
-                  padding: new EdgeInsets.symmetric(vertical: 8.0),
-                  child: new Text(hint, style: new TextStyle(fontStyle: FontStyle.italic))
-              ),
-              new Expanded(
-                child: builder(context)
-              )
-            ]
+          new Expanded(
+            child: new GridView.count(
+              crossAxisCount: 2,
+              childAspectRatio: 2.0,
+              children: buildToggles(context)
+            )
           )
-        )
-    );
-  }
-
-  static void show(BuildContext context, String title, String hint, WidgetBuilder builder) {
-    Navigator.of(context).push(
-      new MaterialPageRoute<Null>(
-        builder: (BuildContext context) {
-          return new TagSelectionPage(title, hint, builder);
-        }
+        ]
       )
     );
   }
@@ -133,31 +112,29 @@ class TagSelectionPage extends StatelessWidget {
 
 
 class SkillsSelectionPage {
-
-  static void show(BuildContext context, User user, bool canEdit, List<Tag> tags) {
-    TagSelectionPage.show(
-        context,
-        "Stylist Skills",
-        canEdit ? "Select the skills you want to promote" : "Skills",
-            (context) {
-          return new TagsSelectionWidget(user, canEdit, tags);
-        }
-    );
+  static void show(BuildContext context, User user, List<Tag> tags) {
+    new Page(
+        title: "Stylist Skills",
+        child: new TagsSelectionWidget(
+            hint: "Select the skills you want to promote",
+            user: user,
+            tags: tags)
+    ).show(context);
   }
 }
 
 
 class InterestsSelectionPage {
 
-  static void show(BuildContext context, User user, bool canEdit, List<Tag> tags) {
-    TagSelectionPage.show(
-      context,
-      "Interests & Hobbies",
-      canEdit ? "Select interests that you want to share" : "Interests",
-      (context) {
-        return new TagsSelectionWidget(user, canEdit, tags);
-      }
-    );
+  static void show(BuildContext context, User user, List<Tag> tags) {
+    new Page(
+      title: "Interests & Hobbies",
+      child: new TagsSelectionWidget(
+        hint: "Select interests that you want to share",
+        user: user,
+        tags: tags
+      )
+    ).show(context);
   }
 }
 

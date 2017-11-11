@@ -1,19 +1,12 @@
 import 'package:flutter/material.dart';
 import 'content/root.dart';
 import 'content/user.dart';
-import 'yellow_divider.dart';
+import 'page.dart';
 
 class PersonalPortfolioView extends StatelessWidget {
 
   static show(BuildContext context) {
-    Navigator.of(context).push(new MaterialPageRoute<Null>(
-      builder: (BuildContext context) {
-        return new Scaffold(
-          appBar: new AppBar(title: new Text("Personal Porfolio")),
-          body: new Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [ new YellowDivider(), new Expanded(child: new PersonalPortfolioView()) ])
-        );
-      }
-    ));
+    new Page(title: "Personal Porfolio", child: new PersonalPortfolioView()).show(context);
   }
 
   Widget build(BuildContext context) {
