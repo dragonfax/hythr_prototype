@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'content/user.dart';
 import 'profile_widget.dart';
-import 'client_notes_widget.dart';
 import 'content/root.dart';
 import 'page.dart';
 
@@ -15,7 +14,7 @@ class ClientsTabView extends StatelessWidget {
   }
 
   showClientProfilePanel(BuildContext context, User client) {
-    new Page(title: client.realName, child: new ProfileWidget()).show(context);
+    new Page(title: client.realName, child: new ProfileWidget(user: client, canEdit: false, asClient: true)).show(context);
   }
 
   showContactAll(BuildContext context) async {
@@ -43,7 +42,10 @@ class ClientsTabView extends StatelessWidget {
         new ConstrainedBox(
             constraints: new BoxConstraints(minHeight: 20.0),
             child: new FlatButton(
-                onPressed: () { showContactAll(context); }, child: new Text("Contact All"))),
+                onPressed: () { showContactAll(context); },
+                child: new Text("Contact All")
+            )
+        ),
         new Expanded(
             child: new ListView(
                 itemExtent: 100.0,
@@ -52,13 +54,8 @@ class ClientsTabView extends StatelessWidget {
                   return new ListTile(
                       leading: client.getProfilePicture(),
                       title: new Text(client.realName),
-                      // onTap: () { showClientProfilePanel(context, client); }
-                      onTap: () {
-                        ClientNotesWidget.show(
-                            context,
-                            root.currentUser.clientNotes[client.username],
-                            client);
-                      });
+                      onTap: () { showClientProfilePanel(context, client); }
+                  );
                 }).toList()))
       ]);
     }
