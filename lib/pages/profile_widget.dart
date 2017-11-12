@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'content/user.dart';
+import '../content/content.dart';
 import 'tags_selection_page.dart';
-import 'content/root.dart';
 import 'page.dart';
 import 'package:flutter/foundation.dart';
-import 'content/client_note.dart';
 import 'clients_tab_view.dart';
 
 class ProfileWidget extends StatelessWidget {

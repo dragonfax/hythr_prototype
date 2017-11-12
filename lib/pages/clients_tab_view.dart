@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'content/user.dart';
-import 'profile_widget.dart';
-import 'content/root.dart';
-import 'page.dart';
+import '../content/content.dart';
+import 'package:hythr/pages/profile_widget.dart';
+import 'package:hythr/pages/page.dart';
 import 'package:flutter_fab_dialer/flutter_fab_dialer.dart';
 
 class ClientsTabView extends StatelessWidget {

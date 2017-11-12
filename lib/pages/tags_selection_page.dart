@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'content/user.dart';
-import 'content/tag.dart';
-import 'toggle_button.dart';
-import 'page.dart';
+import '../content/content.dart';
+import 'package:hythr/widgets/toggle_button.dart';
+import 'package:hythr/pages/page.dart';
 
 const List<Color> blacks = const [
   const Color(0xFF202020),

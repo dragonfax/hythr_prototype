@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'constants.dart';
-import 'content/root.dart';
+import '../constants.dart';
+import '../content/content.dart';
 
 
 class ApplicationMenu extends StatelessWidget {

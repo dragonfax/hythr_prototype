@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'content/root.dart';
-import 'content/user.dart';
-import 'page.dart';
+import '../content/content.dart';
+import 'package:hythr/pages/page.dart';
 import 'package:flutter_fab_dialer/flutter_fab_dialer.dart';
 
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'yellow_divider.dart';
+import 'package:hythr/widgets/yellow_divider.dart';
 import 'package:flutter/foundation.dart';
 
 class Page extends StatelessWidget {

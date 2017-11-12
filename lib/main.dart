@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'signin_widget.dart';
+import 'package:hythr/pages/signin_widget.dart';
 import 'constants.dart';
-import 'home.dart';
+import 'package:hythr/pages/home.dart';
 
 void main() {
   runApp(new MyApp());

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'content/notification.dart' as content;
-import 'content/root.dart';
-import 'page.dart';
+import '../content/content.dart' as content;
+import 'package:hythr/pages/page.dart';
 
 class NotificationsTabView extends StatelessWidget {
   NotificationsTabView(this.notifications);
@@ -9,7 +8,7 @@ class NotificationsTabView extends StatelessWidget {
   final List<content.Notification> notifications;
 
   static show(BuildContext context) {
-    new Page( title: "Notifications", child: new NotificationsTabView(root.currentUser?.notifications) ).show(context);
+    new Page( title: "Notifications", child: new NotificationsTabView(content.root.currentUser?.notifications) ).show(context);
   }
 
   @override
