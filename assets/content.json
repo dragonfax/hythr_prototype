@@ -93,6 +93,44 @@
       "icon": "assets/icons/gradient.png"
     }
   ],
+  "timeline": [
+    {
+      "username": "sam_malone",
+      "type": "profile_photo",
+      "asset": "assets/images/angela_b/clients/1.jpg"
+    },
+    {
+      "username": "tony_m",
+      "type": "announcement",
+      "message": "I'm taking vacation from 7/12 - 7/28. Please reschedule any appointments during that window."
+    },
+    {
+      "username": "jon_b",
+      "type": "client_photo",
+      "client": "rebecca_howe",
+      "asset": "assets/images/profiles/kirstie_alley.jpg"
+    },
+    {
+      "username": "jon_b",
+      "type": "announcement",
+      "message": "Suprise! I'm moving to Fringe! Hair Solutions at the beginning of November. I hope the weather on the hill is better."
+    },
+    {
+      "username": "angela_b",
+      "type": "interest",
+      "interest": "Hockey"
+    },
+    {
+      "username": "mona",
+      "type": "inspiration",
+      "asset": "assets/images/angela_b/style/3.jpg"
+    },
+    {
+      "username": "jon_b",
+      "type": "certification",
+      "certification": "American Board of Certified Haircolorists"
+    }
+  ],
   "users": [
     {
       "username": "angela_b",

@@ -9,6 +9,7 @@ import 'package:flutter/widgets.dart';
 import 'yellow_divider.dart';
 import 'profile_widget.dart';
 import 'add_content_speed_dial.dart';
+import 'timeline_widget.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -24,6 +25,7 @@ class HomePageState extends State<HomePage> {
     DataRoot newRoot = await readContent();
     setState(() {
       root = newRoot;
+      debugPrint("home page reassembled");
     });
   }
 
@@ -67,6 +69,11 @@ class MainMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new ListView(children: [
+          new ListTile(
+            leading: const Icon(Icons.timeline),
+            title: const Text("Timeline"),
+            onTap: () { TimeLineWidget.show(context); }
+          ),
           new ListTile(
             leading: const Icon(Icons.person),
             title: const Text("Stylist Profile"),

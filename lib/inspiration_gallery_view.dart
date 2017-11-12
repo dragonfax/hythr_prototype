@@ -4,6 +4,7 @@ import 'content/user.dart';
 import 'page.dart';
 import 'package:flutter_fab_dialer/flutter_fab_dialer.dart';
 
+
 class InspirationGalleryView extends StatelessWidget {
 
   static show(BuildContext context) {
