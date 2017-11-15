@@ -10,6 +10,7 @@ import 'package:hythr/widgets/yellow_divider.dart';
 import 'package:hythr/pages/profile_widget.dart';
 import '../widgets/add_content_speed_dial.dart';
 import 'package:hythr/pages/timeline_widget.dart';
+import 'stylist_search_page.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -94,6 +95,11 @@ class MainMenu extends StatelessWidget {
             title: const Text("Inspiration"),
             onTap: () { InspirationGalleryView.show(context); },
           ),
+          new ListTile(
+            leading: const Icon(Icons.search),
+            title: const Text("Find a Stylist"),
+            onTap: () { StylistSearchPage.show(context, root.currentUser); },
+          )
         ]);
   }
 }
