@@ -24,7 +24,7 @@ class ProfileWidget extends StatelessWidget {
     // initial tiles with basic user info for the first sliver.
     List<Widget> basicInfo = [
       new ListTile(
-        leading: user.getProfilePicture(),
+        leading: user.getChip(),
         title: new Text(user.realName),
         subtitle: new Column(children: [
           new Text(user.username),

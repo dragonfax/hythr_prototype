@@ -55,7 +55,7 @@ class ClientsTabView extends StatelessWidget {
                   children: root.currentUser.clients.map((clientName) {
                     User client = root.users[clientName];
                     return new ListTile(
-                        leading: client.getProfilePicture(),
+                        leading: client.getChip(),
                         title: new Text(client.realName),
                         onTap: () { showClientProfilePanel(context, client); }
                     );

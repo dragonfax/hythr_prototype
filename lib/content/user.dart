@@ -67,11 +67,21 @@ class User {
     }
   }
 
-  getProfilePicture() {
+  String getInitials() {
+    return realName.split(" ").map((String s){ return s[0];}).join("");
+  }
+
+  Widget getChip() {
     final profilePhoto = gallery.firstWhere((p) { return p.isProfile; }, orElse: () => null);
     if ( profilePhoto != null ) {
-      return new Image.asset(profilePhoto.asset);
+      return new CircleAvatar(
+        backgroundImage: new AssetImage(profilePhoto.asset),
+      );
+    } else {
+      return new CircleAvatar(
+        backgroundColor: Colors.grey.shade800,
+        child: new Text(getInitials())
+      );
     }
-    return new Icon(Icons.person);
   }
 }
