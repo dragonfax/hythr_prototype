@@ -50,6 +50,14 @@ class ProfileWidget extends StatelessWidget {
         title: new Text(user.phone ?? "XXX-XXX-XXXX"),
       ),
       const Divider(),
+      new ListTile(
+        leading: const Icon(Icons.message),
+        title: new Text("Send message"),
+        onTap: () {
+          ContactClientButton.showContactDialog(context);
+        }
+      ),
+      const Divider(),
     ]);
 
 
@@ -75,14 +83,16 @@ class ProfileWidget extends StatelessWidget {
 
     basicInfo.addAll([
       new ListTile(
-        leading: const Icon(Icons.beach_access),
-        title: const Text("Interests",
-          style: const TextStyle(fontWeight: FontWeight.bold)
-        ),
+        leading: const Icon(Icons.book),
+        title: const Text("Interests" ),
         subtitle: new Text(user.interests.join(", ")),
         onTap: !canEdit ? null : () {
           InterestsSelectionPage.show(context, user, root.interests);
         }
+      ),
+      new ListTile(
+        leading: const Icon(Icons.merge_type),
+        title: const Text("Hair Type")
       ),
     ]);
 
@@ -91,9 +101,7 @@ class ProfileWidget extends StatelessWidget {
         new Divider(),
         new ListTile(
             leading: const Icon(Icons.content_cut),
-            title: const Text("Skills",
-                style: const TextStyle(fontWeight: FontWeight.bold)
-            ),
+            title: const Text("Skills" ),
             subtitle: new Text(user.skills.join(", ")),
             onTap: !canEdit ? null : () {
               SkillsSelectionPage.show(context, user, root.skills);
@@ -104,23 +112,38 @@ class ProfileWidget extends StatelessWidget {
 
     if ( !asClient ) {
       basicInfo.addAll([
-        new Divider(),
+        const Divider(),
         new ListTile(
             leading: const Icon(Icons.school),
-            title: const Text("Certifications",
-                style: const TextStyle(fontWeight: FontWeight.bold)),
+            title: const Text("Certifications"),
             subtitle: new Text((user.certifications ?? []).join(", "))),
       ]);
     }
+
+    basicInfo.addAll([
+      const Divider(),
+      new ListTile(
+        leading: const Icon(Icons.person_outline),
+        title: new Text("Personal photos"),
+      ),
+      const Divider(),
+      new ListTile(
+        leading: const Icon(Icons.star),
+        title: new Text("Inspiration photos")
+      ),
+    ]);
 
     if ( asClient ) {
       basicInfo.addAll(const [
         const Divider(),
         const ListTile(
-          title: const Text("Notes & Photos", style: const TextStyle(fontWeight: FontWeight.bold))
+          leading: const Icon(Icons.note),
+          title: const Text("Your Notes & Photos")
         ),
       ]);
+    }
 
+    /*
       List<ClientNote> notes = root.currentUser.clientNotes[user.username];
 
       if ( notes == null || notes.isEmpty ) {
@@ -134,25 +157,20 @@ class ProfileWidget extends StatelessWidget {
           }).toList()
         );
       }
-    }
+    } */
 
     SliverList slist = new SliverList( delegate: new SliverChildListDelegate(basicInfo));
 
     return new Stack(children: [
-      new Column(children: [
-        new ContactClientButton(),
-        new Expanded(
-          child: new CustomScrollView(slivers: [slist])
-        )
-      ]),
+      new CustomScrollView(slivers: [slist]),
       const AddClientContentSpeedDial()
     ]);
   }
 }
 
-class ContactClientButton extends StatelessWidget {
+class ContactClientButton {
 
-  showContactDialog(BuildContext context) async {
+  static showContactDialog(BuildContext context) async {
     showDialog<Null>(
       context: context,
       child: new AlertDialog(
@@ -165,18 +183,4 @@ class ContactClientButton extends StatelessWidget {
       )
     );
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return new ConstrainedBox(
-        constraints: const BoxConstraints(minHeight: 20.0),
-        child: new FlatButton(
-            onPressed: () {
-              showContactDialog(context);
-            },
-            child: const Text("Contact")
-        )
-    );
-  }
-
 }
