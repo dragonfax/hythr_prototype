@@ -62,6 +62,8 @@ flutter:
 
   assets:
     - assets/content.json
+    - assets/icons/puzzle_piece.png
+    - assets/icons/heart.png
     - assets/icons/gradient.png
     - assets/icons/men.png
     - assets/icons/women.png

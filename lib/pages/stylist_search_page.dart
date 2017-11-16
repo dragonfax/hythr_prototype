@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'page.dart';
 import '../content/user.dart';
 import '../content/root.dart';
+import 'dart:math';
+
+final rng = new Random();
 
 class StylistSearchPage extends StatelessWidget {
 
@@ -33,22 +36,22 @@ class StylistSearchPage extends StatelessWidget {
               new Column(children: [
                 new Row(children: [
                   new Padding(
-                    child: const Icon(Icons.perm_device_information),
+                    child: new ImageIcon(new AssetImage("assets/icons/puzzle_piece.png")),
                     padding: new EdgeInsets.symmetric(horizontal: 10.0)
                   ),
-                  new Text("5")
+                  new Text(rng.nextInt(10).toString())
                 ]),
                 new Row(children: [
                   new Padding(
-                    child: const Icon(Icons.hearing),
+                    child: new ImageIcon(new AssetImage("assets/icons/heart.png")),
                     padding: new EdgeInsets.symmetric(horizontal: 10.0)
                   ),
-                  new Text("3")
+                  new Text(rng.nextInt(10).toString())
                 ])
               ]),
               new Padding(
                 padding: new EdgeInsets.symmetric(horizontal: 10.0),
-                child: new Text("1.3 mi")
+                child: new Text( ( rng.nextDouble() * 10 ).toStringAsFixed(1) + " mi")
               )
             ]
           ),
