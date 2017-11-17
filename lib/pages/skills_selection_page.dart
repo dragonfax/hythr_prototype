@@ -28,7 +28,7 @@ List<Skill> skills = [
       null),
   new Skill("Straight Hair",
       new ImageIcon(new AssetImage("assets/icons/straight_line.png")), null),
-  new Skill("Asian Hair", new ImageIcon(new AssetImage("assets/icons/lotus.jpg")),
+  new Skill("Asian Hair", new ImageIcon(new AssetImage("assets/icons/lotus.png")),
       null),
   new Skill("Afro Texture",
       new ImageIcon(new AssetImage("assets/icons/afro.png")), null),
