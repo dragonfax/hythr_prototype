@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import '../content/content.dart';
-import 'tags_selection_page.dart';
 import 'page.dart';
 import 'package:flutter/foundation.dart';
 import 'clients_tab_view.dart';
+import 'interests_selection_page.dart';
+import 'skills_selection_page.dart';
 
 class ProfileWidget extends StatelessWidget {
   final bool canEdit;
@@ -87,7 +88,7 @@ class ProfileWidget extends StatelessWidget {
         title: const Text("Interests" ),
         subtitle: new Text(user.interests.join(", ")),
         onTap: !canEdit ? null : () {
-          InterestsSelectionPage.show(context, user, root.interests);
+          InterestsSelectionPage.show(context, user);
         }
       ),
       new ListTile(
@@ -104,7 +105,7 @@ class ProfileWidget extends StatelessWidget {
             title: const Text("Skills" ),
             subtitle: new Text(user.skills.join(", ")),
             onTap: !canEdit ? null : () {
-              SkillsSelectionPage.show(context, user, root.skills);
+              SkillsSelectionPage.show(context, user);
             }
         ),
       ]);

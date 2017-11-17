@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import '../content/content.dart';
 import 'package:hythr/widgets/toggle_button.dart';
-import 'package:hythr/pages/page.dart';
 
 const List<Color> blacks = const [
   const Color(0xFF202020),
@@ -16,6 +15,33 @@ const List<Color> blacks = const [
   const Color(0xFF121212),
   const Color(0xFF161616),
 ];
+
+abstract class Tag {
+  final String name;
+  final ImageIcon icon;
+  final List<Tag> children;
+
+  Tag(this.name, this.icon, this.children);
+
+  bool hasChildren() {
+    return children != null && children.isNotEmpty;
+  }
+
+  List<String> getTagList(User user);
+
+  bool getValue(User user) {
+    return getTagList(user).contains(name);
+  }
+
+  toggle(User user) {
+    List<String> l = getTagList(user);
+    if ( l.contains(name) ) {
+      l.remove(name);
+    } else {
+      l.add(name);
+    }
+  }
+}
 
 class TagSwitch extends ToggleButton {
 
@@ -76,9 +102,9 @@ class TagsSelectionWidgetState extends State<TagsSelectionWidget> {
               tag.toggle(user);
             });
           },
-          onLongPress: ! tag.hasChildren() ? null : () {
+          /* onLongPress: ! tag.hasChildren() ? null : () {
             InterestsSelectionPage.show(context,user,tag.children);
-          },
+          }, */
       );
     }).toList();
   }
@@ -108,33 +134,4 @@ class TagsSelectionWidgetState extends State<TagsSelectionWidget> {
     );
   }
 }
-
-
-class SkillsSelectionPage {
-  static void show(BuildContext context, User user, List<Tag> tags) {
-    new Page(
-        title: "Stylist Skills",
-        child: new TagsSelectionWidget(
-            hint: "Select the skills you want to promote",
-            user: user,
-            tags: tags)
-    ).show(context);
-  }
-}
-
-
-class InterestsSelectionPage {
-
-  static void show(BuildContext context, User user, List<Tag> tags) {
-    new Page(
-      title: "Interests & Hobbies",
-      child: new TagsSelectionWidget(
-        hint: "Select interests that you want to share",
-        user: user,
-        tags: tags
-      )
-    ).show(context);
-  }
-}
-
 

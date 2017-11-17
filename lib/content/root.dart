@@ -3,7 +3,6 @@ import 'dart:convert' show JSON;
 import 'package:flutter/services.dart' show rootBundle;
 
 import 'user.dart';
-import 'tag.dart';
 import 'timeline.dart';
 
 DataRoot root = new DataRoot();
@@ -29,9 +28,6 @@ class DataRoot {
 
   User currentUser;
 
-  List<Tag> skills;
-  List<Tag> interests;
-
   List<TimeLine> timeline;
 
   DataRoot() {
@@ -47,10 +43,6 @@ class DataRoot {
     });
 
     currentUser = stylists()[0];
-
-    skills = json['skills'].map((d) { return new Tag.fromJson(d, TagClass.SKILL); }).toList();
-
-    interests = json['interests'].map((d) { return new Tag.fromJson(d, TagClass.INTEREST); }).toList();
 
     timeline = json['timeline'].map((d) { return TimeLine.subclassFromJson(d); }).toList();
   }

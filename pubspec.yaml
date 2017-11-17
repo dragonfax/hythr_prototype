@@ -62,11 +62,27 @@ flutter:
 
   assets:
     - assets/content.json
+    - assets/icons/thin_lines.png
+    - assets/icons/thick_lines.png
     - assets/icons/puzzle_piece.png
     - assets/icons/heart.png
     - assets/icons/gradient.png
     - assets/icons/men.png
     - assets/icons/women.png
+    - assets/icons/wavy_lines.png
+    - assets/icons/looped_line.png
+    - assets/icons/straight_line.png
+    - assets/icons/lotus.jpg
+    - assets/icons/afro.png
+    - assets/icons/dashed_lines.png
+    - assets/icons/long_lines.png
+    - assets/icons/up_arrow.png
+    - assets/icons/wedding_ring.png
+    - assets/icons/plusminus.png
+    - assets/icons/highlighter.png
+    - assets/icons/flame.png
+    - assets/icons/scissors.png
+    - assets/icons/razor.png
     - assets/images/logo.png
     - assets/images/background.jpg
     - assets/images/profiles/ted_danson.jpg

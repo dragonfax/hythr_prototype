@@ -4,6 +4,5 @@ export 'gallery.dart';
 export 'notification.dart';
 export 'root.dart';
 export 'stylist.dart';
-export 'tag.dart';
 export 'timeline.dart';
 export 'user.dart';
