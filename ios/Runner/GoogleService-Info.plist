@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>69790516515-9e8epk7bcc61v4ircn88igvi3mprn2gp.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.69790516515-9e8epk7bcc61v4ircn88igvi3mprn2gp</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>69790516515-70imeb5he7fhdoltnm4mb1hkkampqkv5.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBF5A4FTqwqRoFvWKYOx739PzHFtBNbRYc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>69790516515</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.digeratido.hythr</string>
+	<key>PROJECT_ID</key>
+	<string>hythr-1510215815985</string>
+	<key>STORAGE_BUCKET</key>
+	<string>hythr-1510215815985.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:69790516515:ios:d11b5ce3df106984</string>
+	<key>DATABASE_URL</key>
+	<string>https://hythr-1510215815985.firebaseio.com</string>
+</dict>
+</plist>
