@@ -7,6 +7,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hythr/google_signin.dart';
 
 
+
 void main() {
   runApp(new MyApp());
 }
@@ -34,6 +35,15 @@ class MyApp extends StatelessWidget {
     if (user == null) {
       await googleSignIn.signIn();
     }
+
+    if (await auth.currentUser() == null) {
+      GoogleSignInAuthentication credentials = await googleSignIn.currentUser.authentication;
+      await auth.signInWithGoogle(
+        idToken: credentials.idToken,
+        accessToken: credentials.accessToken,
+      );
+    }
+
   }
 
 }
