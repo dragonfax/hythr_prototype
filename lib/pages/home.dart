@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:hythr/pages/notifications_tab_view.dart';
-import '../widgets/application_menu.dart';
-import '../content/content.dart';
+import 'package:flutter/widgets.dart';
 import 'package:hythr/pages/clients_tab_view.dart';
 import 'package:hythr/pages/personal_portfolio_view.dart';
 import 'package:hythr/pages/inspiration_gallery_view.dart';
-import 'package:flutter/widgets.dart';
 import 'package:hythr/widgets/yellow_divider.dart';
 import 'package:hythr/pages/profile_widget.dart';
-import '../widgets/add_content_speed_dial.dart';
+import 'package:hythr/widgets/add_content_speed_dial.dart';
 import 'package:hythr/pages/timeline_widget.dart';
+import 'package:hythr/widgets/application_menu.dart';
+import 'package:hythr/content/content.dart';
 import 'stylist_search_page.dart';
 
 class HomePage extends StatefulWidget {
-
-  const HomePage();
-
   @override
   HomePageState createState() => new HomePageState();
 }

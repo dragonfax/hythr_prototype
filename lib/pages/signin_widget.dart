@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class SignInWidget extends StatefulWidget {
 
@@ -45,23 +46,16 @@ class SignInState extends State<SignInWidget> {
               padding: const EdgeInsets.only(bottom: 16.0),
               child: new FlatButton(
                 onPressed: signedInCallback,
-                child: const Text("Sign up with Facebook"),
+                child: const Text("Sign in with Google"),
                 color: Colors.blue,
                 textColor: Colors.white,
               )
-            ),
-            new FlatButton(
-              onPressed: signedInCallback,
-              child: const Text("Sign up with Email"),
-              color: Colors.blue,
-              textColor: Colors.white,
             ),
           ]
         )
       )
     );
 
-    // TODO consider using a widget generator to lazy build the app after signin.
     return ! signedIn ? signInPage : child;
   }
 }
