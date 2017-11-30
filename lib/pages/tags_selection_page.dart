@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import '../content/content.dart';
 import 'package:hythr/widgets/toggle_button.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:hythr/google_signin.dart';
 
 const List<Color> blacks = const [
   const Color(0xFF202020),
@@ -33,13 +35,14 @@ abstract class Tag {
     return getTagList(user).contains(name);
   }
 
-  toggle(User user) {
-    List<String> l = getTagList(user);
-    if ( l.contains(name) ) {
-      l.remove(name);
-    } else {
-      l.add(name);
-    }
+  toggleOn(User user) {
+    var ref = FirebaseDatabase.instance.reference().child('/users/' + googleSignIn.currentUser.id + '/skills/' + name);
+    ref.set(true);
+  }
+
+  toggleOff(User user) {
+    var ref = FirebaseDatabase.instance.reference().child('/users/' + googleSignIn.currentUser.id + '/skills/' + name);
+    ref.set(null);
   }
 }
 
@@ -50,17 +53,19 @@ class TagSwitch extends ToggleButton {
   final VoidCallback onChanged;
   final VoidCallback onLongPress;
   final Color bgColor;
+  final bool value;
 
   TagSwitch({
     @required this.user,
     @required this.tag,
     @required this.onChanged,
     this.onLongPress,
-    this.bgColor = Colors.black
+    this.bgColor = Colors.black,
+    this.value = false
   }) : super(
     name: tag.name,
     icon: tag.icon,
-    value: tag.getValue(user),
+    value: value,
     onChanged: onChanged == null ? null :  onChanged,
     onLongPress: onLongPress,
     bgColor: bgColor,
@@ -72,35 +77,38 @@ class TagsSelectionWidget extends StatefulWidget {
   final User user;
   final bool canEdit;
   final List<Tag> tags;
+  final DatabaseReference document;
 
-  const TagsSelectionWidget({ @required this.hint, @required this.user, this.canEdit = true, @required this.tags });
+  const TagsSelectionWidget({
+    @required this.hint,
+    @required this.user,
+    this.canEdit = true,
+    @required this.tags,
+    this.document
+  });
 
   @override
-  createState() => new TagsSelectionWidgetState(hint: hint, user: user, tags: tags);
+  createState() => new TagsSelectionWidgetState();
 }
 
 class TagsSelectionWidgetState extends State<TagsSelectionWidget> {
-  final String hint;
 
-  final User user;
-  final bool canEdit;
-  final List<Tag> tags;
-
-  TagsSelectionWidgetState({ @required this.hint, @required this.user, this.canEdit =true, @required this.tags });
-
-  List<Widget> buildToggles(BuildContext context) {
+  List<Widget> buildToggles(BuildContext context, List<String> selectedTags) {
 
     int index = 0;
-    return tags.map((tag){
+    return widget.tags.map((tag){
       index++;
       return new TagSwitch(
-          user: user,
+          user: widget.user,
           tag: tag,
           bgColor: blacks[index % blacks.length],
-          onChanged: ! canEdit ? null : () {
-            setState((){
-              tag.toggle(user);
-            });
+          value: selectedTags.contains(tag.name),
+          onChanged: ! widget.canEdit ? null : () {
+            if ( selectedTags.contains(tag.name) ) {
+              tag.toggleOff(widget.user);
+            } else {
+              tag.toggleOn(widget.user);
+            }
           },
           /* onLongPress: ! tag.hasChildren() ? null : () {
             InterestsSelectionPage.show(context,user,tag.children);
@@ -109,10 +117,8 @@ class TagsSelectionWidgetState extends State<TagsSelectionWidget> {
     }).toList();
   }
 
-  @override
-  Widget build(BuildContext context) {
-
-    return new DecoratedBox(
+  Widget buildPage(List<String> selectedTags){
+     return new DecoratedBox(
       decoration: const BoxDecoration(
         color: Colors.black
       ),
@@ -120,17 +126,38 @@ class TagsSelectionWidgetState extends State<TagsSelectionWidget> {
         children: [
           new Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: new Text(hint, style: const TextStyle(fontStyle: FontStyle.italic))
+              child: new Text(widget.hint, style: const TextStyle(fontStyle: FontStyle.italic))
           ),
           new Expanded(
             child: new GridView.count(
               crossAxisCount: 2,
               childAspectRatio: 2.0,
-              children: buildToggles(context)
+              children: buildToggles(context, selectedTags)
             )
           )
         ]
       )
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new StreamBuilder<Event>(
+      stream: widget.document.onValue,
+      builder: (BuildContext context, AsyncSnapshot<Event> asyncEvent) {
+        if ( asyncEvent != null ) {
+          debugPrint("got asyncsnapshot event " + asyncEvent.data.toString());
+          if ( asyncEvent.data != null ) {
+            debugPrint("with snapshot " + asyncEvent.data.snapshot.toString());
+            if ( asyncEvent.data.snapshot != null ) {
+              debugPrint("with value " + asyncEvent.data.snapshot.value.toString());
+            }
+          }
+        }
+        Map data = asyncEvent?.data?.snapshot?.value;
+        List<String> selectedTags = data?.keys?.toList() ?? <String>[];
+        return buildPage(selectedTags);
+      }
     );
   }
 }
