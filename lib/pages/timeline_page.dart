@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import '../content/content.dart';
 import 'package:hythr/pages/page.dart';
 
-class TimeLineWidget extends StatelessWidget {
+class TimeLinePage extends StatelessWidget {
   static show(BuildContext context) {
-    new Page(title: "TimeLine", child: new TimeLineWidget()).show(context);
+    new Page(title: "TimeLine", child: new TimeLinePage()).show(context);
   }
 
   Widget build(BuildContext context) {

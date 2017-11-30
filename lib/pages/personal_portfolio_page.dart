@@ -3,10 +3,10 @@ import '../content/content.dart';
 import 'package:hythr/pages/page.dart';
 import 'package:flutter_fab_dialer/flutter_fab_dialer.dart';
 
-class PersonalPortfolioView extends StatelessWidget {
+class PersonalPortfolioPage extends StatelessWidget {
 
   static show(BuildContext context) {
-    new Page(title: "Personal Porfolio", child: new PersonalPortfolioView()).show(context);
+    new Page(title: "Personal Porfolio", child: new PersonalPortfolioPage()).show(context);
   }
 
   Widget build(BuildContext context) {

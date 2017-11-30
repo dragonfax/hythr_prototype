@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:hythr/pages/notifications_tab_view.dart';
+import 'package:hythr/pages/notifications_page.dart';
 import 'package:flutter/widgets.dart';
-import 'package:hythr/pages/clients_tab_view.dart';
-import 'package:hythr/pages/personal_portfolio_view.dart';
-import 'package:hythr/pages/inspiration_gallery_view.dart';
+import 'package:hythr/pages/clients_tab_page.dart';
+import 'package:hythr/pages/personal_portfolio_page.dart';
+import 'package:hythr/pages/inspiration_gallery_page.dart';
 import 'package:hythr/widgets/yellow_divider.dart';
-import 'package:hythr/pages/profile_widget.dart';
+import 'package:hythr/pages/profile_page.dart';
 import 'package:hythr/widgets/add_content_speed_dial.dart';
-import 'package:hythr/pages/timeline_widget.dart';
+import 'package:hythr/pages/timeline_page.dart';
 import 'package:hythr/widgets/application_menu.dart';
 import 'package:hythr/content/content.dart';
 import 'stylist_search_page.dart';
@@ -42,7 +42,7 @@ class HomePageState extends State<HomePage> {
           new IconButton(
               icon: const Icon(Icons.notifications, color: Colors.white),
               tooltip: "Notifications",
-              onPressed: () { NotificationsTabView.show(context); }
+              onPressed: () { NotificationsPage.show(context); }
           )
         ],
       ),
@@ -70,27 +70,27 @@ class MainMenu extends StatelessWidget {
           new ListTile(
             leading: const Icon(Icons.timeline),
             title: const Text("Timeline"),
-            onTap: () { TimeLineWidget.show(context); }
+            onTap: () { TimeLinePage.show(context); }
           ),
           new ListTile(
             leading: const Icon(Icons.person),
             title: const Text("Stylist Profile"),
-            onTap: () { ProfileWidget.show(context, root.currentUser, true, false); },
+            onTap: () { ProfilePage.show(context, root.currentUser, true, false); },
           ),
           new ListTile(
             leading: const Icon(Icons.people_outline),
             title: const Text("Clients"),
-            onTap: () { ClientsTabView.show(context); },
+            onTap: () { ClientsTabPage.show(context); },
           ),
           new ListTile(
             leading: const Icon(Icons.photo_camera),
             title: const Text("Personal Portfolio"),
-            onTap: () { PersonalPortfolioView.show(context); },
+            onTap: () { PersonalPortfolioPage.show(context); },
           ),
           new ListTile(
             leading: const Icon(Icons.photo_album),
             title: const Text("Inspiration"),
-            onTap: () { InspirationGalleryView.show(context); },
+            onTap: () { InspirationGalleryPage.show(context); },
           ),
           new ListTile(
             leading: const Icon(Icons.search),

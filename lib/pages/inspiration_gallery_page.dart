@@ -4,10 +4,10 @@ import 'package:hythr/pages/page.dart';
 import 'package:flutter_fab_dialer/flutter_fab_dialer.dart';
 
 
-class InspirationGalleryView extends StatelessWidget {
+class InspirationGalleryPage extends StatelessWidget {
 
   static show(BuildContext context) {
-    new Page(title: "Inspiration", child: new InspirationGalleryView()).show(context);
+    new Page(title: "Inspiration", child: new InspirationGalleryPage()).show(context);
   }
 
   Widget build(BuildContext context) {

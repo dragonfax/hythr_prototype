@@ -3,19 +3,19 @@ import 'package:flutter/widgets.dart';
 import '../content/content.dart';
 import 'page.dart';
 import 'package:flutter/foundation.dart';
-import 'clients_tab_view.dart';
+import 'clients_tab_page.dart';
 import 'interests_selection_page.dart';
 import 'skills_selection_page.dart';
 
-class ProfileWidget extends StatelessWidget {
+class ProfilePage extends StatelessWidget {
   final bool canEdit;
   final User user;
   final bool asClient; // otherwise as-stylist
 
-  ProfileWidget({ @required this.user, this.canEdit = false, this.asClient = false });
+  ProfilePage({ @required this.user, this.canEdit = false, this.asClient = false });
 
   static show(BuildContext context, User user, bool canEdit, bool asClient) {
-    new Page(title: "Stylist Profile", child: new ProfileWidget(user: user, canEdit: canEdit, asClient: asClient)).show(context);
+    new Page(title: "Stylist Profile", child: new ProfilePage(user: user, canEdit: canEdit, asClient: asClient)).show(context);
   }
 
   @override

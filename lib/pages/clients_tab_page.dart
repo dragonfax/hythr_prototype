@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import '../content/content.dart';
-import 'package:hythr/pages/profile_widget.dart';
+import 'package:hythr/pages/profile_page.dart';
 import 'package:hythr/pages/page.dart';
 import 'package:flutter_fab_dialer/flutter_fab_dialer.dart';
 
-class ClientsTabView extends StatelessWidget {
+class ClientsTabPage extends StatelessWidget {
   static show(BuildContext context) {
-    new Page(title: "Clients", child: new ClientsTabView()).show(context);
+    new Page(title: "Clients", child: new ClientsTabPage()).show(context);
   }
 
   Widget getTab() {
@@ -14,7 +14,7 @@ class ClientsTabView extends StatelessWidget {
   }
 
   showClientProfilePanel(BuildContext context, User client) {
-    new Page(title: client.realName, child: new ProfileWidget(user: client, canEdit: false, asClient: true)).show(context);
+    new Page(title: client.realName, child: new ProfilePage(user: client, canEdit: false, asClient: true)).show(context);
   }
 
   showContactAll(BuildContext context) async {
