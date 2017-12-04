@@ -65,4 +65,10 @@ class UserSignIn {
     // should be logged in by now.
     setCurrentUser(u);
   }
+
+  createNewUser(String email ) async {
+    var userDoc = FirebaseDatabase.instance.reference().child('users').push();
+    var u = new User(email);
+    await userDoc.update(u.toFirebaseUpdate());
+  }
 }

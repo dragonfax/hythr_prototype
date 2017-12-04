@@ -27,7 +27,7 @@ class UserAvatarState extends State<UserAvatar> {
           backgroundImage: new NetworkImage(
             userSignIn.currentUser.photoUrl )
         ),
-        new Text(userSignIn.currentUser?.realName ?? 'Not Logged In')
+        new Text(userSignIn.currentUser?.realName ?? 'Unknown')
       ]
     );
   }

@@ -34,6 +34,8 @@ class User {
     return { "real_name": realName, "email": email, "photo_url": photoUrl };
   }
 
+  User(this.email);
+
   User.fromFirebaseSnapshot(DataSnapshot snapshot) {
     realName = snapshot.value["real_name"];
     email = snapshot.value["email"];
