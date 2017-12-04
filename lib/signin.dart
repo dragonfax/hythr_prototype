@@ -18,7 +18,7 @@ class UserSignIn {
 
   Stream<User> get onCurrentUserChanged => _currentUserController.stream;
 
-  User _setCurrentUser(User user) {
+  User setCurrentUser(User user) {
     if (user != currentUser) {
       currentUser = user;
       _currentUserController.add(currentUser);
@@ -63,6 +63,6 @@ class UserSignIn {
     }
 
     // should be logged in by now.
-    _setCurrentUser(u);
+    setCurrentUser(u);
   }
 }

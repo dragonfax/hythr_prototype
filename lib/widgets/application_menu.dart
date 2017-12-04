@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hythr/constants.dart';
 import 'package:hythr/signin.dart';
-import 'package:flutter/services.dart';
+import 'package:hythr/pages/user_select_page.dart';
 
 class UserAvatar extends StatefulWidget {
   @override
@@ -21,7 +22,7 @@ class UserAvatarState extends State<UserAvatar> {
 
     return new Row(
       children: <Widget>[
-        userSignIn.currentUser == null ? new Icon(Icons.mood) :
+        userSignIn.currentUser == null || userSignIn.currentUser.photoUrl == null ? new Icon(Icons.mood) :
         new CircleAvatar(
           backgroundImage: new NetworkImage(
             userSignIn.currentUser.photoUrl )
@@ -51,6 +52,13 @@ class ApplicationMenu extends StatelessWidget {
                 const Divider(),
                 const Text("Lead Developer: Jason Stillwell")
               ],
+            ),
+            new ListTile(
+              leading: const Icon(Icons.people),
+              title: const Text("Select User"),
+              onTap: () {
+                UserSelectPage.show(context);
+              }
             ),
             const ListTile(
               leading: const Icon(Icons.settings),
