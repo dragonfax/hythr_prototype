@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import '../content/content.dart';
 import 'package:hythr/widgets/toggle_button.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:hythr/google_signin.dart';
+import 'package:hythr/signin.dart';
 
 const List<Color> blacks = const [
   const Color(0xFF202020),
@@ -36,12 +36,12 @@ abstract class Tag {
   }
 
   toggleOn(User user) {
-    var ref = FirebaseDatabase.instance.reference().child('/users/' + googleSignIn.currentUser.id + '/skills/' + name);
+    var ref = FirebaseDatabase.instance.reference().child('/users/' + userSignIn.currentUser.googleId + '/skills/' + name);
     ref.set(true);
   }
 
   toggleOff(User user) {
-    var ref = FirebaseDatabase.instance.reference().child('/users/' + googleSignIn.currentUser.id + '/skills/' + name);
+    var ref = FirebaseDatabase.instance.reference().child('/users/' + userSignIn.currentUser.googleId + '/skills/' + name);
     ref.set(null);
   }
 }
@@ -145,15 +145,6 @@ class TagsSelectionWidgetState extends State<TagsSelectionWidget> {
     return new StreamBuilder<Event>(
       stream: widget.document.onValue,
       builder: (BuildContext context, AsyncSnapshot<Event> asyncEvent) {
-        if ( asyncEvent != null ) {
-          debugPrint("got asyncsnapshot event " + asyncEvent.data.toString());
-          if ( asyncEvent.data != null ) {
-            debugPrint("with snapshot " + asyncEvent.data.snapshot.toString());
-            if ( asyncEvent.data.snapshot != null ) {
-              debugPrint("with value " + asyncEvent.data.snapshot.value.toString());
-            }
-          }
-        }
         Map data = asyncEvent?.data?.snapshot?.value;
         List<String> selectedTags = data?.keys?.toList() ?? <String>[];
         return buildPage(selectedTags);

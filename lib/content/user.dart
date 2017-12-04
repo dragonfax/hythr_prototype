@@ -3,9 +3,17 @@ import 'notification.dart' as notification;
 import 'gallery.dart';
 import 'stylist.dart';
 import 'client_note.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class User {
   bool isStylist = false;
+
+  // TODO
+  String photoUrl;
+  String email;
+  String googleId;
+
   String username;
   String realName;
   String phone;
@@ -21,6 +29,25 @@ class User {
   List<notification.Notification> notifications = [];
   List<Picture> gallery = [];
 
+
+  Map<String,String> toFirebaseUpdate() {
+    return { "real_name": realName, "email": email, "photo_url": photoUrl };
+  }
+
+  User.fromFirebaseSnapshot(DataSnapshot snapshot) {
+    realName = snapshot.value["real_name"];
+    email = snapshot.value["email"];
+    photoUrl = snapshot.value["photo_url"];
+    googleId = snapshot.key;
+  }
+
+  User.fromGoogleUser(GoogleSignInAccount googleUser) {
+    realName = googleUser.displayName;
+    email = googleUser.email;
+    photoUrl = googleUser.photoUrl;
+    googleId = googleUser.id;
+    // no username as they use email instead
+  }
 
   User.fromJson(Map json) {
     username = json['username'];

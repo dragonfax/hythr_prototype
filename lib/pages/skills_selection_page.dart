@@ -3,7 +3,7 @@ import 'tags_selection_page.dart';
 import 'package:hythr/content/content.dart';
 import 'page.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:hythr/google_signin.dart';
+import 'package:hythr/signin.dart';
 
 class Skill extends Tag {
   Skill(String name, ImageIcon icon, List<Tag> children)
@@ -62,7 +62,7 @@ class SkillsSelectionPage {
                 hint: "Select the skills you want to promote",
                 user: user,
                 tags: skills,
-                document: FirebaseDatabase.instance.reference().child('users/' + googleSignIn.currentUser.id + '/skills')
+                document: FirebaseDatabase.instance.reference().child('users/' + userSignIn.currentUser.googleId + '/skills')
             )
     ).show(context);
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hythr/constants.dart';
-import 'package:hythr/google_signin.dart';
+import 'package:hythr/signin.dart';
 import 'package:flutter/services.dart';
 
 class UserAvatar extends StatefulWidget {
@@ -11,7 +11,7 @@ class UserAvatar extends StatefulWidget {
 class UserAvatarState extends State<UserAvatar> {
 
   UserAvatarState() {
-    googleSignIn.onCurrentUserChanged.listen((e) {
+    userSignIn.onCurrentUserChanged.listen((e) {
       debugPrint("received a user change");
       setState(() {});
     });
@@ -21,12 +21,12 @@ class UserAvatarState extends State<UserAvatar> {
 
     return new Row(
       children: <Widget>[
-        googleSignIn.currentUser == null ? new Icon(Icons.mood) :
+        userSignIn.currentUser == null ? new Icon(Icons.mood) :
         new CircleAvatar(
           backgroundImage: new NetworkImage(
-            googleSignIn.currentUser.photoUrl )
+            userSignIn.currentUser.photoUrl )
         ),
-        new Text(googleSignIn.currentUser?.displayName ?? 'Not Logged In')
+        new Text(userSignIn.currentUser?.realName ?? 'Not Logged In')
       ]
     );
   }
@@ -60,7 +60,7 @@ class ApplicationMenu extends StatelessWidget {
               leading: const Icon(Icons.time_to_leave),
               title: const Text('Logout'),
               onTap: () {
-                googleSignIn.signOut();
+                userSignIn.signOut();
                 SystemNavigator.pop();
               }
             ),
