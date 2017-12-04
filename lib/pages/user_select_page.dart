@@ -15,6 +15,7 @@ class UserSelectWidget extends StatelessWidget {
             title: new Text(snapshot.value['email']),
             onTap: () {
               userSignIn.setCurrentUser(new User.fromFirebaseSnapshot(snapshot));
+              Navigator.of(context).pop();
             }
           );
         }
