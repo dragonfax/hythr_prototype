@@ -44,7 +44,7 @@ class SignInState extends State<SignInPage> {
     var userDoc = FirebaseDatabase.instance.reference().child('users/' + googleSignIn.currentUser.id);
     var userSnapshot = await userDoc.once();
     if (userSnapshot.value == null ) {
-      await userDoc.update({ "real_name": googleSignIn.currentUser.displayName });
+      await userDoc.update({ "real_name": googleSignIn.currentUser.displayName, "email": googleSignIn.currentUser.email });
     }
 
     // should be logged in by now.
