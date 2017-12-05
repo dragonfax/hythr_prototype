@@ -1,13 +1,18 @@
+import 'dart:math';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import '../content/content.dart';
-import 'page.dart';
 import 'package:flutter/foundation.dart';
+import 'package:hythr/content/content.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'page.dart';
 import 'clients_tab_page.dart';
 import 'interests_selection_page.dart';
 import 'skills_selection_page.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'input_dialog.dart';
+
 
 class ProfilePage extends StatelessWidget {
   final bool canEdit;
@@ -23,6 +28,17 @@ class ProfilePage extends StatelessWidget {
             child: new ProfilePage(
                 user: user, canEdit: canEdit, asClient: asClient))
         .show(context);
+  }
+
+  pickProfilePicture() async {
+    File imageFile = await ImagePicker.pickImage();
+
+    int random = new Random().nextInt(100000);
+    StorageReference sref = FirebaseStorage.instance.ref().child("${user.googleId}_profile_$random.jpg");
+    StorageUploadTask uploadTask = sref.put(imageFile);
+    Uri imageUrl = (await uploadTask.future).downloadUrl;
+
+    user.firebaseRef().child("photo_url").set(imageUrl.toString());
   }
 
   @override
@@ -42,7 +58,10 @@ class ProfilePage extends StatelessWidget {
           // initial tiles with basic user info for the first sliver.
           List<Widget> basicInfo = [
             new ListTile(
-                leading: user.getChip(),
+                leading: new GestureDetector(
+                    child: user.getChip(),
+                    onTap: pickProfilePicture
+                ),
                 title: new Text(user.realName ?? "<unknown>"),
                 subtitle: new Column(children: [
                   new Text(user.email),

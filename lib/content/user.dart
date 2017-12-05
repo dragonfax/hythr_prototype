@@ -151,10 +151,9 @@ class User {
   }
 
   Widget getChip() {
-    final profilePhoto = gallery.firstWhere((p) { return p.isProfile; }, orElse: () => null);
-    if ( profilePhoto != null ) {
+    if ( photoUrl != null ) {
       return new CircleAvatar(
-        backgroundImage: new AssetImage(profilePhoto.asset),
+        backgroundImage: new NetworkImage( photoUrl )
       );
     } else {
       return new CircleAvatar(

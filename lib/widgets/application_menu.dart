@@ -13,7 +13,6 @@ class UserAvatarState extends State<UserAvatar> {
 
   UserAvatarState() {
     userSignIn.onCurrentUserChanged.listen((e) {
-      debugPrint("received a user change");
       setState(() {});
     });
   }
