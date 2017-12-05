@@ -2,10 +2,11 @@ import '../content/content.dart';
 import 'tags_selection_page.dart';
 import 'package:flutter/material.dart';
 import 'page.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class Interest extends Tag {
 
-  Interest(String name, ImageIcon icon, List<Tag> children) : super(name, icon, children);
+  Interest(String name, ImageIcon icon, List<Tag> children) : super(name, icon, children, "interests");
 
   @override
   List<String> getTagList(User user) {
@@ -45,7 +46,8 @@ class InterestsSelectionPage {
       child: new TagsSelectionWidget(
         hint: "Select interests that you want to share",
         user: user,
-        tags: interests
+        tags: interests,
+        document: FirebaseDatabase.instance.reference().child('users/' + user.googleId + '/interests')
       )
     ).show(context);
   }

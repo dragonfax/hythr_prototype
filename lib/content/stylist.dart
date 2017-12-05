@@ -12,5 +12,9 @@ class Salon {
       phone = json['phone'];
     }
   }
+
+  toFirebaseUpdate() {
+    return { "name": name, "address": address, "hours": hours, "phone": phone};
+  }
 }
 

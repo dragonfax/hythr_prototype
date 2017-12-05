@@ -6,6 +6,17 @@ import 'client_note.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_database/firebase_database.dart';
 
+listToMap(List<String> list) {
+  if ( list == null ) {
+    return null;
+  }
+  Map<String,bool> m = {};
+  list.forEach((i) {
+    m[i] = true;
+  });
+  return m;
+}
+
 class User {
   bool isStylist = false;
 
@@ -30,17 +41,46 @@ class User {
   List<Picture> gallery = [];
 
 
-  Map<String,String> toFirebaseUpdate() {
-    return { "real_name": realName, "email": email, "photo_url": photoUrl };
+  toFirebaseUpdate() {
+    return {
+      "real_name": realName,
+      "email": email,
+      "photo_url": photoUrl,
+
+      "is_stylist": isStylist,
+      "phone": phone,
+
+      "salon": salon?.toFirebaseUpdate(),
+
+      "interests": listToMap(interests),
+      "skills": listToMap(skills),
+      "certifications": listToMap(certifications),
+    };
   }
 
   User(this.email);
 
   User.fromFirebaseSnapshot(DataSnapshot snapshot) {
+    googleId = snapshot.key;
+
     realName = snapshot.value["real_name"];
     email = snapshot.value["email"];
+
+    var json = snapshot.value;
+
+    isStylist = json['is_stylist'] ?? false;
     photoUrl = snapshot.value["photo_url"];
-    googleId = snapshot.key;
+    phone = json['phone'];
+
+    if (json['salon'] != null ) {
+      salon = new Salon.fromJson(json['salon']);
+    }
+
+    interests = json['interests'] == null ? <String>[] : json['interests'].keys.toList();
+
+    skills = json['skills'] == null ? <String>[] : json['skills'].keys.toList();
+
+    certifications = json['certifications'] == null ? <String>[] : json['certifications'].keys.toList();
   }
 
   User.fromGoogleUser(GoogleSignInAccount googleUser) {

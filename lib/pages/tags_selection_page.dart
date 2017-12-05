@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import '../content/content.dart';
-import 'package:hythr/widgets/toggle_button.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:hythr/signin.dart';
+import 'package:hythr/content/content.dart';
+import 'package:hythr/widgets/toggle_button.dart';
 
 const List<Color> blacks = const [
   const Color(0xFF202020),
@@ -22,8 +21,9 @@ abstract class Tag {
   final String name;
   final ImageIcon icon;
   final List<Tag> children;
+  final String type;
 
-  Tag(this.name, this.icon, this.children);
+  Tag(this.name, this.icon, this.children, this.type);
 
   bool hasChildren() {
     return children != null && children.isNotEmpty;
@@ -36,12 +36,12 @@ abstract class Tag {
   }
 
   toggleOn(User user) {
-    var ref = FirebaseDatabase.instance.reference().child('/users/' + userSignIn.currentUser.googleId + '/skills/' + name);
+    var ref = FirebaseDatabase.instance.reference().child('/users/' + user.googleId + '/' + type + '/' + name);
     ref.set(true);
   }
 
   toggleOff(User user) {
-    var ref = FirebaseDatabase.instance.reference().child('/users/' + userSignIn.currentUser.googleId + '/skills/' + name);
+    var ref = FirebaseDatabase.instance.reference().child('/users/' + user.googleId + '/' + type + '/' + name);
     ref.set(null);
   }
 }

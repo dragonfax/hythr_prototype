@@ -11,6 +11,7 @@ import 'package:hythr/pages/timeline_page.dart';
 import 'package:hythr/widgets/application_menu.dart';
 import 'package:hythr/content/content.dart';
 import 'stylist_search_page.dart';
+import 'package:hythr/signin.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -75,7 +76,7 @@ class MainMenu extends StatelessWidget {
           new ListTile(
             leading: const Icon(Icons.person),
             title: const Text("Stylist Profile"),
-            onTap: () { ProfilePage.show(context, root.currentUser, true, false); },
+            onTap: () { ProfilePage.show(context, userSignIn.currentUser, true, false); },
           ),
           new ListTile(
             leading: const Icon(Icons.people_outline),

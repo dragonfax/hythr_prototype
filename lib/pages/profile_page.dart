@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'clients_tab_page.dart';
 import 'interests_selection_page.dart';
 import 'skills_selection_page.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class ProfilePage extends StatelessWidget {
   final bool canEdit;
@@ -21,6 +22,16 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    return new StreamBuilder(
+      stream: FirebaseDatabase.instance.reference().child("users/" + user.googleId).onValue,
+      builder: (BuildContext context, AsyncSnapshot<Event> asyncEvent) {
+
+        if ( asyncEvent?.data?.snapshot?.value == null ) {
+          return new Text("Loading...");
+        }
+
+        User user = new User.fromFirebaseSnapshot(asyncEvent?.data?.snapshot);
+
 
     // initial tiles with basic user info for the first sliver.
     List<Widget> basicInfo = [
@@ -28,7 +39,7 @@ class ProfilePage extends StatelessWidget {
         leading: user.getChip(),
         title: new Text(user.realName),
         subtitle: new Column(children: [
-          new Text(user.username),
+          new Text(user.email),
         ]),
       ),
     ];
@@ -144,28 +155,15 @@ class ProfilePage extends StatelessWidget {
       ]);
     }
 
-    /*
-      List<ClientNote> notes = root.currentUser.clientNotes[user.username];
-
-      if ( notes == null || notes.isEmpty ) {
-        basicInfo.add(
-          const ListTile(title: const Center(child: const Text("No notes")))
-        );
-      } else {
-        basicInfo.addAll(
-          notes.map((note){
-            return note.getWidget();
-          }).toList()
-        );
-      }
-    } */
-
     SliverList slist = new SliverList( delegate: new SliverChildListDelegate(basicInfo));
 
     return new Stack(children: [
       new CustomScrollView(slivers: [slist]),
       const AddClientContentSpeedDial()
     ]);
+
+      }
+    );
   }
 }
 

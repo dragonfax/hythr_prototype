@@ -3,11 +3,10 @@ import 'tags_selection_page.dart';
 import 'package:hythr/content/content.dart';
 import 'page.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:hythr/signin.dart';
 
 class Skill extends Tag {
   Skill(String name, ImageIcon icon, List<Tag> children)
-      : super(name, icon, children);
+      : super(name, icon, children, "skills");
 
   @override
   List<String> getTagList(User user) {
@@ -62,7 +61,7 @@ class SkillsSelectionPage {
                 hint: "Select the skills you want to promote",
                 user: user,
                 tags: skills,
-                document: FirebaseDatabase.instance.reference().child('users/' + userSignIn.currentUser.googleId + '/skills')
+                document: FirebaseDatabase.instance.reference().child('users/' + user.googleId + '/skills')
             )
     ).show(context);
   }
