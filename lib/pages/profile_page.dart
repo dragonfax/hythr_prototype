@@ -104,7 +104,7 @@ class ProfilePage extends StatelessWidget {
       ),
       new ListTile(
         leading: const Icon(Icons.merge_type),
-        title: const Text("Hair Type")
+        title: const Text("Your Hair Type")
       ),
     ]);
 
