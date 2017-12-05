@@ -60,6 +60,10 @@ class User {
 
   User(this.email);
 
+  firebaseRef() {
+    return FirebaseDatabase.instance.reference().child("users/" + googleId);
+  }
+
   User.fromFirebaseSnapshot(DataSnapshot snapshot) {
     googleId = snapshot.key;
 
@@ -137,6 +141,9 @@ class User {
   }
 
   String getInitials() {
+    if ( realName == null ) {
+      return "";
+    }
     return realName.split(" ").map((String s){ return s[0];}).join("");
   }
 

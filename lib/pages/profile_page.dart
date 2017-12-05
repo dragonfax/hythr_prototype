@@ -7,6 +7,7 @@ import 'clients_tab_page.dart';
 import 'interests_selection_page.dart';
 import 'skills_selection_page.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'input_dialog.dart';
 
 class ProfilePage extends StatelessWidget {
   final bool canEdit;
@@ -37,10 +38,21 @@ class ProfilePage extends StatelessWidget {
     List<Widget> basicInfo = [
       new ListTile(
         leading: user.getChip(),
-        title: new Text(user.realName),
+        title: new Text(user.realName ?? "<unknown>"),
         subtitle: new Column(children: [
           new Text(user.email),
         ]),
+        onTap: () async {
+          var realName = await new InputDialog(
+            title: 'Enter Your Name',
+            labelText: 'Full Name',
+            initial: user.realName
+          ).show(context);
+
+          if ( realName != null ) {
+            user.firebaseRef().child("real_name").set(realName);
+          }
+        }
       ),
     ];
 

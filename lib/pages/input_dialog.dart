@@ -5,8 +5,9 @@ class InputDialog extends StatelessWidget {
   final String title;
   final String labelText;
   final String actionLabel;
+  final String initial;
 
-  InputDialog({ @required this.title, this.labelText, this.actionLabel });
+  InputDialog({ @required this.title, this.labelText, this.actionLabel, this.initial });
 
   show(BuildContext context) async {
     return await showDialog<String>(
@@ -21,6 +22,7 @@ class InputDialog extends StatelessWidget {
     return new AlertDialog(
         title: new Text(title),
         content: new TextField(
+          controller: new TextEditingController(text: initial == null ? "" : initial),
             decoration: new InputDecoration(
                 labelText: labelText == null ? "Enter" : labelText
             ),
