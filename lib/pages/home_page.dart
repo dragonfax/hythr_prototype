@@ -81,7 +81,7 @@ class MainMenu extends StatelessWidget {
           new ListTile(
             leading: const Icon(Icons.people_outline),
             title: const Text("Clients"),
-            onTap: () { ClientsTabPage.show(context); },
+            onTap: () { ClientsTabPage.show(context,userSignIn.currentUser); },
           ),
           new ListTile(
             leading: const Icon(Icons.photo_camera),

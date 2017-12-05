@@ -8,7 +8,6 @@ import 'package:hythr/content/content.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'page.dart';
-import 'clients_tab_page.dart';
 import 'interests_selection_page.dart';
 import 'skills_selection_page.dart';
 import 'input_dialog.dart';
@@ -207,10 +206,7 @@ class ProfilePage extends StatelessWidget {
           SliverList slist =
               new SliverList(delegate: new SliverChildListDelegate(basicInfo));
 
-          return new Stack(children: [
-            new CustomScrollView(slivers: [slist]),
-            const AddClientContentSpeedDial()
-          ]);
+          return new CustomScrollView(slivers: [slist]);
         });
   }
 }

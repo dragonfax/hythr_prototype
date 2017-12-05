@@ -143,12 +143,6 @@ class User {
     }
   }
 
-  String getInitials() {
-    if ( realName == null ) {
-      return "";
-    }
-    return realName.split(" ").map((String s){ return s[0];}).join("");
-  }
 
   Widget getChip() {
     if ( photoUrl != null ) {
@@ -158,8 +152,14 @@ class User {
     } else {
       return new CircleAvatar(
         backgroundColor: Colors.grey.shade800,
-        child: new Text(getInitials())
+        child: new Text(getInitials(realName))
       );
     }
   }
+}
+String getInitials(name) {
+  if ( name == null ) {
+    return "";
+  }
+  return name.split(" ").map((String s){ return s[0];}).join("");
 }
