@@ -29,6 +29,7 @@ class User {
   String realName;
   String phone;
   Salon salon;
+  String bio;
   List<String> interests = [];
   List<String> skills = [];
   List<String> certifications = [];
@@ -51,6 +52,7 @@ class User {
       "phone": phone,
 
       "salon": salon?.toFirebaseUpdate(),
+      "bio": bio,
 
       "interests": listToMap(interests),
       "skills": listToMap(skills),
@@ -75,6 +77,7 @@ class User {
     isStylist = json['is_stylist'] ?? false;
     photoUrl = snapshot.value["photo_url"];
     phone = json['phone'];
+    bio = json['bio'];
 
     if (json['salon'] != null ) {
       salon = new Salon.fromJson(json['salon']);
