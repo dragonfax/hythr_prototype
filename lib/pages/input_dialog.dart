@@ -7,13 +7,11 @@ class InputDialog extends StatelessWidget {
   final String actionLabel;
   final String initial;
 
-  InputDialog({ @required this.title, this.labelText, this.actionLabel, this.initial });
+  InputDialog(
+      {@required this.title, this.labelText, this.actionLabel, this.initial});
 
   show(BuildContext context) async {
-    return await showDialog<String>(
-        context: context,
-        child: this
-    );
+    return await showDialog<String>(context: context, child: this);
   }
 
   @override
@@ -22,26 +20,21 @@ class InputDialog extends StatelessWidget {
     return new AlertDialog(
         title: new Text(title),
         content: new TextField(
-          controller: new TextEditingController(text: initial == null ? "" : initial),
-            decoration: new InputDecoration(
-                labelText: labelText == null ? "Enter" : labelText
-            ),
+            controller: new TextEditingController(text: initial == null ? "" : initial),
+            decoration: new InputDecoration( labelText: labelText == null ? "Enter" : labelText),
             onChanged: (t) {
               value = t;
             },
             onSubmitted: (t) async {
               value = t;
               Navigator.of(context).pop(value);
-            }
-        ),
+            }),
         actions: [
           new FlatButton(
               child: new Text(actionLabel == null ? "Okay" : actionLabel),
               onPressed: () async {
                 Navigator.of(context).pop(value);
-              }
-          )
-        ]
-    );
+              })
+        ]);
   }
 }

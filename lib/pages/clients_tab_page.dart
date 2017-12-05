@@ -3,32 +3,9 @@ import 'package:hythr/pages/page.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'input_dialog.dart';
 import 'package:hythr/content/user.dart';
+import 'client_notes_page.dart';
+import 'package:hythr/content/client.dart';
 
-class Client {
-  String key;
-  String name;
-  String photoUrl;
-
-  Client.fromFirebaseSnapshot(String k, Map value) {
-    key = k;
-    name = value['name'];
-    photoUrl = value['photo_url'];
-  }
-
-  Widget getChip() {
-    if ( photoUrl != null ) {
-      return new CircleAvatar(
-          backgroundImage: new NetworkImage( photoUrl )
-      );
-    } else {
-      return new CircleAvatar(
-          backgroundColor: Colors.grey.shade800,
-          child: new Text(getInitials(name))
-      );
-    }
-  }
-
-}
 
 class ClientsTabPage extends StatelessWidget {
   final User user;
@@ -54,6 +31,10 @@ class ClientsTabPage extends StatelessWidget {
   clientsRef() {
     return FirebaseDatabase.instance.reference().child(
         "clients/" + user.googleId);
+  }
+
+  showClientNotes(BuildContext context, Client client) {
+    new ClientNotesPage(user, client).show(context);
   }
 
   @override
@@ -88,7 +69,7 @@ class ClientsTabPage extends StatelessWidget {
                                   leading: client.getChip(),
                                   title: new Text(client.name),
                                   onTap: () {
-                                    // showClientProfilePanel(context, client);
+                                    showClientNotes(context, client);
                                   }
                               );
                             }).toList()
