@@ -1,32 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hythr/constants.dart';
-import 'package:hythr/signin.dart';
 import 'package:hythr/pages/user_select_page.dart';
+import 'package:hythr/widgets/current_user.dart';
+import 'package:hythr/content/user.dart';
+import 'package:hythr/signin.dart';
 
-class UserAvatar extends StatefulWidget {
-  @override
-  UserAvatarState createState() => new UserAvatarState();
-}
-
-class UserAvatarState extends State<UserAvatar> {
-
-  UserAvatarState() {
-    userSignIn.onCurrentUserChanged.listen((e) {
-      setState(() {});
-    });
-  }
+class UserAvatar extends StatelessWidget {
 
   Widget build(BuildContext context) {
-
+    final User user = CurrentUser.of(context);
     return new Row(
       children: <Widget>[
-        userSignIn.currentUser == null || userSignIn.currentUser.photoUrl == null ? new Icon(Icons.mood) :
+        user == null || user.photoUrl == null ? new Icon(Icons.mood) :
         new CircleAvatar(
-          backgroundImage: new NetworkImage(
-            userSignIn.currentUser.photoUrl )
+          backgroundImage: new NetworkImage( user.photoUrl )
         ),
-        new Text(userSignIn.currentUser?.realName ?? 'Unknown')
+        new Text(user?.realName ?? 'Unknown')
       ]
     );
   }
