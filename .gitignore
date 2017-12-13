@@ -10,3 +10,4 @@ pubspec.lock
 CertificateSigningRequest.certSigningRequest
 ios Distribution signing certificate.p12
 ios_development.cer
+android/app/google-services.json
