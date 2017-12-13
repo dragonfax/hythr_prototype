@@ -4,6 +4,8 @@ import 'gallery.dart';
 import 'stylist.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+
 
 listToMap(List<String> list) {
   if ( list == null ) {
@@ -142,7 +144,7 @@ class User {
   Widget getChip() {
     if ( photoUrl != null ) {
       return new CircleAvatar(
-        backgroundImage: new NetworkImage( photoUrl )
+        backgroundImage: new CachedNetworkImageProvider( photoUrl )
       );
     } else {
       return new CircleAvatar(

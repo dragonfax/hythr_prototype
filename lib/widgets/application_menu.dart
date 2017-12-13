@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:hythr/constants.dart';
 import 'package:hythr/pages/user_select_page.dart';
 import 'package:hythr/widgets/current_user.dart';
 import 'package:hythr/content/user.dart';
 import 'package:hythr/signin.dart';
 import 'package:hythr/pages/settings_page.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+
 
 class UserAvatar extends StatelessWidget {
 
@@ -15,7 +16,7 @@ class UserAvatar extends StatelessWidget {
       children: <Widget>[
         user == null || user.photoUrl == null ? new Icon(Icons.mood) :
         new CircleAvatar(
-          backgroundImage: new NetworkImage( user.photoUrl )
+          backgroundImage: new CachedNetworkImageProvider( user.photoUrl )
         ),
         new Text(user?.realName ?? 'Unknown')
       ]

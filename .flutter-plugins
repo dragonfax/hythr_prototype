@@ -3,3 +3,5 @@ firebase_database=/Users/jstillwell/.pub-cache/hosted/pub.dartlang.org/firebase_
 firebase_storage=/Users/jstillwell/.pub-cache/hosted/pub.dartlang.org/firebase_storage-0.0.7/
 google_sign_in=/Users/jstillwell/.pub-cache/hosted/pub.dartlang.org/google_sign_in-1.0.1/
 image_picker=/Users/jstillwell/.pub-cache/hosted/pub.dartlang.org/image_picker-0.1.5/
+path_provider=/Users/jstillwell/.pub-cache/hosted/pub.dartlang.org/path_provider-0.2.2/
+shared_preferences=/Users/jstillwell/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.2.5/

@@ -9,6 +9,8 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/widgets.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+
 
 abstract class ClientNote {
   Widget getWidget();
@@ -41,7 +43,11 @@ class PhotoNote extends ClientNote {
 
   @override
   getWidget() {
-    return new Image.network(photoUrl);
+    if ( photoUrl == null ) {
+      throw "found a bad photo note";
+    }
+    debugPrint("$photoUrl");
+    return new CachedNetworkImage(photoUrl);
   }
 }
 
