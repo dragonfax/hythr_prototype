@@ -18,6 +18,10 @@ class UserSignIn {
 
   Stream<User> get onCurrentUserChanged => _currentUserController.stream;
 
+  StreamController<Null> _onSignOutController = new StreamController<Null>.broadcast();
+
+  Stream<Null> get onSignOut => _onSignOutController.stream;
+
   User setCurrentUser(User user) {
     if (user != currentUser) {
       currentUser = user;
@@ -28,6 +32,7 @@ class UserSignIn {
 
   signOut() {
     googleSignIn.signOut();
+    _onSignOutController.add(null);
   }
 
   Future<Null> signIn() async {

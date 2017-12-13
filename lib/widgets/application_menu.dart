@@ -58,7 +58,6 @@ class ApplicationMenu extends StatelessWidget {
               title: const Text('Logout'),
               onTap: () {
                 userSignIn.signOut();
-                SystemNavigator.pop();
               }
             ),
           ]

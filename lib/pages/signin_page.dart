@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hythr/signin.dart';
 import 'package:hythr/widgets/current_user.dart';
+import 'dart:async';
 
 
 class SignInPage extends StatefulWidget {
@@ -17,12 +18,27 @@ class SignInPage extends StatefulWidget {
 class SignInState extends State<SignInPage> {
 
   bool signedIn = false;
+  StreamSubscription<Null> _signoutSubscription;
+
+  SignInState() {
+    _signoutSubscription = userSignIn.onSignOut.listen((_){
+      setState((){
+        signedIn = false;
+      });
+    });
+  }
 
   signedInCallback() async {
     await userSignIn.signIn();
     setState(() {
       signedIn = true;
     });
+  }
+
+  @override
+  dispose() {
+    _signoutSubscription.cancel();
+    super.dispose();
   }
 
   Widget buildSigninPage() {
