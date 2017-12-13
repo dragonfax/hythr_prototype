@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hythr/pages/notifications_page.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hythr/pages/clients_tab_page.dart';
 import 'package:hythr/pages/personal_portfolio_page.dart';
@@ -7,7 +6,6 @@ import 'package:hythr/pages/inspiration_gallery_page.dart';
 import 'package:hythr/widgets/yellow_divider.dart';
 import 'package:hythr/pages/profile_page.dart';
 import 'package:hythr/widgets/add_content_speed_dial.dart';
-import 'package:hythr/pages/timeline_page.dart';
 import 'package:hythr/widgets/application_menu.dart';
 import 'package:hythr/content/content.dart';
 import 'stylist_search_page.dart';
@@ -20,20 +18,6 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
 
-  loadContent() async {
-    DataRoot newRoot = await readContent();
-    setState(() {
-      root = newRoot;
-      debugPrint("home page reassembled");
-    });
-  }
-
-  @override
-  initState() {
-    super.initState();
-    loadContent();
-  }
-
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -43,7 +27,7 @@ class HomePageState extends State<HomePage> {
           new IconButton(
               icon: const Icon(Icons.notifications, color: Colors.white),
               tooltip: "Notifications",
-              onPressed: () { NotificationsPage.show(context); }
+              onPressed: null
           )
         ],
       ),
@@ -73,7 +57,7 @@ class MainMenu extends StatelessWidget {
           new ListTile(
             leading: const Icon(Icons.timeline),
             title: const Text("Timeline"),
-            onTap: () { TimeLinePage.show(context); }
+            onTap: null,
           ),
           new ListTile(
             leading: const Icon(Icons.person),
@@ -98,7 +82,7 @@ class MainMenu extends StatelessWidget {
           new ListTile(
             leading: const Icon(Icons.search),
             title: const Text("Find a Stylist"),
-            onTap: () { StylistSearchPage.show(context, root.currentUser); },
+            onTap: () { StylistSearchPage.show(context, user); },
           )
         ]);
   }

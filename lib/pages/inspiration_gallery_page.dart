@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../content/content.dart';
 import 'package:hythr/pages/page.dart';
 import 'package:flutter_fab_dialer/flutter_fab_dialer.dart';
+import 'package:hythr/widgets/current_user.dart';
 
 
 class InspirationGalleryPage extends StatelessWidget {
@@ -11,10 +12,10 @@ class InspirationGalleryPage extends StatelessWidget {
   }
 
   Widget build(BuildContext context) {
+
+    final User user = CurrentUser.of(context);
+
     List<Widget> slivers = [];
-
-    User user = root.currentUser;
-
     slivers.addAll([
         new SliverGrid(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount( crossAxisCount: 3),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../content/content.dart';
 import 'package:hythr/pages/page.dart';
 import 'package:flutter_fab_dialer/flutter_fab_dialer.dart';
+import 'package:hythr/widgets/current_user.dart';
 
 class PersonalPortfolioPage extends StatelessWidget {
 
@@ -10,11 +11,12 @@ class PersonalPortfolioPage extends StatelessWidget {
   }
 
   Widget build(BuildContext context) {
+
+    final User user = CurrentUser.of(context);
+
     List<Widget> slivers = [];
+
     List<Widget> basicInfo = [];
-
-    User user = root.currentUser;
-
     basicInfo.add(
       new ListTile(
         leading: const Icon(Icons.person_outline),

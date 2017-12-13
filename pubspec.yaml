@@ -70,7 +70,6 @@ flutter:
   # see https://flutter.io/custom-fonts/#from-packages
 
   assets:
-    - assets/content.json
     - assets/icons/thin_lines.png
     - assets/icons/thick_lines.png
     - assets/icons/puzzle_piece.png
@@ -94,37 +93,3 @@ flutter:
     - assets/icons/razor.png
     - assets/images/logo.png
     - assets/images/background.jpg
-    - assets/images/profiles/ted_danson.jpg
-    - assets/images/profiles/rhea_perlman.jpg
-    - assets/images/profiles/john_ratzenberger.jpg
-    - assets/images/profiles/alyssa_milano.jpg
-    - assets/images/profiles/danny_pintauro.jpg
-    - assets/images/profiles/george_wendt.jpg
-    - assets/images/profiles/katherine_helmond.jpg
-    - assets/images/profiles/kelsey_grammer.jpg
-    - assets/images/profiles/kirstie_alley.jpg
-    - assets/images/profiles/shelley_long.jpg
-    - assets/images/profiles/tony_danza.jpg
-    - assets/images/angela_b/profile/1.jpg
-    - assets/images/angela_b/profile/2.jpg
-    - assets/images/angela_b/profile/3.jpg
-    - assets/images/angela_b/profile/4.jpg
-    - assets/images/angela_b/style/1.jpg
-    - assets/images/angela_b/style/2.jpg
-    - assets/images/angela_b/style/3.jpg
-    - assets/images/angela_b/style/4.jpg
-    - assets/images/angela_b/clients/1.jpg
-    - assets/images/angela_b/clients/2.jpg
-    - assets/images/angela_b/clients/3.jpg
-    - assets/images/angela_b/clients/4.jpg
-    - assets/images/angela_b/clients/5.jpg
-    - assets/images/angela_b/clients/6.jpg
-    - assets/images/angela_b/clients/7.jpg
-    - assets/images/angela_b/clients/8.jpg
-    - assets/images/angela_b/clients/9.jpg
-    - assets/images/angela_b/clients/10.jpg
-    - assets/images/angela_b/clients/11.jpg
-    - assets/images/angela_b/clients/12.jpg
-    - assets/images/angela_b/clients/13.jpg
-    - assets/images/angela_b/clients/14.jpg
-    - assets/images/angela_b/clients/15.jpg
