@@ -7,9 +7,9 @@ import 'package:hythr/widgets/yellow_divider.dart';
 import 'package:hythr/pages/profile_page.dart';
 import 'package:hythr/widgets/add_content_speed_dial.dart';
 import 'package:hythr/widgets/application_menu.dart';
-import 'package:hythr/content/content.dart';
 import 'stylist_search_page.dart';
 import 'package:hythr/widgets/current_user.dart';
+import 'package:hythr/content/user.dart';
 
 class HomePage extends StatefulWidget {
   @override

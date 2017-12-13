@@ -4,13 +4,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/foundation.dart';
-import 'package:hythr/content/content.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'page.dart';
 import 'interests_selection_page.dart';
 import 'skills_selection_page.dart';
 import 'input_dialog.dart';
+import 'package:hythr/content/user.dart';
 
 
 class ProfilePage extends StatelessWidget {

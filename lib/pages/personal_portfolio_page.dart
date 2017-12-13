@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../content/content.dart';
 import 'package:hythr/pages/page.dart';
 import 'package:flutter_fab_dialer/flutter_fab_dialer.dart';
 import 'package:hythr/widgets/current_user.dart';
+import 'package:hythr/content/user.dart';
 
 class PersonalPortfolioPage extends StatelessWidget {
 

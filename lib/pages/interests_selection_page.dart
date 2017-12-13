@@ -1,8 +1,8 @@
-import '../content/content.dart';
 import 'tags_selection_page.dart';
 import 'package:flutter/material.dart';
 import 'page.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:hythr/content/user.dart';
 
 class Interest extends Tag {
 

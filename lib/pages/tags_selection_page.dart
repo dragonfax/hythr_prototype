@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:hythr/content/content.dart';
 import 'package:hythr/widgets/toggle_button.dart';
+import 'package:hythr/content/user.dart';
 
 const List<Color> blacks = const [
   const Color(0xFF202020),

@@ -8,7 +8,6 @@ import 'dart:math';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/widgets.dart';
-import 'package:hythr/content/content.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 abstract class ClientNote {
