@@ -11,7 +11,7 @@ import 'package:hythr/pages/timeline_page.dart';
 import 'package:hythr/widgets/application_menu.dart';
 import 'package:hythr/content/content.dart';
 import 'stylist_search_page.dart';
-import 'package:hythr/signin.dart';
+import 'package:hythr/widgets/current_user.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -67,6 +67,8 @@ class HomePageState extends State<HomePage> {
 class MainMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    User user = CurrentUser.of(context);
     return new ListView(children: [
           new ListTile(
             leading: const Icon(Icons.timeline),
@@ -76,12 +78,12 @@ class MainMenu extends StatelessWidget {
           new ListTile(
             leading: const Icon(Icons.person),
             title: const Text("Stylist Profile"),
-            onTap: () { ProfilePage.show(context, userSignIn.currentUser, true, false); },
+            onTap: () { ProfilePage.show(context, user, true, false); },
           ),
           new ListTile(
             leading: const Icon(Icons.people_outline),
             title: const Text("Clients"),
-            onTap: () { ClientsTabPage.show(context,userSignIn.currentUser); },
+            onTap: () { ClientsTabPage.show(context,user); },
           ),
           new ListTile(
             leading: const Icon(Icons.photo_camera),
