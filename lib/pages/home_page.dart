@@ -61,8 +61,8 @@ class MainMenu extends StatelessWidget {
           ),
           new ListTile(
             leading: const Icon(Icons.person),
-            title: const Text("Stylist Profile"),
-            onTap: () { ProfilePage.show(context, user, true, false); },
+            title: const Text("Your Profile"),
+            onTap: () { ProfilePage.show(context, user, true, false, true); },
           ),
           new ListTile(
             leading: const Icon(Icons.people_outline),

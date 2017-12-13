@@ -11,6 +11,7 @@ import 'interests_selection_page.dart';
 import 'skills_selection_page.dart';
 import 'input_dialog.dart';
 import 'package:hythr/content/user.dart';
+import 'salon_input.dart';
 
 
 class ProfilePage extends StatelessWidget {
@@ -21,9 +22,9 @@ class ProfilePage extends StatelessWidget {
   ProfilePage(
       {@required this.user, this.canEdit = false, this.asClient = false});
 
-  static show(BuildContext context, User user, bool canEdit, bool asClient) {
+  static show(BuildContext context, User user, bool canEdit, bool asClient, bool you) {
     new Page(
-            title: "Stylist Profile",
+            title: you ? "Your Profile" : "Profile",
             child: new ProfilePage(
                 user: user, canEdit: canEdit, asClient: asClient))
         .show(context);
@@ -38,6 +39,10 @@ class ProfilePage extends StatelessWidget {
     Uri imageUrl = (await uploadTask.future).downloadUrl;
 
     user.firebaseRef().child("photo_url").set(imageUrl.toString());
+  }
+
+  salonInput(User user, BuildContext context) {
+    new SalonInput(user).show(context);
   }
 
   @override
@@ -125,21 +130,32 @@ class ProfilePage extends StatelessWidget {
             const Divider(),
           ]);
 
-          if (!asClient && user.salon != null) {
-            basicInfo.addAll([
-              new ListTile(
-                leading: new Column(children: const [
-                  const Icon(Icons.content_cut),
-                ]),
-                title: new Text(user.salon.name ?? ""),
-                subtitle: new Text(user.salon.address +
-                    "\n" +
-                    user.salon.hours +
-                    "\n" +
-                    user.salon.phone),
-              ),
-              const Divider()
-            ]);
+          // Salon
+          if (!asClient ) {
+            if ( user.salon != null ) {
+              basicInfo.addAll([
+                new ListTile(
+                  leading: const Icon(Icons.content_cut),
+                  title: new Text(user.salon.name ?? ""),
+                  subtitle: new Text(
+                      (user.salon.address ?? "") + "\n" +
+                      (user.salon.hours ?? "") + "\n" +
+                      (user.salon.phone ?? "")
+                  ),
+                  onTap: () { salonInput(user, context); }
+                ),
+                const Divider()
+              ]);
+            } else {
+              basicInfo.addAll([
+                new ListTile(
+                  leading: const Icon(Icons.content_cut),
+                  title: const Text("Click to add your Salon", style: const TextStyle(fontStyle: FontStyle.italic)),
+                  onTap: () { salonInput(user, context); }
+                ),
+                const Divider()
+              ]);
+            }
           }
 
           basicInfo.addAll([

@@ -34,7 +34,6 @@ class UserDataChangedWatcher extends StatelessWidget {
 
   Widget build(BuildContext context) {
     User user = CurrentUser.of(context);
-    debugPrint("${user.realName}");
 
     return new StreamBuilder<Event>(
       stream: user.firebaseRef().onValue,

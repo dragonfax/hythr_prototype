@@ -4,6 +4,8 @@ class Salon {
   String hours;
   String phone;
 
+  Salon({this.name, this.address, this.hours, this.phone});
+
   Salon.fromJson(Map json) {
     if ( json != null ) {
       name = json['name'];
