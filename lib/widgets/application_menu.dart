@@ -5,6 +5,7 @@ import 'package:hythr/pages/user_select_page.dart';
 import 'package:hythr/widgets/current_user.dart';
 import 'package:hythr/content/user.dart';
 import 'package:hythr/signin.dart';
+import 'package:hythr/pages/settings_page.dart';
 
 class UserAvatar extends StatelessWidget {
 
@@ -26,6 +27,9 @@ class UserAvatar extends StatelessWidget {
 
 class ApplicationMenu extends StatelessWidget {
 
+  openSettings(BuildContext context) {
+    new SettingsPage().show(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,9 +53,12 @@ class ApplicationMenu extends StatelessWidget {
                 UserSelectPage.show(context);
               }
             ),
-            const ListTile(
+            new ListTile(
               leading: const Icon(Icons.settings),
               title: const Text('Settings'),
+              onTap: () {
+                openSettings(context);
+              }
             ),
             new ListTile(
               leading: const Icon(Icons.time_to_leave),

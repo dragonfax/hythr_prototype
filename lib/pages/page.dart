@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hythr/widgets/yellow_divider.dart';
 import 'package:flutter/foundation.dart';
+import 'package:hythr/widgets/current_user.dart';
+import 'package:hythr/widgets/current_user_data.dart';
 
 class Page extends StatelessWidget {
   final String title;
@@ -11,7 +13,7 @@ class Page extends StatelessWidget {
   show(BuildContext context) {
     Navigator.of(context).push(new MaterialPageRoute<Null>(
       builder: (BuildContext context) {
-        return this;
+        return new UserChangedWatcher(child: new UserDataChangedWatcher(child: this));
       }
     ));
   }

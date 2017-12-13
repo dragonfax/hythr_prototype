@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hythr/signin.dart';
 import 'package:hythr/widgets/current_user.dart';
+import 'package:hythr/widgets/current_user_data.dart';
 import 'dart:async';
 
 
@@ -73,6 +74,6 @@ class SignInState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ! signedIn ? buildSigninPage() : new UserChangedWatcher(child:widget.child);
+    return ! signedIn ? buildSigninPage() : new UserChangedWatcher(child: new UserDataChangedWatcher(child:widget.child));
   }
 }
