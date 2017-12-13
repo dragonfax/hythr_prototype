@@ -18,15 +18,16 @@ class ProfilePage extends StatelessWidget {
   final bool canEdit;
   final User user;
   final bool asClient; // otherwise as-stylist
+  final bool isYou;
 
   ProfilePage(
-      {@required this.user, this.canEdit = false, this.asClient = false});
+      {@required this.user, this.canEdit = false, this.asClient = false, this.isYou = false});
 
   static show(BuildContext context, User user, bool canEdit, bool asClient, bool you) {
     new Page(
             title: you ? "Your Profile" : "Profile",
             child: new ProfilePage(
-                user: user, canEdit: canEdit, asClient: asClient))
+                user: user, canEdit: canEdit, asClient: asClient, isYou: you))
         .show(context);
   }
 
@@ -121,14 +122,19 @@ class ProfilePage extends StatelessWidget {
               }
             ),
             const Divider(),
-            new ListTile(
-                leading: const Icon(Icons.message),
-                title: new Text("Send message"),
-                onTap: () {
-                  ContactClientButton.showContactDialog(context);
-                }),
-            const Divider(),
           ]);
+
+          if ( ! isYou ) {
+            basicInfo.addAll([
+              new ListTile(
+                  leading: const Icon(Icons.message),
+                  title: new Text("Send message"),
+                  onTap: () {
+                    ContactClientButton.showContactDialog(context);
+                  }),
+              const Divider(),
+            ]);
+          }
 
           // Salon
           if (!asClient ) {
