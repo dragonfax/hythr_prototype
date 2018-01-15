@@ -5,42 +5,42 @@ import 'input_dialog.dart';
 import 'package:hythr/content/user.dart';
 import 'client_notes_page.dart';
 import 'package:hythr/content/client.dart';
+import 'package:hythr/widgets/current_user.dart';
 
 
 class ClientsTabPage extends StatelessWidget {
-  final User user;
-
-  ClientsTabPage(this.user);
 
   static show(BuildContext context, User user) {
-    new Page(title: "Clients", child: new ClientsTabPage(user)).show(context);
+    new Page(title: "Clients", child: new ClientsTabPage()).show(context);
   }
 
-  addClientFunc(BuildContext context) {
+  addClientFunc(User user, BuildContext context) {
     return () async {
       var name = await new InputDialog(
           title: "Enter Client Name",
           actionLabel: "Create Client"
       ).show(context);
 
-      var ref = await clientsRef().push();
+      var ref = await clientsRef(user).push();
       ref.set({ "name": name});
     };
   }
 
-  clientsRef() {
+  clientsRef(User user) {
     return FirebaseDatabase.instance.reference().child(
         "clients/" + user.googleId);
   }
 
-  showClientNotes(BuildContext context, Client client) {
+  showClientNotes(User user, BuildContext context, Client client) {
     new ClientNotesPage(user, client).show(context);
   }
 
   @override
   Widget build(BuildContext context) {
+
+    User user = CurrentUser.of(context);
     return new StreamBuilder<Event>(
-      stream: clientsRef().onValue,
+      stream: clientsRef(user).onValue,
       builder: (BuildContext context, AsyncSnapshot<Event> asyncSnapshot) {
 
         List<Client> clients = ( asyncSnapshot?.data?.snapshot?.value?.keys ?? <String>[]).map((key) {
@@ -53,7 +53,7 @@ class ClientsTabPage extends StatelessWidget {
               new ConstrainedBox(
                   constraints: const BoxConstraints(minHeight: 20.0),
                   child: new FlatButton(
-                      onPressed: addClientFunc(context),
+                      onPressed: addClientFunc(user, context),
                       child: const Text("Add New Client")
                   )
               ),
@@ -69,7 +69,7 @@ class ClientsTabPage extends StatelessWidget {
                                   leading: client.getChip(),
                                   title: new Text(client.name),
                                   onTap: () {
-                                    showClientNotes(context, client);
+                                    showClientNotes(user, context, client);
                                   }
                               );
                             }).toList()

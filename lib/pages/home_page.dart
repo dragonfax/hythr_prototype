@@ -38,7 +38,7 @@ class HomePageState extends State<HomePage> {
           const YellowDivider(),
           new Expanded(child: new Stack(
             children: [
-              new MainMenu(),
+              new ClientsTabPage(),
               new AddContentSpeedDial()
             ]
           ))
