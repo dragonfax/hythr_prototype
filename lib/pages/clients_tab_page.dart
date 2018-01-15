@@ -84,11 +84,14 @@ class ClientsTabPage extends StatelessWidget {
         } else {
           String prevLetter;
           clients.forEach((client) {
-            var letter = client.name[0];
+            var letter = client.name[0].toUpperCase();
 
             if ( prevLetter == null || prevLetter != letter) {
               clientDirectory.add(letter);
-              clientTiles.add(new ClientDirectoryTile(letter.toUpperCase()));
+              clientTiles.add(new ClientDirectoryTile(letter));
+              prevLetter = letter;
+            } else {
+              clientTiles.add(new Divider());
             }
 
             clientTiles.add(new ListTile(
@@ -99,7 +102,6 @@ class ClientsTabPage extends StatelessWidget {
               },
             ));
 
-            clientTiles.add(new Divider());
           });
         }
 
