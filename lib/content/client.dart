@@ -22,7 +22,7 @@ class Client {
     } else {
       return new CircleAvatar(
           backgroundColor: Colors.grey.shade800,
-          child: new Text(getInitials(name))
+          child: new Text(getInitials(name.toUpperCase()))
       );
     }
   }

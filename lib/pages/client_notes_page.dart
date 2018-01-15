@@ -9,6 +9,7 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/widgets.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'input_dialog.dart';
 
 abstract class ClientNote {
   Widget getWidget();
@@ -84,14 +85,49 @@ class ClientNotesPage extends StatelessWidget {
         "/notes/" + user.googleId + '/' + client.key);
   }
 
+  clientRef() {
+    return FirebaseDatabase.instance.reference().child(
+        "/clients/" + user.googleId + '/' + client.key);
+  }
+
+  Widget onTapGesture(Widget child, callback) {
+    return new GestureDetector(
+      onTap: callback,
+      child: child,
+    );
+  }
+
+  editClientName(BuildContext context) async {
+    var name = await new InputDialog(
+        title: "Enter Client Name",
+        actionLabel: "Change Client Name"
+    ).show(context);
+
+    await clientRef().update({ "name": name});
+  }
+
+  editClientPhoto(BuildContext context) async {
+    File imageFile = await ImagePicker.pickImage();
+
+    int random = new Random().nextInt(100000);
+    StorageReference sref = FirebaseStorage.instance.ref().child("${user.googleId}_client-profile_${client.key}_$random.jpg");
+    StorageUploadTask uploadTask = sref.put(imageFile);
+    Uri imageUrl = (await uploadTask.future).downloadUrl;
+
+    clientRef().update({ "photo_url": imageUrl.toString() });
+  }
+
   @override
   build(context) {
     var controller = new TextEditingController();
 
-
     return
     new Stack(children: [
       new Column(children: [
+        new ListTile(
+          leading: onTapGesture(client.getChip(), () => editClientPhoto(context) ),
+          title: onTapGesture(new Text(client.name), () => editClientName(context)),
+        ),
         new TextField(
           controller: controller,
           decoration: new InputDecoration( labelText: "Enter a note"),

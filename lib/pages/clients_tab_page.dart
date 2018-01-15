@@ -8,6 +8,32 @@ import 'package:hythr/content/client.dart';
 import 'package:hythr/widgets/current_user.dart';
 
 
+class ClientDirectoryTile extends StatelessWidget {
+
+  final String letter;
+
+  ClientDirectoryTile(this.letter);
+
+  @override
+  build(context) {
+    return new Container(
+      color: Colors.grey[800],
+      child: new ConstrainedBox(
+        constraints: new BoxConstraints(minHeight: 30.0),
+        child: new Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: new UnconstrainedBox(
+            constrainedAxis: Axis.horizontal,
+            child: new Row(children: [
+              new Text(letter, style: new TextStyle(fontWeight: FontWeight.bold))
+            ]),
+          ),
+        )
+      )
+    );
+  }
+}
+
 class ClientsTabPage extends StatelessWidget {
 
   static show(BuildContext context, User user) {
@@ -48,6 +74,35 @@ class ClientsTabPage extends StatelessWidget {
           return new Client.fromFirebaseSnapshot(key, value);
         }).toList();
 
+        clients.sort((Client a, Client b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()) );
+
+        List<Widget> clientTiles = [];
+        List<String> clientDirectory = [];
+
+        if ( clients.isEmpty ) {
+          clientTiles.add(const Center(child: const Text('0 clients')));
+        } else {
+          String prevLetter;
+          clients.forEach((client) {
+            var letter = client.name[0];
+
+            if ( prevLetter == null || prevLetter != letter) {
+              clientDirectory.add(letter);
+              clientTiles.add(new ClientDirectoryTile(letter.toUpperCase()));
+            }
+
+            clientTiles.add(new ListTile(
+              leading: client.getChip(),
+              title: new Text(client.name),
+              onTap: () {
+                showClientNotes(user, context, client);
+              },
+            ));
+
+            clientTiles.add(new Divider());
+          });
+        }
+
         return new Column(
             children: [
               new ConstrainedBox(
@@ -61,18 +116,8 @@ class ClientsTabPage extends StatelessWidget {
                   child: new Stack(
                       children: [
                         new ListView(
-                          itemExtent: 100.0,
-                          children: clients.isEmpty ?
-                            [ const Center(child: const Text('0 clients')) ] :
-                            clients.map((client) {
-                              return new ListTile(
-                                  leading: client.getChip(),
-                                  title: new Text(client.name),
-                                  onTap: () {
-                                    showClientNotes(user, context, client);
-                                  }
-                              );
-                            }).toList()
+                          // itemExtent: 50.0,
+                          children: clientTiles
                         ),
                       ]
                   )
