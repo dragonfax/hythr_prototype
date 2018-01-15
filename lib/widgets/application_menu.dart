@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:hythr/constants.dart';
 import 'package:hythr/pages/user_select_page.dart';
 import 'package:hythr/widgets/current_user.dart';
