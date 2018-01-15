@@ -21,14 +21,14 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Stylist Home"),
-        actions: <Widget>[
+        title: new Text("Clients"),
+        /*actions: <Widget>[
           new IconButton(
               icon: const Icon(Icons.notifications, color: Colors.white),
               tooltip: "Notifications",
               onPressed: null
           )
-        ],
+        ], */
       ),
       drawer: new ApplicationMenu(),
       body: new Column(
