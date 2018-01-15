@@ -5,7 +5,6 @@ import 'package:hythr/pages/personal_portfolio_page.dart';
 import 'package:hythr/pages/inspiration_gallery_page.dart';
 import 'package:hythr/widgets/yellow_divider.dart';
 import 'package:hythr/pages/profile_page.dart';
-import 'package:hythr/widgets/add_content_speed_dial.dart';
 import 'package:hythr/widgets/application_menu.dart';
 import 'stylist_search_page.dart';
 import 'package:hythr/widgets/current_user.dart';
@@ -36,12 +35,7 @@ class HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const YellowDivider(),
-          new Expanded(child: new Stack(
-            children: [
-              new ClientsTabPage(),
-              new AddContentSpeedDial()
-            ]
-          ))
+          new Expanded(child: new ClientsTabPage())
         ]
       ),
     );

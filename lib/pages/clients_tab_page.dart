@@ -7,6 +7,19 @@ import 'client_notes_page.dart';
 import 'package:hythr/content/client.dart';
 import 'package:hythr/widgets/current_user.dart';
 
+class ClientDirectorySidebar extends StatelessWidget {
+  final List<String> letters;
+
+  ClientDirectorySidebar(this.letters);
+
+  @override
+  build(context) {
+    return new Column(
+      mainAxisSize: MainAxisSize.min,
+      children: letters.map((letter) { return new Text(letter, style: new TextStyle( fontSize: 20.0, fontWeight: FontWeight.bold )); } ).toList()
+    );
+  }
+}
 
 class ClientDirectoryTile extends StatelessWidget {
 
@@ -105,26 +118,25 @@ class ClientsTabPage extends StatelessWidget {
           });
         }
 
-        return new Column(
-            children: [
-              new ConstrainedBox(
-                  constraints: const BoxConstraints(minHeight: 20.0),
-                  child: new FlatButton(
-                      onPressed: addClientFunc(user, context),
-                      child: const Text("Add New Client")
-                  )
-              ),
-              new Expanded(
-                  child: new Stack(
-                      children: [
-                        new ListView(
-                          // itemExtent: 50.0,
-                          children: clientTiles
-                        ),
-                      ]
-                  )
+        return new Stack(
+          alignment: Alignment.centerRight,
+          children: [
+            new ListView(
+              children: clientTiles
+            ),
+            new Positioned(
+              right: 10.0,
+              bottom:10.0,
+              child: new FloatingActionButton(
+                    child: new Icon(Icons.person_add),
+                    tooltip: "Add a Client",
+                    onPressed: addClientFunc(user, context),
               )
-            ]
+            ),
+            new Positioned(
+              child: new ClientDirectorySidebar(clientDirectory)
+            )
+          ]
         );
       }
     );
