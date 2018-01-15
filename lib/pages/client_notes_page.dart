@@ -103,11 +103,17 @@ class ClientNotesPage extends StatelessWidget {
         actionLabel: "Change Client Name"
     ).show(context);
 
-    await clientRef().update({ "name": name});
+    if ( name != null && name != "" ) {
+      await clientRef().update({ "name": name});
+    }
   }
 
   editClientPhoto(BuildContext context) async {
     File imageFile = await ImagePicker.pickImage();
+
+    if (imageFile == null ) {
+      return;
+    }
 
     int random = new Random().nextInt(100000);
     StorageReference sref = FirebaseStorage.instance.ref().child("${user.googleId}_client-profile_${client.key}_$random.jpg");
