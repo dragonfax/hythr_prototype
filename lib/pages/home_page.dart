@@ -22,7 +22,7 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Clients"),
+        title: new Text("Hairappy"),
         actions: <Widget>[ new TimerListButton() ]
       ),
       drawer: new ApplicationMenu(),
