@@ -9,6 +9,7 @@ import 'package:hythr/widgets/application_menu.dart';
 import 'stylist_search_page.dart';
 import 'package:hythr/widgets/current_user.dart';
 import 'package:hythr/content/user.dart';
+import 'timers_list_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -22,13 +23,15 @@ class HomePageState extends State<HomePage> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text("Clients"),
-        /*actions: <Widget>[
+        actions: <Widget>[
           new IconButton(
-              icon: const Icon(Icons.notifications, color: Colors.white),
-              tooltip: "Notifications",
-              onPressed: null
+              icon: const Icon(Icons.timer, color: Colors.white),
+              tooltip: "Timers",
+              onPressed: () {
+                TimersListPage.show(context);
+              }
           )
-        ], */
+        ],
       ),
       drawer: new ApplicationMenu(),
       body: new Column(

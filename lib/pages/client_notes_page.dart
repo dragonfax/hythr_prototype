@@ -14,6 +14,7 @@ import 'package:flutter_fab_dialer/flutter_fab_dialer.dart';
 import 'package:hythr/constants.dart';
 import 'package:hythr/widgets/digit_dial.dart';
 import 'package:hythr/content/notes.dart';
+import 'package:hythr/content/timer.dart';
 
 
 class ClientNotesPage extends StatelessWidget {
@@ -98,16 +99,27 @@ class ClientNotesPage extends StatelessWidget {
     var d1 = new Digit();
     var d2 = new Digit();
 
+    var controller = new TextEditingController();
+
     int result = await showDialog<int>(
       context: context,
       child: new AlertDialog(
         title: const Text("Create Timer"),
-        content: new Row(
+        content: new Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            new DigitDial(d1),
-            new DigitDial(d2),
-            new Text("Min")
+            new TextField(
+              controller: controller,
+              decoration: new InputDecoration( labelText: "Enter a title."),
+            ),
+            new Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                new DigitDial(d1),
+                new DigitDial(d2),
+                new Text("Min")
+              ]
+            )
           ]
         ),
         actions: [new FlatButton(
@@ -122,6 +134,7 @@ class ClientNotesPage extends StatelessWidget {
 
     if ( result != null ) {
       clientNotesRef().push().set(new TimerNote(result).toFirebaseSet());
+      timers.add(new Timer(client: client, timer: result, title: controller.text));
     }
   }
 
