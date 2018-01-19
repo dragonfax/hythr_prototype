@@ -149,6 +149,9 @@ class AddClientContentMenu extends StatelessWidget {
     return new FabDialer(
       [
         new FabMiniMenuItem(
+          textColor: Colors.white,
+          chipColor: Colors.blue,
+          fabColor: Colors.blue,
             icon: new Icon(Icons.person_add),
             text: "Add Client",
             elevation: 4.0,
@@ -156,6 +159,9 @@ class AddClientContentMenu extends StatelessWidget {
             onPressed: () { debugPrint("calling function"); addClientFunc(context); } ,
         ),
         new FabMiniMenuItem(
+            textColor: Colors.white,
+            chipColor: Colors.blue,
+            fabColor: Colors.blue,
             icon: new Icon(Icons.phone),
             text: "Import Client",
             elevation: 4.0,
@@ -163,6 +169,9 @@ class AddClientContentMenu extends StatelessWidget {
             onPressed: () {}
         ),
         new FabMiniMenuItem(
+            textColor: Colors.white,
+            chipColor: Colors.blue,
+            fabColor: Colors.blue,
           icon: new Icon(Icons.message),
           text: "Message All Clients",
           elevation: 4.0,

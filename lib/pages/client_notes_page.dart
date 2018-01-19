@@ -12,158 +12,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'input_dialog.dart';
 import 'package:flutter_fab_dialer/flutter_fab_dialer.dart';
 import 'package:hythr/constants.dart';
+import 'package:hythr/widgets/digit_dial.dart';
+import 'package:hythr/content/notes.dart';
 
-
-abstract class ClientNote {
-  DateTime createdAt;
-
-  Widget getWidget(BuildContext context);
-
-  ClientNote();
-
-  factory ClientNote.fromFirebaseSnapshot(DataSnapshot snapshot) {
-    ClientNote n;
-    if ( snapshot.value['type'] == "text" ) {
-      n = new TextNote.fromFirebaseSnapshot(snapshot);
-    } else if ( snapshot.value['type'] == "photo" ) {
-      n = new PhotoNote.fromFirebaseSnapshot(snapshot);
-    } else {
-      throw "failed to get note type";
-    }
-
-    if (snapshot.value['created_at'] != null) {
-      n.createdAt = new DateTime.fromMillisecondsSinceEpoch(snapshot.value['created_at']);
-    }
-
-    return n;
-  }
-
-  Map toFirebaseSet() {
-    return {
-      "created_at": createdAt == null ? ServerValue.timestamp : createdAt.millisecondsSinceEpoch
-    };
-  }
-
-
-  String formatDate() {
-    if ( createdAt != null ) {
-      return createdAt.month.toString() + '/' + createdAt.day.toString();
-    } else {
-      return '';
-    }
-  }
-
-  Widget getDateWidget() {
-    return new Container(
-      width: 50.0,
-      child: new Text(formatDate())
-    );
-  }
-}
-
-class PhotoNote extends ClientNote {
-  String photoUrl;
-
-  PhotoNote(this.photoUrl);
-
-  PhotoNote.fromFirebaseSnapshot(DataSnapshot snapshot) {
-    photoUrl = snapshot.value['photo_url'];
-  }
-
-  @override
-  toFirebaseSet() {
-    var s = super.toFirebaseSet();
-    s.addAll({ "type": "photo", "photo_url": photoUrl});
-    return s;
-  }
-
-  @override
-  getWidget(BuildContext context) {
-
-    return new GestureDetector(
-      onTap: () => show(context),
-      child: new Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: new Row(
-          children: [
-            getDateWidget(),
-            new Icon(Icons.photo),
-          ]
-        )
-      )
-    );
-  }
-
-  show(context) {
-    showDialog<Null>(
-      context: context,
-      child: new AlertDialog(
-        content: new Image.network(photoUrl),
-        actions: [
-          new FlatButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text("Done")
-          ),
-        ]
-      )
-    );
-  }
-}
-
-class TextNote extends ClientNote {
-
-  String text;
-
-  TextNote(this.text);
-
-  TextNote.fromFirebaseSnapshot(DataSnapshot snapshot) {
-    text = snapshot.value['text'];
-  }
-
-  @override
-  toFirebaseSet() {
-    var s = super.toFirebaseSet();
-    s.addAll({ "type": "text", "text": text });
-    return s;
-  }
-
-  @override
-  getWidget(BuildContext context) {
-
-    var sub = text;
-    if (text.length > 20 ) {
-      sub = text.substring(0,20);
-    }
-
-    return new GestureDetector(
-      onTap: () => show(context),
-      child: new Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: new Row(
-          children: [
-            getDateWidget(),
-            new Text(sub)
-          ]
-        )
-      )
-    );
-  }
-
-  show(context) {
-    showDialog<Null>(
-      context: context,
-      child: new AlertDialog(
-        content: new Text(text),
-        actions: [
-          new FlatButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text("Done")
-          ),
-        ]
-      )
-    );
-  }
-}
 
 class ClientNotesPage extends StatelessWidget {
 
@@ -242,6 +93,38 @@ class ClientNotesPage extends StatelessWidget {
     }
   }
 
+  createTimer(context) async {
+
+    var d1 = new Digit();
+    var d2 = new Digit();
+
+    int result = await showDialog<int>(
+      context: context,
+      child: new AlertDialog(
+        title: const Text("Create Timer"),
+        content: new Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            new DigitDial(d1),
+            new DigitDial(d2),
+            new Text("Min")
+          ]
+        ),
+        actions: [new FlatButton(
+          child: new Text("Start Timer"),
+          onPressed: () {
+            int value = d1.value * 10 + d2.value;
+            Navigator.of(context).pop(value);
+          }
+        )]
+      )
+    );
+
+    if ( result != null ) {
+      clientNotesRef().push().set(new TimerNote(result).toFirebaseSet());
+    }
+  }
+
   @override
   build(context) {
     // var controller = new TextEditingController();
@@ -283,7 +166,11 @@ class ClientNotesPage extends StatelessWidget {
       new Positioned(
           right: 10.0,
           bottom:10.0,
-          child: new AddNoteContentMenu(addImageNote: addImageNote, addTextNote: addTextNote)
+          child: new AddNoteContentMenu(
+              addImageNote: addImageNote,
+              addTextNote: addTextNote,
+              createTimer: createTimer
+          )
       )
     ]);
   }
@@ -294,8 +181,9 @@ class ClientNotesPage extends StatelessWidget {
 class AddNoteContentMenu extends StatelessWidget {
   final ContextCallback addImageNote;
   final ContextCallback addTextNote;
+  final ContextCallback createTimer;
 
-  AddNoteContentMenu({ this.addImageNote, this.addTextNote });
+  AddNoteContentMenu({ this.addImageNote, this.addTextNote, this.createTimer });
 
   @override
   build(context) {
@@ -321,6 +209,15 @@ class AddNoteContentMenu extends StatelessWidget {
           tooltip: "Add a Text Note",
           onPressed: () => addTextNote(context)
       ),
+      new FabMiniMenuItem(
+        textColor: Colors.white,
+        chipColor: Colors.blue,
+        fabColor: Colors.blue,
+        icon: new Icon(Icons.timer),
+        elevation: 4.0,
+        text: "Start Timer",
+        onPressed: () => createTimer(context)
+      )
     ];
 
     return new FabDialer(fabList, Colors.blue, const Icon(Icons.add));
