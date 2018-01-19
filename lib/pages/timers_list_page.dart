@@ -2,6 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:hythr/content/timer.dart';
 import 'page.dart';
 
+
+class TimerListButton extends StatelessWidget {
+  @override
+  build(context) {
+    return new IconButton(
+      icon: const Icon(Icons.timer, color: Colors.white),
+      tooltip: "Timers",
+      onPressed: () {
+        TimersListPage.show(context);
+      }
+    );
+  }
+}
+
 class TimersListPage extends StatelessWidget {
 
    static show(BuildContext context) {

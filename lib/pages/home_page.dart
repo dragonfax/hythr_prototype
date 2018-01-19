@@ -23,15 +23,7 @@ class HomePageState extends State<HomePage> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text("Clients"),
-        actions: <Widget>[
-          new IconButton(
-              icon: const Icon(Icons.timer, color: Colors.white),
-              tooltip: "Timers",
-              onPressed: () {
-                TimersListPage.show(context);
-              }
-          )
-        ],
+        actions: <Widget>[ new TimerListButton() ]
       ),
       drawer: new ApplicationMenu(),
       body: new Column(
