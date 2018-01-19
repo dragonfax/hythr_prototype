@@ -82,7 +82,7 @@ DEPENDENCIES:
   - firebase_storage (from `/Users/jstillwell/.pub-cache/hosted/pub.dartlang.org/firebase_storage-0.0.7/ios`)
   - Flutter (from `/Users/jstillwell/Code/flutter/flutter/bin/cache/artifacts/engine/ios-release`)
   - google_sign_in (from `/Users/jstillwell/.pub-cache/hosted/pub.dartlang.org/google_sign_in-1.0.1/ios`)
-  - image_picker (from `/Users/jstillwell/.pub-cache/hosted/pub.dartlang.org/image_picker-0.1.4/ios`)
+  - image_picker (from `/Users/jstillwell/.pub-cache/hosted/pub.dartlang.org/image_picker-0.1.5/ios`)
 
 EXTERNAL SOURCES:
   firebase_auth:
@@ -96,7 +96,7 @@ EXTERNAL SOURCES:
   google_sign_in:
     :path: /Users/jstillwell/.pub-cache/hosted/pub.dartlang.org/google_sign_in-1.0.1/ios
   image_picker:
-    :path: /Users/jstillwell/.pub-cache/hosted/pub.dartlang.org/image_picker-0.1.4/ios
+    :path: /Users/jstillwell/.pub-cache/hosted/pub.dartlang.org/image_picker-0.1.5/ios
 
 SPEC CHECKSUMS:
   Firebase: dbfb98ccec2dcfcd21ab9cc1b4981a3f3c8c5e26
