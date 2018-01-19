@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'input_dialog.dart';
 import 'package:flutter_fab_dialer/flutter_fab_dialer.dart';
+import 'package:hythr/constants.dart';
 
 
 abstract class ClientNote {
@@ -252,6 +253,9 @@ class ClientNotesPage extends StatelessWidget {
           leading: onTapGesture(client.getChip(), () => editClientPhoto(context) ),
           title: onTapGesture(new Text(client.name), () => editClientName(context)),
         ),
+        new FlatButton( child: new Text("Send Message"), onPressed: () {
+          new InputDialog(title: "Message Client", actionLabel: "Enter a message").show(context);
+        } ),
         /*new TextField(
           controller: controller,
           decoration: new InputDecoration( labelText: "Enter a note"),
@@ -265,7 +269,13 @@ class ClientNotesPage extends StatelessWidget {
             query: clientNotesRef(),
             itemBuilder: (context, snapshot, animation, index) {
               ClientNote note = new ClientNote.fromFirebaseSnapshot(snapshot);
-              return note.getWidget(context);
+              return new Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    new Divider(),
+                    note.getWidget(context),
+                  ]
+              );
             }
           )
         )
@@ -280,7 +290,6 @@ class ClientNotesPage extends StatelessWidget {
 
 }
 
-typedef void ContextCallback(BuildContext context);
 
 class AddNoteContentMenu extends StatelessWidget {
   final ContextCallback addImageNote;
@@ -298,7 +307,7 @@ class AddNoteContentMenu extends StatelessWidget {
         fabColor: Colors.blue,
         icon: new Icon(Icons.camera),
         elevation: 4.0,
-        text: "Photo",
+        text: "Add Photo",
         tooltip: "Take a Photo",
         onPressed: () => addImageNote(context)
       ),
@@ -308,7 +317,7 @@ class AddNoteContentMenu extends StatelessWidget {
           fabColor: Colors.blue,
           icon: new Icon(Icons.short_text),
           elevation: 4.0,
-          text: "Text",
+          text: "Add Note",
           tooltip: "Add a Text Note",
           onPressed: () => addTextNote(context)
       ),

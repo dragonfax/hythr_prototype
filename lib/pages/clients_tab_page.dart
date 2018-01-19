@@ -6,6 +6,8 @@ import 'package:hythr/content/user.dart';
 import 'client_notes_page.dart';
 import 'package:hythr/content/client.dart';
 import 'package:hythr/widgets/current_user.dart';
+import 'package:flutter_fab_dialer/flutter_fab_dialer.dart';
+import 'package:hythr/constants.dart';
 
 class ClientDirectorySidebar extends StatelessWidget {
   final List<String> letters;
@@ -53,16 +55,14 @@ class ClientsTabPage extends StatelessWidget {
     new Page(title: "Clients", child: new ClientsTabPage()).show(context);
   }
 
-  addClientFunc(User user, BuildContext context) {
-    return () async {
-      var name = await new InputDialog(
-          title: "Enter Client Name",
-          actionLabel: "Create Client"
-      ).show(context);
+  addClientFunc(User user, BuildContext context) async {
+    var name = await new InputDialog(
+        title: "Enter Client Name",
+        actionLabel: "Create Client"
+    ).show(context);
 
-      var ref = await clientsRef(user).push();
-      ref.set({ "name": name});
-    };
+    var ref = await clientsRef(user).push();
+    ref.set({ "name": name});
   }
 
   clientsRef(User user) {
@@ -127,11 +127,7 @@ class ClientsTabPage extends StatelessWidget {
             new Positioned(
               right: 10.0,
               bottom:10.0,
-              child: new FloatingActionButton(
-                    child: new Icon(Icons.person_add),
-                    tooltip: "Add a Client",
-                    onPressed: addClientFunc(user, context),
-              )
+              child: new AddClientContentMenu((context) => addClientFunc(user, context))
             ),
             new Positioned(
               child: new ClientDirectorySidebar(clientDirectory)
@@ -139,6 +135,43 @@ class ClientsTabPage extends StatelessWidget {
           ]
         );
       }
+    );
+  }
+}
+
+class AddClientContentMenu extends StatelessWidget {
+  final ContextCallback addClientFunc;
+
+  AddClientContentMenu(this.addClientFunc);
+
+  @override
+  build(context) {
+    return new FabDialer(
+      [
+        new FabMiniMenuItem(
+            icon: new Icon(Icons.person_add),
+            text: "Add Client",
+            elevation: 4.0,
+            tooltip: "Add a new Client",
+            onPressed: () { debugPrint("calling function"); addClientFunc(context); } ,
+        ),
+        new FabMiniMenuItem(
+            icon: new Icon(Icons.phone),
+            text: "Import Client",
+            elevation: 4.0,
+            tooltip: "Add a new Client",
+            onPressed: () {}
+        ),
+        new FabMiniMenuItem(
+          icon: new Icon(Icons.message),
+          text: "Message All Clients",
+          elevation: 4.0,
+          tooltip: "Message all Clients",
+          onPressed: () {}
+        ),
+      ],
+      Colors.blue,
+      const Icon(Icons.add)
     );
   }
 }
