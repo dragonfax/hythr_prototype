@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
 
 
 abstract class ClientNote {
@@ -159,17 +160,19 @@ class TextNote extends ClientNote {
 class TimerNote extends ClientNote {
 
   int timer;
+  String title;
 
-  TimerNote(this.timer);
+  TimerNote({ @required this.timer, this.title });
 
   TimerNote.fromFirebaseSnapshot(DataSnapshot snapshot) {
     timer = snapshot.value['timer'];
+    title = snapshot.value['title'];
   }
 
   @override
   toFirebaseSet() {
     var s = super.toFirebaseSet();
-    s.addAll({ "type": "timer", "timer": timer });
+    s.addAll({ "type": "timer", "timer": timer, "title": title });
     return s;
   }
 
@@ -184,7 +187,7 @@ class TimerNote extends ClientNote {
           new Icon(Icons.timer),
           new Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: new Text(timer.toString() + " minutes")
+            child: new Text(timer.toString() + " min " + ( title == null ? '' : title ))
           )
         ]
       )

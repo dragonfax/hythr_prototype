@@ -133,7 +133,7 @@ class ClientNotesPage extends StatelessWidget {
     );
 
     if ( result != null ) {
-      clientNotesRef().push().set(new TimerNote(result).toFirebaseSet());
+      clientNotesRef().push().set(new TimerNote(timer: result, title: controller.text).toFirebaseSet());
       timers.add(new Timer(client: client, timer: result, title: controller.text));
     }
   }
