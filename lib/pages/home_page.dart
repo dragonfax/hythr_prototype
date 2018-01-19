@@ -35,7 +35,7 @@ class HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const YellowDivider(),
-          new Expanded(child: new ClientsTabPage())
+          new Expanded(child: new MainMenu())
         ]
       ),
     );
@@ -48,11 +48,11 @@ class MainMenu extends StatelessWidget {
 
     User user = CurrentUser.of(context);
     return new ListView(children: [
-          new ListTile(
+          /* new ListTile(
             leading: const Icon(Icons.timeline),
             title: const Text("Timeline"),
             onTap: null,
-          ),
+          ), */
           new ListTile(
             leading: const Icon(Icons.person),
             title: const Text("Your Profile"),
@@ -61,7 +61,7 @@ class MainMenu extends StatelessWidget {
           new ListTile(
             leading: const Icon(Icons.people_outline),
             title: const Text("Clients"),
-            onTap: () { ClientsTabPage.show(context,user); },
+            onTap: () { ClientsTabPage.show(context); },
           ),
           new ListTile(
             leading: const Icon(Icons.photo_camera),

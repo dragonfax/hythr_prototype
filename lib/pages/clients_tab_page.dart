@@ -49,7 +49,7 @@ class ClientDirectoryTile extends StatelessWidget {
 
 class ClientsTabPage extends StatelessWidget {
 
-  static show(BuildContext context, User user) {
+  static show(BuildContext context) {
     new Page(title: "Clients", child: new ClientsTabPage()).show(context);
   }
 
