@@ -148,10 +148,12 @@ class ClientNotesPage extends StatelessWidget {
         new ListTile(
           leading: onTapGesture(client.getChip(), () => editClientPhoto(context) ),
           title: onTapGesture(new Text(client.name), () => editClientName(context)),
+          subtitle: new FlatButton(
+            child: new Text("Send Message", style: new TextStyle( fontStyle: FontStyle.italic)),
+            onPressed: () {
+              new InputDialog(title: "Message Client", actionLabel: "Enter a message").show(context);
+          } ),
         ),
-        new FlatButton( child: new Text("Send Message"), onPressed: () {
-          new InputDialog(title: "Message Client", actionLabel: "Enter a message").show(context);
-        } ),
         /*new TextField(
           controller: controller,
           decoration: new InputDecoration( labelText: "Enter a note"),
