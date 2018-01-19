@@ -156,5 +156,5 @@ String getInitials(name) {
   if ( name == null ) {
     return "";
   }
-  return name.split(" ").map((String s){ return s[0];}).join("");
+  return name.split(" ").where((s) => s.length < 0 ).map((String s){ return s[0];}).join("");
 }
